@@ -43,8 +43,12 @@ lista_de_elementos: lista_de_elementos declaracao;
 lista_de_elementos: funcao;
 lista_de_elementos: declaracao;
 declaracao: tipo lista_de_nome_de_variaveis ';';
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' TK_IDENTIFICADOR;
-lista_de_nome_de_variaveis: TK_IDENTIFICADOR;
+lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional;
+lista_de_nome_de_variaveis: multidimensional;
+multidimensional: TK_IDENTIFICADOR '[' lista_literais;
+lista_literais: TK_PR_INT '^'; 
+lista_literais: TK_PR_INT ']';
+multidimensional: TK_IDENTIFICADOR;
 
 tipo: TK_PR_INT;
 tipo: TK_PR_FLOAT;
