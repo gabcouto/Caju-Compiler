@@ -127,3 +127,7 @@ void yyerror(const char *mensagem){
 	printf("Erro Sintático: [%s] na linha %d", mensagem, 0);
 	return;
 }
+int main()
+{
+	yyparse();
+}
