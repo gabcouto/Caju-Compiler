@@ -63,6 +63,8 @@ lista_parametros: ')';
 bloco_comandos: '{' comandos_simples;
 comandos_simples: declaracao_local comandos_simples;
 comandos_simples: atribuicao_local comandos_simples;
+comandos_simples: chamada_funcao comandos_simples;
+comandos_simples: chamada_retorno comandos_simples;
 
 /*
 	Declaração de Variável Local
@@ -86,13 +88,25 @@ multidimensional_local: TK_IDENTIFICADOR;
 */
 atribuicao_local: TK_IDENTIFICADOR  lista_de_identificadores '=' expressao;
 lista_de_identificadores: TK_IDENTIFICADOR lista_de_expressoes;
-lista_de_expressoes: '[' expressao lista_de_expressoes;
-lista_de_expressoes: '^' expressao lista_de_expressoes;
-lista_de_expressoes: expressao ']';
+lista_de_expressoes: '[' expressao lista_de_expressoes_;
+lista_de_expressoes_: '^' expressao lista_de_expressoes_;
+lista_de_expressoes_: ']';
 lista_de_expressoes: ;
 
-comandos_simples: '}';
+/*
+	Chamada de Função
+*/
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao |  ')'; 
+lista_expressoes_funcao: expressao ',' lista_expressoes_funcao;
+lista_expressoes_funcao: expressao;
 
+/*
+	Chamada de retorno
+*/
+chamada_retorno: TK_PR_RETURN expressao;
+
+
+comandos_simples: '}';
 
 /*
 	Expressão
