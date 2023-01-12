@@ -65,6 +65,7 @@ comandos_simples: declaracao_local comandos_simples;
 comandos_simples: atribuicao_local comandos_simples;
 comandos_simples: chamada_funcao comandos_simples;
 comandos_simples: chamada_retorno comandos_simples;
+comandos_simples: chamada_ctrl_fluxo comandos_simples;
 
 /*
 	Declaração de Variável Local
@@ -105,13 +106,43 @@ lista_expressoes_funcao: expressao;
 */
 chamada_retorno: TK_PR_RETURN expressao;
 
+/*
+	Controle de Fluxo
+*/
+chamada_ctrl_fluxo: ctrl_condicional | ctrl_repeticao;
+ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos;
+ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else;
+cond_else: TK_PR_ELSE bloco_comandos;
+cond_else: ;
+
+
 
 comandos_simples: '}';
 
 /*
 	Expressão
+
+	fiz recursões a direita, n sei se tem problema, e n sei como garantir precedência 
+ 	mas a declaração dos operadores ta na ordem certa pra n precisar ficar consultando a tabela
 */
-expressao: ;
+expressao: operandos;
+expressao: '(' expressao ')';
+expressao: operadores_pre expressao;
+expressao: expressao operadores expressao;
+
+operandos: multidimensional;
+operandos: literal;
+operandos: chamada_funcao;
+
+operadores_pre: '-' | '!' | ;
+operadores: '*' | '/' | '%';
+operadores: '+' | '-';
+operadores: '<' | '>' | TK_OC_LE | TK_OC_GE;
+operadores: TK_OC_EQ | TK_OC_NE;
+operadores: TK_OC_AND;
+operadores: TK_OC_OR;
+
+
 
 tipo: TK_PR_INT;
 tipo: TK_PR_FLOAT;
