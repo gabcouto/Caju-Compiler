@@ -82,13 +82,22 @@ multidimensional_local: TK_IDENTIFICADOR TK_OC_LE literal;
 multidimensional_local: TK_IDENTIFICADOR;
 
 /*
-	Atribuição local (incompleto)
+	Atribuição local
 */
-atribuicao_local: TK_IDENTIFICADOR  lista_de_expressoes '=' expressao;
-lista_de_expressoes:;
-expressao:;
+atribuicao_local: TK_IDENTIFICADOR  lista_de_identificadores '=' expressao;
+lista_de_identificadores: TK_IDENTIFICADOR lista_de_expressoes;
+lista_de_expressoes: '[' expressao lista_de_expressoes;
+lista_de_expressoes: '^' expressao lista_de_expressoes;
+lista_de_expressoes: expressao ']';
+lista_de_expressoes: ;
+
 comandos_simples: '}';
 
+
+/*
+	Expressão
+*/
+expressao: ;
 
 tipo: TK_PR_INT;
 tipo: TK_PR_FLOAT;
