@@ -1,3 +1,4 @@
+ETAPA_ATUAL = etapa2
 OUT = parser
 LINUXCC  = gcc
 LINUXFLEX = flex
@@ -9,13 +10,11 @@ OBJ_FOLDER = mkdir -p obj
 TEMP_FOLDER = mkdir -p temp
 UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
-		OSFLAG += -D LINUX
 		CC = $(LINUXCC)
 		FLEX = $(LINUXFLEX)
 		BISON = $(LINUXBISON)
 	endif
 	ifeq ($(UNAME_S),Darwin)
-		OSFLAG += -D OSX
 		CC = $(OSXCC)
 		FLEX = $(OSXFLEX)
 		BISON = $(OSXBISON)
@@ -37,7 +36,9 @@ scanner: scanner.l
 parser:
 	$(TEMP_FOLDER)
 	$(BISON) -d -o temp/parser.tab.c parser.y
+package:
+	tar cvzf $(ETAPA_ATUAL).tgz extra.c main.c scanner.l parser.y Makefile
 clean:
 	rm -rf obj
 	rm -rf temp
-	rm -f parser	
+	rm -f parser
