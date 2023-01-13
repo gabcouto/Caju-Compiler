@@ -89,8 +89,7 @@ multidimensional_local: TK_IDENTIFICADOR;
 /*
 	Atribuição local
 */
-atribuicao_local: TK_IDENTIFICADOR  lista_de_identificadores '=' expressao;
-lista_de_identificadores: TK_IDENTIFICADOR lista_de_expressoes;
+atribuicao_local: TK_IDENTIFICADOR  lista_de_expressoes '=' expressao ';';
 lista_de_expressoes: '[' expressao lista_de_expressoes_;
 lista_de_expressoes_: '^' expressao lista_de_expressoes_;
 lista_de_expressoes_: ']';
@@ -99,8 +98,8 @@ lista_de_expressoes: ;
 /*
 	Chamada de Função
 */
-chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao |  ')'; 
-lista_expressoes_funcao: expressao ',' lista_expressoes_funcao;
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao |  ')' ';'; 
+lista_expressoes_funcao: lista_expressoes_funcao ',' expressao;
 lista_expressoes_funcao: expressao;
 
 /*
