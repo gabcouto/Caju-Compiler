@@ -1,4 +1,4 @@
-/* Gabriel Couto & Felippo Stédile */
+/* Gabriel Couto & Felippo Stédile: Dupla  */
 
 %{
 

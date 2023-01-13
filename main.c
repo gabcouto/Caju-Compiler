@@ -1,3 +1,4 @@
+/* Gabriel Couto & Felippo Stédile: Dupla */
 /*
 Função principal para realização da análise sintática.
 

@@ -1,3 +1,4 @@
+/*Gabriel Couto & Felippo Stédile: Dupla */
 // funcoes auxiliares
 
 extern int yylineno;

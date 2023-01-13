@@ -1,3 +1,5 @@
+/* Gabriel Couto & Felippo Stédile: Dupla */
+
 %{
 	#include <stdio.h>
 	int yylex(void);

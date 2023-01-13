@@ -1,3 +1,4 @@
+# Gabriel Couto & Felippo Stédile: Dupla 
 ETAPA_ATUAL = etapa2
 OUT = parser
 LINUXCC  = gcc
