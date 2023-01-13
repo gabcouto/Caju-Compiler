@@ -1,5 +1,6 @@
 # Gabriel Couto & Felippo Stédile: Dupla 
 ETAPA_ATUAL = etapa2
+FILES_TO_TAR = extra.c main.c scanner.l parser.y Makefile
 OUT = parser
 LINUXCC  = gcc
 LINUXFLEX = flex
@@ -38,8 +39,9 @@ parser:
 	$(TEMP_FOLDER)
 	$(BISON) -d -o temp/parser.tab.c parser.y
 package:
-	tar cvzf $(ETAPA_ATUAL).tgz extra.c main.c scanner.l parser.y Makefile
+	tar cvzf $(ETAPA_ATUAL).tgz $(FILES_TO_TAR)
 clean:
 	rm -rf obj
 	rm -rf temp
 	rm -f parser
+	rm -f *.tgz
