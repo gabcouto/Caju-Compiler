@@ -125,6 +125,8 @@ comandos_simples: '}';
 	fiz recursões a direita, n sei se tem problema, e n sei como garantir precedência 
  	mas a declaração dos operadores ta na ordem certa pra n precisar ficar consultando a tabela
 */
+
+
 expressao: operandos;
 expressao: '(' expressao ')';
 expressao: operadores_pre expressao;
@@ -134,14 +136,13 @@ operandos: multidimensional;
 operandos: literal;
 operandos: chamada_funcao;
 
-operadores_pre: '-' | '!' | ;
+operadores_pre: '-' | '!';
 operadores: '*' | '/' | '%';
 operadores: '+' | '-';
 operadores: '<' | '>' | TK_OC_LE | TK_OC_GE;
 operadores: TK_OC_EQ | TK_OC_NE;
 operadores: TK_OC_AND;
 operadores: TK_OC_OR;
-
 
 
 tipo: TK_PR_INT;
@@ -155,10 +156,6 @@ literal: TK_LIT_CHAR;
 
 %%
 void yyerror(const char *mensagem){
-	printf("Erro Sintático: [%s] na linha %d", mensagem, 0);
+	printf("Erro Sintático: [%s] na linha %d\n", mensagem, 0);
 	return;
-}
-int main()
-{
-	yyparse();
 }
