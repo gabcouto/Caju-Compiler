@@ -50,9 +50,9 @@ lista_de_elementos: declaracao;
 declaracao: tipo lista_de_nome_de_variaveis ';';
 lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional;
 lista_de_nome_de_variaveis: multidimensional;
-multidimensional: TK_IDENTIFICADOR '[' lista_literais;
-lista_literais: TK_LIT_INT '^' lista_literais; 
-lista_literais: TK_LIT_INT ']';
+multidimensional: TK_IDENTIFICADOR '[' lista_literais ']';
+lista_literais: lista_literais '^' TK_LIT_INT;
+lista_literais: TK_LIT_INT;
 multidimensional: TK_IDENTIFICADOR;
 
 /*
