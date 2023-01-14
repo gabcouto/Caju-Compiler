@@ -39,7 +39,7 @@ espaco [ \t\r]
 <barrabarra>.* {};
 <barrabarra>\n { ++line_number; BEGIN(INITIAL);}
 
-[,;:(){}+\-*/%^<>=!] { return yytext[0]; }
+[,;:(){}+\-*/%^<>=!\[\]] { return yytext[0]; }
 
 "<="   { return TK_OC_LE; }
 ">="   { return TK_OC_GE; }
