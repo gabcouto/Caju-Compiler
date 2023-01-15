@@ -7,6 +7,7 @@
 %}
 
 %define parse.error verbose
+%define parse.trace
 
 %token TK_PR_INT
 %token TK_IDENTIFICADOR
