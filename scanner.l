@@ -49,8 +49,8 @@ espaco [ \t\r]
 "||"    { return TK_OC_OR; }
 
 [a-zA-Z]+ { return TK_IDENTIFICADOR; }
-[\-|+]?[0-9]+ { return TK_LIT_INT; }
-[\-|+]?[0-9]+\.([0-9]+E)?[0-9]+ { return TK_LIT_FLOAT; }
+[0-9]+ { return TK_LIT_INT; }
+[0-9]+\.([0-9]+E)?[0-9]+ { return TK_LIT_FLOAT; }
 '[^'\n]' { return TK_LIT_CHAR; } 
 
 "/*"         BEGIN(comment);

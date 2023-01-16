@@ -2,6 +2,7 @@
 
 %{
 	#include <stdio.h>
+	extern int yylineno;
 	int yylex(void);
 	void yyerror(const char *);
 %}
@@ -99,7 +100,8 @@ lista_de_expressoes: ;
 /*
 	Chamada de Função
 */
-chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao |  ')' ';'; 
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' ';';
+chamada_funcao: TK_IDENTIFICADOR  '(' ')' ';'; 
 lista_expressoes_funcao: lista_expressoes_funcao ',' expressao;
 lista_expressoes_funcao: expressao;
 
@@ -128,14 +130,47 @@ comandos_simples: '}';
  	mas a declaração dos operadores ta na ordem certa pra n precisar ficar consultando a tabela
 */
 
+/* 8*3+7+5*4  */
+/* 
+	Tem que ser alternação
+	a
+	a+a;
+	a+a+a;
 
-expressao: operandos;
+	e nunca:
+	+;
+	+a;
+	a+;
+	a+a+;
+	+a+a;
+	+a+a+;
+	+a+a+a;
+	
+
+ */
+
+/*
+	Recursão esquerda (comentado)
+
+	expressao: '(' expressao ')';
+	expressao: operandos;
+	expressao: operadores_pre operandos_;
+	expressao: expressao operadores operandos_;
+	expressao: expressao operadores operadores_pre operandos_;
+	operandos_: operandos;
+	operandos_: '(' operandos_ ')';
+*/
+
 expressao: '(' expressao ')';
-expressao: operadores_pre expressao;
-expressao: expressao operadores expressao;
+expressao: operandos;
+expressao: operadores_pre operandos_;
+expressao: operandos_ operadores expressao;
+expressao: operadores_pre operandos_ operadores expressao;
+operandos_: operandos;
+operandos_: '(' operandos_ ')';
 
-operandos: multidimensional;
 operandos: literal;
+operandos: multidimensional;
 operandos: chamada_funcao;
 
 operadores_pre: '-' | '!';
@@ -158,6 +193,6 @@ literal: TK_LIT_CHAR;
 
 %%
 void yyerror(const char *mensagem){
-	printf("Erro Sintático: [%s] na linha %d\n", mensagem, 0);
+	printf("Erro Sintático: [%s] na linha %d\n", mensagem, yylineno);
 	return;
 }
