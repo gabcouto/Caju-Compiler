@@ -67,7 +67,7 @@ lista_parametros: ')';
 bloco_comandos: '{' comandos_simples;
 comandos_simples: declaracao_local comandos_simples;
 comandos_simples: atribuicao_local comandos_simples;
-comandos_simples: chamada_funcao comandos_simples;
+comandos_simples: chamada_funcao ';' comandos_simples;
 comandos_simples: chamada_retorno comandos_simples;
 comandos_simples: chamada_ctrl_fluxo comandos_simples;
 
@@ -100,15 +100,15 @@ lista_de_expressoes: ;
 /*
 	Chamada de Função
 */
-chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' ';';
-chamada_funcao: TK_IDENTIFICADOR  '(' ')' ';'; 
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')';
+chamada_funcao: TK_IDENTIFICADOR  '(' ')'; 
 lista_expressoes_funcao: lista_expressoes_funcao ',' expressao;
 lista_expressoes_funcao: expressao;
 
 /*
 	Chamada de retorno
 */
-chamada_retorno: TK_PR_RETURN expressao;
+chamada_retorno: TK_PR_RETURN expressao ';';
 
 /*
 	Controle de Fluxo
