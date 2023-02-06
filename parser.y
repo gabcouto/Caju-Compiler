@@ -124,7 +124,7 @@ operandos: literal;
 operandos: multidimensional;
 operandos: chamada_funcao;
 
-
+/*
 expressao: operandos;
 expressao: operadores_pre operandos_;
 expressao: operandos_ operadores expressao;
@@ -139,13 +139,13 @@ operadores: '<' | '>' | TK_OC_LE | TK_OC_GE;
 operadores: TK_OC_EQ | TK_OC_NE;
 operadores: TK_OC_AND;
 operadores: TK_OC_OR;
-
+*/
 /*
 E: E+T | T;
 T: T*F | F;
 F: (E) | id;
 
-
+*/
 
 op0: '-' | '!' ;
 op1: '*' | '/' | '%';
@@ -155,17 +155,15 @@ op4: TK_OC_EQ | TK_OC_NE;
 op5: TK_OC_AND;
 op6: TK_OC_OR;
 
-
-expressao: expressao op6 exp1;
+expressao: expressao op6 exp1 | exp1;
 exp1: exp1 op5 exp2 | exp2;
 exp2: exp2 op4 exp3 | exp3;
 exp3: exp3 op3 exp4 | exp4;
 exp4: exp4 op2 exp5 | exp5:
 exp5: exp5 op1 exp6 | exp6;
-exp6: '(' expressao ')';
-exp6: op0 expressao;
-exp6: operandos;
-*/
+exp6: op0 exp6 | exp7;
+exp7: '(' exp7 ')' | operandos;
+
 
 
 tipo: TK_PR_INT;
