@@ -60,41 +60,35 @@ multidimensional: TK_IDENTIFICADOR;
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros bloco_comandos;
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos;
 lista_parametros: tipo TK_IDENTIFICADOR ',' lista_parametros;
-lista_parametros: tipo TK_IDENTIFICADOR ')';
-lista_parametros: ')';
-bloco_comandos: '{' comandos_simples;
-comandos_simples: declaracao_local comandos_simples;
-comandos_simples: atribuicao_local comandos_simples;
-comandos_simples: chamada_funcao ';' comandos_simples;
-comandos_simples: chamada_retorno comandos_simples;
-comandos_simples: chamada_ctrl_fluxo comandos_simples;
+lista_parametros: tipo TK_IDENTIFICADOR ;
+bloco_comandos: '{' lista_comandos_simples '}';
+lista_comandos_simples: comandos_simples ';' lista_comandos_simples;
+lista_comandos_simples: comandos_simples;
+comandos_simples: declaracao_local;
+comandos_simples: atribuicao_local;
+comandos_simples: chamada_funcao;
+comandos_simples: chamada_retorno;
+comandos_simples: chamada_ctrl_fluxo;
+comandos_simples: bloco_comandos;
 
 /*
 	Declaração de Variável Local
 */
 declaracao_local: tipo lista_de_nome_de_variaveis_locais ';';
-lista_de_nome_de_variaveis_locais: lista_de_nome_de_variaveis_locais ',' multidimensional_local;
-lista_de_nome_de_variaveis_locais: multidimensional_local;
-multidimensional_local: TK_IDENTIFICADOR '[' lista_literais_locais;
-lista_literais_locais: TK_LIT_INT '^' lista_literais_locais;
-lista_literais_locais: TK_LIT_INT ']';
-
-/* Não estou fazendo inicialização de variáveis multidimensionais, por não saber como fazer ou se é para fazer.
-	Por exemplo: int mediaAlunos[2][3] = 0;
-*/
-
-multidimensional_local: TK_IDENTIFICADOR TK_OC_LE literal;
-multidimensional_local: TK_IDENTIFICADOR;
+lista_de_nome_de_variaveis_locais: lista_de_nome_de_variaveis_locais ',' variavel_local;
+lista_de_nome_de_variaveis_locais: variavel_local;
+variavel_local: TK_IDENTIFICADOR TK_OC_LE literal;
+variavel_local: TK_IDENTIFICADOR;
 
 /*
 	Atribuição local
 */
 atribuicao_local: TK_IDENTIFICADOR  lista_de_expressoes '=' expressao ';';
-lista_de_expressoes: '[' expressao lista_de_expressoes_;
-lista_de_expressoes_: '^' expressao lista_de_expressoes_;
-lista_de_expressoes_: ']';
+lista_de_expressoes: '[' lista_de_expressoes_ expressao']';
+lista_de_expressoes_: lista_de_expressoes_ expressao '^';
+lista_de_expressoes_: ;
 lista_de_expressoes: ;
 
 /*
@@ -102,7 +96,7 @@ lista_de_expressoes: ;
 */
 chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')';
 chamada_funcao: TK_IDENTIFICADOR  '(' ')'; 
-lista_expressoes_funcao: lista_expressoes_funcao ',' expressao;
+lista_expressoes_funcao: expressao ',' lista_expressoes_funcao;
 lista_expressoes_funcao: expressao;
 
 /*
@@ -121,57 +115,22 @@ cond_else: ;
 
 
 
-comandos_simples: '}';
-
 /*
 	Expressão
 
-	fiz recursões a direita, n sei se tem problema, e n sei como garantir precedência 
- 	mas a declaração dos operadores ta na ordem certa pra n precisar ficar consultando a tabela
 */
 
-/* 8*3+7+5*4  */
-/* 
-	Tem que ser alternação
-	a
-	a+a;
-	a+a+a;
+operandos: literal;
+operandos: multidimensional;
+operandos: chamada_funcao;
 
-	e nunca:
-	+;
-	+a;
-	a+;
-	a+a+;
-	+a+a;
-	+a+a+;
-	+a+a+a;
-	
 
- */
-
-/*
-	Recursão esquerda (comentado)
-
-	expressao: '(' expressao ')';
-	expressao: operandos;
-	expressao: operadores_pre operandos_;
-	expressao: expressao operadores operandos_;
-	expressao: expressao operadores operadores_pre operandos_;
-	operandos_: operandos;
-	operandos_: '(' operandos_ ')';
-*/
-
-expressao: '(' expressao ')';
 expressao: operandos;
 expressao: operadores_pre operandos_;
 expressao: operandos_ operadores expressao;
 expressao: operadores_pre operandos_ operadores expressao;
 operandos_: operandos;
 operandos_: '(' operandos_ ')';
-
-operandos: literal;
-operandos: multidimensional;
-operandos: chamada_funcao;
 
 operadores_pre: '-' | '!';
 operadores: '*' | '/' | '%';
@@ -180,6 +139,33 @@ operadores: '<' | '>' | TK_OC_LE | TK_OC_GE;
 operadores: TK_OC_EQ | TK_OC_NE;
 operadores: TK_OC_AND;
 operadores: TK_OC_OR;
+
+/*
+E: E+T | T;
+T: T*F | F;
+F: (E) | id;
+
+
+
+op0: '-' | '!' ;
+op1: '*' | '/' | '%';
+op2: '+' | '-';
+op3: '<' | '>' | TK_OC_LE | TK_OC_GE;
+op4: TK_OC_EQ | TK_OC_NE;
+op5: TK_OC_AND;
+op6: TK_OC_OR;
+
+
+expressao: expressao op6 exp1;
+exp1: exp1 op5 exp2 | exp2;
+exp2: exp2 op4 exp3 | exp3;
+exp3: exp3 op3 exp4 | exp4;
+exp4: exp4 op2 exp5 | exp5:
+exp5: exp5 op1 exp6 | exp6;
+exp6: '(' expressao ')';
+exp6: op0 expressao;
+exp6: operandos;
+*/
 
 
 tipo: TK_PR_INT;
