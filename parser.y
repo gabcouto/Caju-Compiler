@@ -159,10 +159,10 @@ expressao: expressao op6 exp1 | exp1;
 exp1: exp1 op5 exp2 | exp2;
 exp2: exp2 op4 exp3 | exp3;
 exp3: exp3 op3 exp4 | exp4;
-exp4: exp4 op2 exp5 | exp5:
+exp4: exp4 op2 exp5 | exp5;
 exp5: exp5 op1 exp6 | exp6;
 exp6: op0 exp6 | exp7;
-exp7: '(' exp7 ')' | operandos;
+exp7: '(' expressao ')' | operandos;
 
 
 
