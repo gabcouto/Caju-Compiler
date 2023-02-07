@@ -62,10 +62,10 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $3); add_child($$, $4); add_child($$, $5); add_child($$, $6);};
+cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);};
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node(LISTA_PARAMETROS, ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
 lista_parametros: tipo IDENTIFICADOR {add_child($$, $1); add_child($$, $2);};
-bloco_comandos: '{' lista_comandos_simples '}' {add_child($$, $1); add_child($$, $2); add_child($$, $3);}; ///////////////bloco de comandos n entra? ou entra
+bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;}; ///////////////bloco de comandos n entra? ou entra
 lista_comandos_simples: comandos_simples ';' lista_comandos_simples {$$ = create_node(LISTA_COMM, ";"); add_child($$, $1), add_child($$, $3);};
 lista_comandos_simples: comandos_simples {$$=$1;};
 comandos_simples: declaracao_local {$$=$1;};
@@ -99,8 +99,8 @@ lista_de_expressoes: ;
 /*
 	Chamada de Função
 */
-chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node(CHAMA_FUNCAO, $1); add_child($$, $2); add_child($$, $3); add_child($$, $4);};
-chamada_funcao: IDENTIFICADOR  '(' ')' {$$ = create_node(CHAMA_FUNCAO, $1); add_child($$, $2); add_child($$, $3);}; 
+chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node(CHAMA_FUNCAO, $1); add_child($$, $3);};
+chamada_funcao: IDENTIFICADOR  '(' ')' {$$ = create_node(CHAMA_FUNCAO, $1);}; 
 lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = create_node(LISTA_FUNCT, ","); add_child($$, $3);};
 lista_expressoes_funcao: expressao {$$ = $1;};
 
@@ -112,11 +112,11 @@ chamada_retorno: TK_PR_RETURN expressao ';' {$$ = create_node_from_token(TK_PR_R
 /*
 	Controle de Fluxo
 */
-chamada_ctrl_fluxo: ctrl_condicional;// {$$ = $1;};
-chamada_ctrl_fluxo: ctrl_repeticao;// {$$ = $1;};
-ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos;// {$$ = create_node_from_token(TK_PR_WHILE, $1); add_child($$, $2); add_child($$, $3); add_child($$, $4); add_child($$, $5); };
-ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else;// {$$ = create_node_from_token(TK_PR_IF, $1); add_child($$, $2); add_child($$, $3); add_child($$, $4); add_child($$, $5); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
-cond_else: TK_PR_ELSE bloco_comandos;// {$$ = create_node_from_token(TK_PR_ELSE, $1); add_child($$, $2); };
+chamada_ctrl_fluxo: ctrl_condicional {$$ = $1;};
+chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1;};
+ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node_from_token(TK_PR_WHILE, $1); add_child($$, $3); add_child($$, $5); };
+ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node_from_token(TK_PR_IF, $1); add_child($$, $3); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
+cond_else: TK_PR_ELSE bloco_comandos {$$ = create_node_from_token(TK_PR_ELSE, $1); add_child($$, $2); };
 cond_else: ;
 
 
