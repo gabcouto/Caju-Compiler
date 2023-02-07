@@ -48,10 +48,10 @@ espaco [ \t\r]
 "&&"  { return TK_OC_AND; }
 "||"    { return TK_OC_OR; }
 
-[a-zA-Z]+ { return TK_IDENTIFICADOR; }
-[0-9]+ { return TK_LIT_INT; }
-[0-9]+\.([0-9]+E)?[0-9]+ { return TK_LIT_FLOAT; }
-'[^'\n]' { return TK_LIT_CHAR; } 
+[a-zA-Z]+ { yylval.valor_lexico = create_valor (); return TK_IDENTIFICADOR; }
+[0-9]+ { yylval.valor_lexico = create_valor (); return TK_LIT_INT; } //////////////////////////
+[0-9]+\.([0-9]+E)?[0-9]+ { yylval.valor_lexico = create_valor (); return TK_LIT_FLOAT; } ////////////////////
+'[^'\n]' { yylval.valor_lexico = create_valor (); return TK_LIT_CHAR; } ////////////////////////
 
 "/*"         BEGIN(comment);
 
