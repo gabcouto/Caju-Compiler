@@ -13,6 +13,11 @@ int line_number = 1;
 %x comment
 %x barrabarra
 %option yylineno
+
+%union {
+	valor_lexico_t valor_lexico;	
+}
+
 espaco [ \t\r]
 
 %%

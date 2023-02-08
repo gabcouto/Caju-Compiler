@@ -12,6 +12,24 @@ int get_line_number() {
 	return yylineno;
 }
 
+enum token_type {caractere_especial, palavra_reservada, operador_composto, identificador, literal};
+
+union Valor {
+	int inteiro;
+	float flutuante;
+	char caractere;
+	int booleano;
+	char cadeia[80];
+};
+
+typedef struct valor_lexico_t
+{
+	int line_no;
+	token_type tipo;
+	union Valor valor;
+
+} Valor_lexico_t;
+
 typedef struct node
 {
 	char name[60];
