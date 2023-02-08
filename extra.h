@@ -8,13 +8,13 @@ union Valor {
 	float flutuante;
 	char caractere;
 	int booleano;
-	char cadeia[80];
+	char *cadeia;
 };
 
 typedef struct valor_lexico_t
 {
 	int line_no;
-	token_type tipo;
+	enum token_type tipo;
 	union Valor valor;
 
 } Valor_lexico_t;

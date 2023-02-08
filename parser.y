@@ -13,7 +13,7 @@
 
 %union {
 	Valor_lexico_t valor_lexico;
-	node Node;
+	Node node;
 }
 
 //////////////////////////////////////////////////////////
