@@ -47,7 +47,11 @@ void print_tree(Node* node)
 	if(node != NULL)
 	{
 		print_tree(node->firstChild);
+		if(node->firstChild != NULL)
+			printf("%p, %p", node, node->firstChild);
 		print_tree(node->nextSibling);
+		if(node->nextSibling != NULL)
+			printf("%p, %p", node, node->nextSibling);
 		printf("%p [label=\"%s\"]\n", node, node->label);
 	}	
 

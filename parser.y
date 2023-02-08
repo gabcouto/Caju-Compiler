@@ -2,7 +2,7 @@
 
 %{
 	#include <stdio.h>
-	#include "extra.h"
+	#include "../extra.h"
 	extern int yylineno;
 	int yylex(void);
 	void yyerror(const char *);
