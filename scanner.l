@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include "parser.tab.h"
+#include "extra.h"
 int line_number = 1;
 
 %}
