@@ -13,7 +13,7 @@
 
 %union {
 	Valor_lexico_t valor_lexico;
-	Node node;
+	Node *node;
 }
 
 //////////////////////////////////////////////////////////
@@ -29,19 +29,19 @@
 %token <valor_lexico> TK_PR_OUTPUT
 %token <valor_lexico> TK_PR_RETURN
 %token <valor_lexico> TK_PR_FOR
-%token <int> TK_LIT_FALSE
-%token <int> TK_LIT_TRUE
+%token <valor_lexico> TK_PR_BOOL
 %token <valor_lexico> TK_OC_LE
 %token <valor_lexico> TK_OC_GE
 %token <valor_lexico> TK_OC_EQ
 %token <valor_lexico> TK_OC_NE
 %token <valor_lexico> TK_OC_AND
 %token <valor_lexico> TK_OC_OR
-%token <int> TK_LIT_INT
-%token <float> TK_LIT_FLOAT
-%token <char> TK_LIT_CHAR
+%token <valor_lexico> TK_LIT_FALSE
+%token <valor_lexico> TK_LIT_TRUE
+%token <valor_lexico> TK_LIT_INT
+%token <valor_lexico> TK_LIT_FLOAT
+%token <valor_lexico> TK_LIT_CHAR
 %token TK_ERRO
-%token <valor_lexico> TK_PR_BOOL
 
 %type<node> IDENTIFICADOR literal tipo
 %type<node> operandos expressao
@@ -74,8 +74,8 @@ declaracao: tipo lista_de_nome_de_variaveis;
 lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional;
 lista_de_nome_de_variaveis: multidimensional;
 multidimensional: IDENTIFICADOR '[' lista_literais ']';
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, $1);};
-lista_literais: TK_LIT_INT {$$ = create_node_from_token(TK_LIT_INT, $1);};
+lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
+lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1);};
 multidimensional: IDENTIFICADOR;// {$$ = $1;};
 
 /*
@@ -100,7 +100,7 @@ comandos_simples: bloco_comandos {$$=$1;};
 declaracao_local: tipo lista_de_nome_de_variaveis_locais ';' {add_child($$, $1); add_child($$, $2);};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node("LISTA_VAR_LOCAL", ","); add_child($$, $1); add_child($$, $3);};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
-variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node_from_token(TK_OC_LE, $2); add_child($$, $3); };
+variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); add_child($$, $3); };
 variavel_local: IDENTIFICADOR {$$=$1;}; 
 
 /*
@@ -118,24 +118,24 @@ lista_de_expressoes: {};
 /*
 	Chamada de Função
 */
-chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node("CHAMA_FUNCAO", $1); add_child($$, $3);};
-chamada_funcao: IDENTIFICADOR  '(' ')' {$$ = create_node("CHAMA_FUNCAO", $1);}; 
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node_from_token("CHAMA_FUNCAO", $1); add_child($$, $3);};
+chamada_funcao: TK_IDENTIFICADOR  '(' ')' {$$ = create_node_from_token("CHAMA_FUNCAO", $1);}; 
 lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = create_node("LISTA_FUNCT", ","); add_child($$, $3);};
 lista_expressoes_funcao: expressao {$$ = $1;};
 
 /*
 	Chamada de retorno
 */
-chamada_retorno: TK_PR_RETURN expressao ';' {$$ = create_node_from_token(TK_PR_RETURN, $1); add_child($$, $2); };
+chamada_retorno: TK_PR_RETURN expressao ';' {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); };
 
 /*
 	Controle de Fluxo
 */
 chamada_ctrl_fluxo: ctrl_condicional {$$ = $1;};
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1;};
-ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node_from_token(TK_PR_WHILE, $1); add_child($$, $3); add_child($$, $5); };
-ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node_from_token(TK_PR_IF, $1); add_child($$, $3); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
-cond_else: TK_PR_ELSE bloco_comandos {$$ = create_node_from_token(TK_PR_ELSE, $1); add_child($$, $2); };
+ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3); add_child($$, $5); };
+ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
+cond_else: TK_PR_ELSE bloco_comandos {$$ = create_node("TK_PR_ELSE", "else"); add_child($$, $2); };
 cond_else: {};
 
 
@@ -149,20 +149,20 @@ operandos: literal { $$ = $1; } ;
 operandos: multidimensional { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
-expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", TK_OC_OR );  add_child($$, $1);  add_child($$, $3); }; 
+expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", "||" );  add_child($$, $1);  add_child($$, $3); }; 
 expressao: exp1 { $$ = $1; } ;
 
-exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", TK_OC_AND );  add_child($$, $1);  add_child($$, $3); };
+exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", "&&" );  add_child($$, $1);  add_child($$, $3); };
 exp1: exp2  { $$ = $1; } ;
 
-exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", TK_OC_EQ );  add_child($$, $1);  add_child($$, $3); };
-exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", TK_OC_NE );  add_child($$, $1);  add_child($$, $3); };
+exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", "==" );  add_child($$, $1);  add_child($$, $3); };
+exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", "!=" );  add_child($$, $1);  add_child($$, $3); };
 exp2: exp3 { $$ = $1; } ;
 
 exp3: exp3 '<' exp4 {$$ = create_node("LT", "<" );  add_child($$, $1);  add_child($$, $3); };
 exp3: exp3 '>' exp4 {$$ = create_node("GT", ">" );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", TK_OC_LE );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", TK_OC_GE );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", "<=" );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", ">=" );  add_child($$, $1);  add_child($$, $3); };
 exp3: exp4 { $$ = $1; } ;
 
 
@@ -184,14 +184,14 @@ exp7: operandos { $$ = $1; } ;
 
 
 ////////////////////////////////////////////////////////////////////////////
-tipo: TK_PR_INT {$$ = create_node_from_token(TK_PR_INT, $1);};
-tipo: TK_PR_FLOAT {$$ = create_node_from_token(TK_PR_FLOAT, $1);};
-tipo: TK_PR_CHAR {$$ = create_node_from_token(TK_PR_CHAR, $1);};
-tipo: TK_PR_BOOL {$$ = create_node_from_token(TK_PR_BOOL, $1);};
-literal: TK_LIT_INT {$$ = create_node_from_token(TK_LIT_INT, $1); } ;
-literal: TK_LIT_FLOAT {$$ = create_node_from_token(TK_LIT_FLOAT, $1); } ;
-literal: TK_LIT_CHAR {$$ = create_node_from_token(TK_LIT_CHAR, $1);}; 
-IDENTIFICADOR: TK_IDENTIFICADOR { $$ = create_node_from_token(TK_IDENTIFICADOR, $1); };
+tipo: TK_PR_INT {$$ = create_node_from_token("TK_PR_INT", $1);};
+tipo: TK_PR_FLOAT {$$ = create_node_from_token("TK_PR_FLOAT", $1);};
+tipo: TK_PR_CHAR {$$ = create_node_from_token("TK_PR_CHAR", $1);};
+tipo: TK_PR_BOOL {$$ = create_node_from_token("TK_PR_BOOL", $1);};
+literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); } ;
+literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); } ;
+literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);}; 
+IDENTIFICADOR: TK_IDENTIFICADOR { $$ = create_node_from_token("TK_IDENTIFICADOR", $1);};
 
 
 %%

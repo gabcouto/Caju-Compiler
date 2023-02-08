@@ -13,7 +13,7 @@ int get_line_number() {
 	return yylineno;
 }
 
-Node create_node(char* name, char* label)
+Node* create_node(char* name, char* label)
 {
 	Node myNode;
 	strcpy(myNode.name, name);
@@ -22,20 +22,26 @@ Node create_node(char* name, char* label)
 	myNode.firstChild = NULL;
 	myNode.nextSibling = NULL;
 
-	return myNode;
+	return &myNode;
 }
 
-Node create_node_from_token(char* name, Node *node)
+Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 {
+		
+
 	Node myNode;	
 	strcpy(myNode.name, name);
-	strcpy(myNode.label, node.label);
-	
-	
-	myNode.firstChild = node.firstChild;
-	myNode.nextSibling = node.nestSibling;
+	if(valor_lexico.genero == 0)
+		strcpy(myNode.label, valor_lexico.valor.cadeia);
+	else if(valor_lexico.genero == 1)
+		sprintf(myNode.label, "%d", valor_lexico.valor.inteiro);
+	else if(valor_lexico.genero == 2)
+		sprintf(myNode.label, "%f", valor_lexico.valor.flutuante);
 
-	return myNode;
+	myNode.firstChild = NULL;
+	myNode.nextSibling = NULL;
+
+	return &myNode;
 }
 
 void add_child(Node *parentNode, Node *childNode)

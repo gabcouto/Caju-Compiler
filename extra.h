@@ -15,6 +15,7 @@ typedef struct valor_lexico_t
 {
 	int line_no;
 	enum token_type tipo;
+	int genero;
 	union Valor valor;
 
 } Valor_lexico_t;
@@ -27,9 +28,9 @@ typedef struct node
 	struct node *nextSibling;
 } Node;
 
-Node create_node(char* name, char* label);
+Node * create_node(char* name, char* label);
 
-Node create_node_from_token(char* name, Node *node);
+Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico);
 
 void add_child(Node *parentNode, Node *childNode);
 
