@@ -61,10 +61,10 @@
 
 %%
 
-programa: lista_de_elementos {if($1!=NULL){$$ = create_node(FUNCAO, $1);}};
+programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1);}};
 programa: {};
 lista_de_elementos: cabecalho_funcao lista_de_elementos {add_child($$, $1); add_child($$, $2);};
-lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node(LISTA_ELEMENTOS, ";"); add_child($$, $1); add_child($$, $3);}; 
+lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node("LISTA_ELEMENTOS", ";"); add_child($$, $1); add_child($$, $3);}; 
 lista_de_elementos: cabecalho_funcao {$$=$1;};
 lista_de_elementos: declaracao; // {$$=$1;};
 /*
@@ -74,7 +74,7 @@ declaracao: tipo lista_de_nome_de_variaveis;
 lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional;
 lista_de_nome_de_variaveis: multidimensional;
 multidimensional: IDENTIFICADOR '[' lista_literais ']';
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node(LISTA_LIT, "^"); add_child($$, $1);};
+lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, $1);};
 lista_literais: TK_LIT_INT {$$ = create_node_from_token(TK_LIT_INT, $1);};
 multidimensional: IDENTIFICADOR;// {$$ = $1;};
 
@@ -82,10 +82,10 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 	Definição de Função
 */
 cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);};
-lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node(LISTA_PARAMETROS, ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
+lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
 lista_parametros: tipo IDENTIFICADOR {add_child($$, $1); add_child($$, $2);};
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;}; ///////////////bloco de comandos n entra? ou entra
-lista_comandos_simples: comandos_simples ';' lista_comandos_simples {$$ = create_node(LISTA_COMM, ";"); add_child($$, $1), add_child($$, $3);};
+lista_comandos_simples: comandos_simples ';' lista_comandos_simples {$$ = create_node("LISTA_COMM", ";"); add_child($$, $1), add_child($$, $3);};
 lista_comandos_simples: comandos_simples {$$=$1;};
 comandos_simples: declaracao_local {$$=$1;};
 comandos_simples: atribuicao_local {$$=$1;};
@@ -98,7 +98,7 @@ comandos_simples: bloco_comandos {$$=$1;};
 	Declaração de Variável Local
 */
 declaracao_local: tipo lista_de_nome_de_variaveis_locais ';' {add_child($$, $1); add_child($$, $2);};
-lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node(LISTA_VAR_LOCAL, ","); add_child($$, $1); add_child($$, $3);};
+lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node("LISTA_VAR_LOCAL", ","); add_child($$, $1); add_child($$, $3);};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node_from_token(TK_OC_LE, $2); add_child($$, $3); };
 variavel_local: IDENTIFICADOR {$$=$1;}; 
@@ -107,20 +107,20 @@ variavel_local: IDENTIFICADOR {$$=$1;};
 	Atribuição local
 */
 ///////////////////////////////////////////////////////
-atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao ';' {$$ = create_node(ATRIBUICAO, "="); 
-if ($2!= NULL) { $2 = create_node(ARRANJO, "[]"); add_child($2, $1); add_child($$, $2); } // talvez inverter os add child n lembro
+atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao ';' {$$ = create_node("ATRIBUICAO", "="); 
+if ($2!= NULL) { $2 = create_node("ARRANJO", "[]"); add_child($2, $1); add_child($$, $2); } // talvez inverter os add child n lembro
 else { add_child($$, $1);} add_child($$, $4);};
-lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { if ($2!= NULL) {$$ = create_node(LISTA_EXP, "^"); add_child($$, $2);} add_child($$, $3); };
-lista_de_expressoes_: lista_de_expressoes_ expressao '^' {$$ = create_node(LISTA_EXP, "^"); if ($1!=NULL) {add_child($$, $1);} add_child($$, $2); };
+lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { if ($2!= NULL) {$$ = create_node("LISTA_EXP", "^"); add_child($$, $2);} add_child($$, $3); };
+lista_de_expressoes_: lista_de_expressoes_ expressao '^' {$$ = create_node("LISTA_EXP", "^"); if ($1!=NULL) {add_child($$, $1);} add_child($$, $2); };
 lista_de_expressoes_: {};
 lista_de_expressoes: {};
 
 /*
 	Chamada de Função
 */
-chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node(CHAMA_FUNCAO, $1); add_child($$, $3);};
-chamada_funcao: IDENTIFICADOR  '(' ')' {$$ = create_node(CHAMA_FUNCAO, $1);}; 
-lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = create_node(LISTA_FUNCT, ","); add_child($$, $3);};
+chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node("CHAMA_FUNCAO", $1); add_child($$, $3);};
+chamada_funcao: IDENTIFICADOR  '(' ')' {$$ = create_node("CHAMA_FUNCAO", $1);}; 
+lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = create_node("LISTA_FUNCT", ","); add_child($$, $3);};
 lista_expressoes_funcao: expressao {$$ = $1;};
 
 /*
@@ -149,37 +149,37 @@ operandos: literal { $$ = $1; } ;
 operandos: multidimensional { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
-expressao: expressao TK_OC_OR exp1 {$$ = create_node(OR, TK_OC_OR );  add_child($$, $1);  add_child($$, $3); }; 
+expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", TK_OC_OR );  add_child($$, $1);  add_child($$, $3); }; 
 expressao: exp1 { $$ = $1; } ;
 
-exp1: exp1 TK_OC_AND exp2 {$$ = create_node(AND, TK_OC_AND );  add_child($$, $1);  add_child($$, $3); };
+exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", TK_OC_AND );  add_child($$, $1);  add_child($$, $3); };
 exp1: exp2  { $$ = $1; } ;
 
-exp2: exp2 TK_OC_EQ exp3 {$$ = create_node(EQ, TK_OC_EQ );  add_child($$, $1);  add_child($$, $3); };
-exp2: exp2 TK_OC_NE exp3 {$$ = create_node(NE, TK_OC_NE );  add_child($$, $1);  add_child($$, $3); };
+exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", TK_OC_EQ );  add_child($$, $1);  add_child($$, $3); };
+exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", TK_OC_NE );  add_child($$, $1);  add_child($$, $3); };
 exp2: exp3 { $$ = $1; } ;
 
-exp3: exp3 '<' exp4 {$$ = create_node(LT, "<" );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 '>' exp4 {$$ = create_node(GT, ">" );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_LE exp4 {$$ = create_node(LE, TK_OC_LE );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_GE exp4 {$$ = create_node(GE, TK_OC_GE );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 '<' exp4 {$$ = create_node("LT", "<" );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 '>' exp4 {$$ = create_node("GT", ">" );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", TK_OC_LE );  add_child($$, $1);  add_child($$, $3); };
+exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", TK_OC_GE );  add_child($$, $1);  add_child($$, $3); };
 exp3: exp4 { $$ = $1; } ;
 
 
-exp4: exp4 '+' exp5 {$$ = create_node(SOMA, "+" );  add_child($$, $1);  add_child($$, $3); };
-exp4: exp4 '-' exp5 {$$ = create_node(SUB, "-" );  add_child($$, $1);  add_child($$, $3); };
+exp4: exp4 '+' exp5 {$$ = create_node("SOMA", "+" );  add_child($$, $1);  add_child($$, $3); };
+exp4: exp4 '-' exp5 {$$ = create_node("SUB", "-" );  add_child($$, $1);  add_child($$, $3); };
 exp4: exp5 { $$ = $1; } ;
 
-exp5: exp5 '*' exp6 {$$ = create_node(MULT, "*" );  add_child($$, $1);  add_child($$, $3); } ;
-exp5: exp5 '/' exp6 {$$ = create_node(DIV, "/" );  add_child($$, $1);  add_child($$, $3); } ;
-exp5: exp5 '%' exp6 {$$ = create_node(RESTO, "%" );  add_child($$, $1);  add_child($$, $3); } ;
+exp5: exp5 '*' exp6 {$$ = create_node("MULT", "*" );  add_child($$, $1);  add_child($$, $3); } ;
+exp5: exp5 '/' exp6 {$$ = create_node("DIV", "/" );  add_child($$, $1);  add_child($$, $3); } ;
+exp5: exp5 '%' exp6 {$$ = create_node("RESTO", "%" );  add_child($$, $1);  add_child($$, $3); } ;
 exp5: exp6 { $$ = $1; } ;
 
-exp6: '-' exp7 { $$ = create_node(SUB_UNARIO, "-"); add_child($$, $2); } ;
-exp6: '!' exp7 { $$ = create_node(NOT, "!"); add_child($$, $2); } ;
+exp6: '-' exp7 { $$ = create_node("SUB_UNARIO", "-"); add_child($$, $2); } ;
+exp6: '!' exp7 { $$ = create_node("NOT", "!"); add_child($$, $2); } ;
 exp6: exp7 { $$ = $1; } ;
 
-exp7: '(' expressao ')' { $$ = create_node(PARENTESES, "()"); add_child($$, $2);};
+exp7: '(' expressao ')' { $$ = create_node("PARENTESES", "()"); add_child($$, $2);};
 exp7: operandos { $$ = $1; } ;
 
 

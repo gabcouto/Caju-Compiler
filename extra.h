@@ -29,6 +29,8 @@ typedef struct node
 
 Node create_node(char* name, char* label);
 
+Node create_node_from_token(char* name, Node *node);
+
 void add_child(Node *parentNode, Node *childNode);
 
 void print_tree(Node* node);

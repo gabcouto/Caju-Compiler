@@ -25,6 +25,19 @@ Node create_node(char* name, char* label)
 	return myNode;
 }
 
+Node create_node_from_token(char* name, Node *node)
+{
+	Node myNode;	
+	strcpy(myNode.name, name);
+	strcpy(myNode.label, node.label);
+	
+	
+	myNode.firstChild = node.firstChild;
+	myNode.nextSibling = node.nestSibling;
+
+	return myNode;
+}
+
 void add_child(Node *parentNode, Node *childNode)
 {
 	if(parentNode->firstChild == NULL)
