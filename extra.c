@@ -43,6 +43,8 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 	myNode->firstChild = NULL;
 	myNode->nextSibling = NULL;
 
+
+	print_tree(myNode);
 	return myNode;
 }
 

@@ -55,7 +55,7 @@
 %type<node> lista_literais lista_de_nome_de_variaveis lista_de_elementos lista_parametros lista_comandos_simples lista_de_nome_de_variaveis_locais lista_de_expressoes lista_de_expressoes_ lista_expressoes_funcao
 
 
-
+/////////////////////////// vazio de {} para {$$=NULL}?
 
 %start programa
 
@@ -63,7 +63,7 @@
 
 programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1);}};
 programa: {};
-lista_de_elementos: cabecalho_funcao lista_de_elementos {add_child($$, $1); add_child($$, $2);};
+lista_de_elementos: cabecalho_funcao lista_de_elementos { $$=create_node("funcoes", "}"); add_child($$, $1); add_child($$, $2);}; //////////////////////////////createnode?
 lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node("LISTA_ELEMENTOS", ";"); add_child($$, $1); add_child($$, $3);}; 
 lista_de_elementos: cabecalho_funcao {$$=$1;};
 lista_de_elementos: declaracao; // {$$=$1;};
@@ -81,12 +81,13 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);};
-cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $5);};
+
+cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node("cabecafunct", "cab"); add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);}; /////////////////////////////createnode?
+cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node("cabecafunct", "cab"); add_child($$, $1); add_child($$, $2); if($5!=NULL){add_child($$, $5);}}; //////////////////createnode?
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
-lista_parametros: tipo IDENTIFICADOR {add_child($$, $1); add_child($$, $2);};
+lista_parametros: tipo IDENTIFICADOR { $$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2);};///////////////////////createnode?
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;};
-bloco_comandos: '{' '}' {};
+bloco_comandos: '{' '}' {$$=NULL;};
 lista_comandos_simples: comandos_simples ';' lista_comandos_simples {$$ = create_node("LISTA_COMM", ";"); add_child($$, $1), add_child($$, $3);};
 lista_comandos_simples: comandos_simples {$$=$1;};
 comandos_simples: declaracao_local {$$=$1;};
