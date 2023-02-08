@@ -82,9 +82,11 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 	Definição de Função
 */
 cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);};
+cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {add_child($$, $1); add_child($$, $2); add_child($$, $5);};
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
 lista_parametros: tipo IDENTIFICADOR {add_child($$, $1); add_child($$, $2);};
-bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;}; ///////////////bloco de comandos n entra? ou entra
+bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;};
+bloco_comandos: '{' '}' {};
 lista_comandos_simples: comandos_simples ';' lista_comandos_simples {$$ = create_node("LISTA_COMM", ";"); add_child($$, $1), add_child($$, $3);};
 lista_comandos_simples: comandos_simples {$$=$1;};
 comandos_simples: declaracao_local {$$=$1;};
