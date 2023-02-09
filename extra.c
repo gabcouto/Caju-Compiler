@@ -13,16 +13,34 @@ int get_line_number() {
 	return yylineno;
 }
 
-Node* create_node(char* name, char* label)
+void print_node(Node *node){
+
+printf("Entrei na print NODO\n");
+
+	if(node != NULL)
+	{
+		printf("aponto: %p\n", node);
+		printf("meu endereço: %p\n", &node);
+		printf("%s\n %s\n %p\n %p\n", node->name, node->label, node->firstChild, node->nextSibling);
+	}	
+
+
+}
+
+Node * create_node(char* name, char* label)
 {
 	printf("Entrei na Create Node\n");	
 
 	Node *myNode;
+	myNode = (Node*) malloc (sizeof(Node));
 	strcpy(myNode->name, name);
 	strcpy(myNode->label, label);
 	
+	//print_node(myNode);
+	
 	myNode->firstChild = NULL;
 	myNode->nextSibling = NULL;
+
 
 	return myNode;
 }
@@ -31,7 +49,9 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 {
 		printf("Entrei na Create Node from Token\n");
 
-	Node *myNode;	
+	Node *myNode;
+	myNode = (Node*) malloc (sizeof(Node));
+	//printf("AQUIIIII ENDEREÇOOOO %p\n", myNode);
 	strcpy(myNode->name, name);
 	if(valor_lexico.genero == 0)
 		strcpy(myNode->label, valor_lexico.valor.cadeia);
@@ -39,6 +59,8 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 		sprintf(myNode->label, "%d", valor_lexico.valor.inteiro);
 	else if(valor_lexico.genero == 2)
 		sprintf(myNode->label, "%f", valor_lexico.valor.flutuante);
+
+	//print_node(myNode);
 
 	myNode->firstChild = NULL;
 	myNode->nextSibling = NULL;
@@ -50,6 +72,9 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 
 void add_child(Node *parentNode, Node *childNode)
 {
+
+//print_node(parentNode);
+//print_node(childNode);
 
 printf("Entrei na Add Child\n");
 	if(parentNode->firstChild == NULL)
@@ -73,12 +98,14 @@ printf("Entrei na printf TReee\n");
 
 	if(node != NULL)
 	{
-		print_tree(node->firstChild);
-		if(node->firstChild != NULL)
-			printf("%p, %p", node, node->firstChild);
-		print_tree(node->nextSibling);
-		if(node->nextSibling != NULL)
-			printf("%p, %p", node, node->nextSibling);
+		if(node->firstChild != NULL){
+			print_tree(node->firstChild);
+			//printf("%p, %p", node, node->firstChild);
+			}
+		if(node->nextSibling != NULL){
+			print_tree(node->nextSibling);
+			//printf("%p, %p", node, node->nextSibling);
+			}
 		printf("%p [label=\"%s\"]\n", node, node->label);
 	}	
 
