@@ -4,6 +4,7 @@
 	#include <stdio.h>
 	#include "../extra.h"
 	extern int yylineno;
+	extern void *arvore;
 	int yylex(void);
 	void yyerror(const char *);
 %}
@@ -61,7 +62,7 @@
 
 %%
 
-programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1);}};
+programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1); arvore = $$; }};
 programa: {};
 lista_de_elementos: cabecalho_funcao lista_de_elementos { $$=create_node("funcoes", "}"); add_child($$, $1); add_child($$, $2);}; //////////////////////////////createnode?
 lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node("LISTA_ELEMENTOS", ";"); add_child($$, $1); add_child($$, $3);}; 

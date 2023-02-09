@@ -112,6 +112,17 @@ printf("Entrei na printf TReee\n");
 
 }
 
+void exporta(void *arvore)
+{
+       print_tree((Node*) arvore);
+}
+
+void libera(void *arvore)
+{
+       exclude_node((Node*) arvore);
+}
+
+
 void exclude_node(Node* node)
 {
 
