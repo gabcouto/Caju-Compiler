@@ -8,6 +8,10 @@
 
 extern int yylineno;
 
+Node *irmao = NULL;
+Node *irmao2= NULL;
+Node *filho = NULL;
+
 int get_line_number() {
 
 	return yylineno;
@@ -15,13 +19,15 @@ int get_line_number() {
 
 void print_node(Node *node){
 
-printf("Entrei na print NODO\n");
+	printf("Entrei na print NODO\n");
 
 	if(node != NULL)
 	{
-		printf("aponto: %p\n", node);
-		printf("meu endereço: %p\n", &node);
-		printf("%s\n %s\n %p\n %p\n", node->name, node->label, node->firstChild, node->nextSibling);
+		printf("eu estou em: %p\n", node);
+		printf("%s\n %s\n %p\n %p\n",
+		node->name, node->label, node->firstChild, node->nextSibling);
+		printf("endereço do meu filho: %p\n", node->firstChild);
+		printf("endereço do meu irmao: %p\n", node->nextSibling);
 	}	
 
 
@@ -29,8 +35,8 @@ printf("Entrei na print NODO\n");
 
 Node * create_node(char* name, char* label)
 {
-	printf("Entrei na Create Node\n");	
-
+	//printf("Entrei na Create Node\n");	
+	irmao = NULL;
 	Node *myNode;
 	myNode = (Node*) malloc (sizeof(Node));
 	strcpy(myNode->name, name);
@@ -39,19 +45,20 @@ Node * create_node(char* name, char* label)
 	//print_node(myNode);
 	
 	myNode->firstChild = NULL;
+	if(irmao2!=NULL) irmao2->nextSibling = myNode;
+	else irmao2 = myNode;
+	
 	myNode->nextSibling = NULL;
-
-
+	
 	return myNode;
 }
 
 Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 {
-		printf("Entrei na Create Node from Token\n");
-
+	printf("Entrei na Create Node from Token\n");
+	irmao2= NULL;
 	Node *myNode;
 	myNode = (Node*) malloc (sizeof(Node));
-	//printf("AQUIIIII ENDEREÇOOOO %p\n", myNode);
 	strcpy(myNode->name, name);
 	if(valor_lexico.genero == 0)
 		strcpy(myNode->label, valor_lexico.valor.cadeia);
@@ -59,36 +66,50 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 		sprintf(myNode->label, "%d", valor_lexico.valor.inteiro);
 	else if(valor_lexico.genero == 2)
 		sprintf(myNode->label, "%f", valor_lexico.valor.flutuante);
-
+		
 	//print_node(myNode);
-
+	
 	myNode->firstChild = NULL;
+	if(irmao!=NULL) irmao->nextSibling = myNode;
+	else irmao = myNode;
+	
 	myNode->nextSibling = NULL;
 
-
-	print_tree(myNode);
+	//print_tree(myNode);
 	return myNode;
 }
 
 void add_child(Node *parentNode, Node *childNode)
 {
 
-//print_node(parentNode);
-//print_node(childNode);
-
+irmao = NULL;
 printf("Entrei na Add Child\n");
-	if(parentNode->firstChild == NULL)
+/*
+printf("PAI\n");
+print_node(parentNode);
+printf("\nFILHO\n");
+print_node(childNode);
+*/
+	if(parentNode->firstChild == NULL){
 		parentNode->firstChild = childNode;
-	else if(parentNode->nextSibling == NULL)
-		parentNode->nextSibling = childNode;
+		//printf("\nPAI\n");
+		//print_node(parentNode);
+		}
 	else
 	{
-		Node *nextNode = parentNode;
+		Node *nextNode = parentNode->firstChild;
 		while(nextNode->nextSibling != NULL)
 			nextNode = nextNode->nextSibling;
 		nextNode->nextSibling = childNode;
 		// memory release?
 	}
+	
+	print_node(parentNode);
+	print_node(parentNode->nextSibling);
+	print_node(childNode);
+	
+	
+	//print_tree(parentNode);
 }
 
 
@@ -103,7 +124,7 @@ printf("Entrei na printf TReee\n");
 			//printf("%p, %p", node, node->firstChild);
 			}
 		if(node->nextSibling != NULL){
-			print_tree(node->nextSibling);
+			if (node->nextSibling!=node) print_tree(node->nextSibling);
 			//printf("%p, %p", node, node->nextSibling);
 			}
 		printf("%p [label=\"%s\"]\n", node, node->label);
