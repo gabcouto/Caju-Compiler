@@ -83,8 +83,8 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 	Definição de Função
 */
 
-cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node("cabecafunct", "cab"); add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);}; /////////////////////////////createnode?
-cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node("cabecafunct", "cab"); add_child($$, $1); add_child($$, $2); if($5!=NULL){add_child($$, $5);}}; //////////////////createnode?
+cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node("cabecafunct", "Funcao"); add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);}; /////////////////////////////createnode?
+cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node("cabecafunct", "Funcao"); add_child($$, $1); add_child($$, $2); if($5!=NULL){add_child($$, $5);}}; //////////////////createnode?
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
 lista_parametros: tipo IDENTIFICADOR { $$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2);};///////////////////////createnode?
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;};
