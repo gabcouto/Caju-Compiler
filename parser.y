@@ -63,7 +63,7 @@
 %%
 
 programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1); arvore = $$; }};
-programa: {};
+programa: {$$=NULL;};
 lista_de_elementos: cabecalho_funcao lista_de_elementos { $$=create_node("funcoes", "}"); add_child($$, $1); add_child($$, $2);}; //////////////////////////////createnode?
 lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node("LISTA_ELEMENTOS", ";"); add_child($$, $1); add_child($$, $3);}; 
 lista_de_elementos: cabecalho_funcao {$$=$1;};
@@ -101,7 +101,7 @@ comandos_simples: bloco_comandos {$$=$1;};
 /*
 	Declaração de Variável Local
 */
-declaracao_local: tipo lista_de_nome_de_variaveis_locais ';' {add_child($$, $1); add_child($$, $2);};
+declaracao_local: tipo lista_de_nome_de_variaveis_locais {add_child($$, $1); add_child($$, $2);};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node("LISTA_VAR_LOCAL", ","); add_child($$, $1); add_child($$, $3);};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); add_child($$, $3); };
@@ -111,13 +111,13 @@ variavel_local: IDENTIFICADOR {$$=$1;};
 	Atribuição local
 */
 ///////////////////////////////////////////////////////
-atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao ';' {$$ = create_node("ATRIBUICAO", "="); 
+atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao {$$ = create_node("ATRIBUICAO", "="); 
 if ($2!= NULL) { $2 = create_node("ARRANJO", "[]"); add_child($2, $1); add_child($$, $2); } // talvez inverter os add child n lembro
 else { add_child($$, $1);} add_child($$, $4);};
 lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { if ($2!= NULL) {$$ = create_node("LISTA_EXP", "^"); add_child($$, $2);} add_child($$, $3); };
 lista_de_expressoes_: lista_de_expressoes_ expressao '^' {$$ = create_node("LISTA_EXP", "^"); if ($1!=NULL) {add_child($$, $1);} add_child($$, $2); };
-lista_de_expressoes_: {};
-lista_de_expressoes: {};
+lista_de_expressoes_: {$$=NULL;};
+lista_de_expressoes: {$$=NULL;};
 
 /*
 	Chamada de Função
@@ -130,7 +130,7 @@ lista_expressoes_funcao: expressao {$$ = $1;};
 /*
 	Chamada de retorno
 */
-chamada_retorno: TK_PR_RETURN expressao ';' {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); };
+chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); };
 
 /*
 	Controle de Fluxo
@@ -140,7 +140,7 @@ chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1;};
 ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3); add_child($$, $5); };
 ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
 cond_else: TK_PR_ELSE bloco_comandos {$$ = create_node("TK_PR_ELSE", "else"); add_child($$, $2); };
-cond_else: {};
+cond_else: {$$=NULL;};
 
 
 
