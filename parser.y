@@ -64,10 +64,10 @@
 
 programa: lista_de_elementos {if($1!=NULL){$$ = create_node("FUNCAO", "ROOT"); add_child($$, $1); arvore = $$; }};
 programa: {$$=NULL;};
-lista_de_elementos: cabecalho_funcao lista_de_elementos { $$=create_node("funcoes", "}"); add_child($$, $1); add_child($$, $2);}; //////////////////////////////createnode?
-lista_de_elementos: declaracao ';' lista_de_elementos;// {$$ = create_node("LISTA_ELEMENTOS", ";"); add_child($$, $1); add_child($$, $3);}; 
+lista_de_elementos: cabecalho_funcao lista_de_elementos { if($2!=NULL) add_child($$, $2);};
+lista_de_elementos: declaracao ';' lista_de_elementos {$$ = $3;}; 
 lista_de_elementos: cabecalho_funcao {$$=$1;};
-lista_de_elementos: declaracao; // {$$=$1;};
+lista_de_elementos: declaracao {$$=NULL;};
 /*
 	Declaração de Variáveis Globais
 */
@@ -83,8 +83,8 @@ multidimensional: IDENTIFICADOR;// {$$ = $1;};
 	Definição de Função
 */
 
-cabecalho_funcao: tipo IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node("cabecafunct", "Funcao"); add_child($$, $1); add_child($$, $2); add_child($$, $4); add_child($$, $6);}; /////////////////////////////createnode?
-cabecalho_funcao: tipo IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node("cabecafunct", "Funcao"); add_child($$, $1); add_child($$, $2); if($5!=NULL){add_child($$, $5);}}; //////////////////createnode?
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); add_child($$, $1); add_child($$, $4); add_child($$, $6);}; /////////////////////////////createnode?
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); add_child($$, $1); if($5!=NULL){add_child($$, $5);}}; //////////////////createnode?
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2); add_child($$, $4);};
 lista_parametros: tipo IDENTIFICADOR { $$ = create_node("LISTA_PARAMETROS", ","); add_child($$, $1); add_child($$, $2);};///////////////////////createnode?
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2;};
@@ -101,11 +101,12 @@ comandos_simples: bloco_comandos {$$=$1;};
 /*
 	Declaração de Variável Local
 */
-declaracao_local: tipo lista_de_nome_de_variaveis_locais {add_child($$, $2);};
-lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node("LISTA_VAR_LOCAL", ","); add_child($$, $1); add_child($$, $3);};
+declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2;};
+lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais 
+{if($1 != NULL) if ($3 != NULL){ add_child($1, $3); $$=$1;} else $$=$1; else $$=$3;};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); add_child($$, $3); };
-variavel_local: IDENTIFICADOR {$$=$1;}; 
+variavel_local: IDENTIFICADOR {$$=NULL;}; 
 
 /*
 	Atribuição local
