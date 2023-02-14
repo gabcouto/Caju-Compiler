@@ -50,7 +50,14 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 	myNode = (Node*) malloc (sizeof(Node));
 	strcpy(myNode->name, name);
 	if(valor_lexico.genero == 0)
-		strcpy(myNode->label, valor_lexico.valor.cadeia);
+		if(strcmp("CHAMA_FUNCAO", name) == 0)
+		{
+			char fcall[100] = "call ";
+			strcat(fcall, valor_lexico.valor.cadeia);
+			strcpy(myNode->label, fcall);
+		}
+		else
+			strcpy(myNode->label, valor_lexico.valor.cadeia);
 	else if(valor_lexico.genero == 1)
 		sprintf(myNode->label, "%d", valor_lexico.valor.inteiro);
 	else if(valor_lexico.genero == 2)
