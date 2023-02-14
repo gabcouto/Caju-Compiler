@@ -101,7 +101,7 @@ comandos_simples: bloco_comandos {$$=$1;};
 /*
 	Declaração de Variável Local
 */
-declaracao_local: tipo lista_de_nome_de_variaveis_locais {add_child($$, $1); add_child($$, $2);};
+declaracao_local: tipo lista_de_nome_de_variaveis_locais {add_child($$, $2);};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais {$$ = create_node("LISTA_VAR_LOCAL", ","); add_child($$, $1); add_child($$, $3);};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); add_child($$, $3); };
