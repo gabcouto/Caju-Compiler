@@ -85,8 +85,8 @@ void add_child(Node *parentNode, Node *childNode)
 		// memory release?
 	}
 
-	printf("Vou printar com nó pai: %s\n", parentNode->name);
-	print_tree(parentNode);
+	//printf("Vou printar com nó pai: %s\n", parentNode->name);
+	//print_tree(parentNode);
 }
 
 
@@ -121,7 +121,7 @@ void libera(void *arvore)
 void exclude_node(Node* node)
 {
 
-printf("Entrei na exclude node\n");
+	//printf("Entrei na exclude node\n");
 	// When removing a node, we remove and release it and its children recursively.
 	if(node != NULL)
 	{
