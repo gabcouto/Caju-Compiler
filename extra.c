@@ -109,18 +109,19 @@ void print_tree(Node* node)
 
 void print_parentship(Node* node)
 {
-	if(node->firstChild != NULL)
-	{
-		printf("%p, %p\n", node, node->firstChild);
-	}
 	Node *nextNode = node->firstChild;
-	while(nextNode->nextSibling != NULL)
+	if(nextNode != NULL)
 	{
-		print_parentship(node->firstChild);
-		printf("%p, %p\n", node, nextNode->nextSibling);
-		nextNode = nextNode->nextSibling;
-	}
+		printf("%p, %p\n", node, nextNode);
+		print_parentship(nextNode);
 	
+		while(nextNode->nextSibling != NULL)
+		{
+			printf("%p, %p\n", node, nextNode->nextSibling);
+			nextNode = nextNode->nextSibling;
+		}
+	
+	}
 }
 
 void exporta(void *arvore)
