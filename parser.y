@@ -113,9 +113,9 @@ variavel_local: IDENTIFICADOR {$$=NULL;};
 */
 ///////////////////////////////////////////////////////
 atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao {$$ = create_node("ATRIBUICAO", "="); 
-if ($2!= NULL) { $2 = create_node("ARRANJO", "[]"); add_child($2, $1); add_child($$, $2); } // talvez inverter os add child n lembro
+if ($2!= NULL) { add_child($2, $1); add_child($$, $2); } // talvez inverter os add child n lembro
 else { add_child($$, $1);} add_child($$, $4);};
-lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { if ($2!= NULL) {$$ = create_node("LISTA_EXP", "^"); add_child($$, $2);} add_child($$, $3); };
+lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { $$ = create_node("ARRANJO", "[]");  if ($2!= NULL) { add_child($$, $2);} add_child($$, $3); };
 lista_de_expressoes_: lista_de_expressoes_ expressao '^' {$$ = create_node("LISTA_EXP", "^"); if ($1!=NULL) {add_child($$, $1);} add_child($$, $2); };
 lista_de_expressoes_: {$$=NULL;};
 lista_de_expressoes: {$$=NULL;};

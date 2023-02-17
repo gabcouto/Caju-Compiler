@@ -20,7 +20,7 @@ void libera (void *arvore);
 
 int main (int argc, char **argv)
 {
-  yydebug = 1;
+  //yydebug = 1;
   int ret = yyparse(); 
   exporta (arvore);
   libera(arvore);
