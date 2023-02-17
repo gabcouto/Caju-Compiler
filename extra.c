@@ -114,11 +114,11 @@ void print_parentship(Node* node)
 	{
 		printf("%p, %p\n", node, nextNode);
 		print_parentship(nextNode);
-	
 		while(nextNode->nextSibling != NULL)
 		{
 			printf("%p, %p\n", node, nextNode->nextSibling);
 			nextNode = nextNode->nextSibling;
+			print_parentship(nextNode);		
 		}
 	
 	}
