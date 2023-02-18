@@ -14,6 +14,10 @@
 
 enum token_type {caractere_especial, palavra_reservada, operador_composto, identificador, literal};
 
+enum Natureza {Literal, Variavel, Arranjo, Funcao};
+
+enum Tipo {inteiro, flutuante, booleano, caractere};
+
 union Valor {
 	int inteiro;
 	float flutuante;
@@ -35,13 +39,10 @@ typedef struct node
 {
 	char name[60];
 	char label[60];
+	enum Tipo tipo;
 	struct node *firstChild;
 	struct node *nextSibling;
 } Node;
-
-enum Natureza {Literal, Variavel, Arranjo, Funcao};
-
-enum Tipo {inteiro, flutuante, booleano, caractere};
 
 typedef struct location
 {
