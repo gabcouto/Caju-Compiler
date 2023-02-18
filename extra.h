@@ -1,6 +1,17 @@
 #ifndef EXTRA_H_
 #define EXTRA_H_
 
+#define ERR_UNDECLARED 10 //2.2
+#define ERR_DECLARED 11 //2.2
+#define ERR_VARIABLE 20 //2.3
+#define ERR_ARRAY 21 //2.3
+#define ERR_FUNCTION 22 //2.3
+#define ERR_CHAR_TO_INT 31 //2.4
+#define ERR_CHAR_TO_FLOAT 32 //2.4
+#define ERR_CHAR_TO_BOOL 33 //2.4
+#define ERR_CHAR_VECTOR 34 //2.4
+#define ERR_X_TO_CHAR 35 //2.4
+
 enum token_type {caractere_especial, palavra_reservada, operador_composto, identificador, literal};
 
 union Valor {
@@ -27,6 +38,49 @@ typedef struct node
 	struct node *firstChild;
 	struct node *nextSibling;
 } Node;
+
+enum Natureza {Literal, Variavel, Arranjo, Funcao};
+
+enum Tipo {inteiro, flutuante, booleano, caractere};
+
+typedef struct location
+{
+	int linha;
+	int coluna;
+} Location;
+
+typedef struct content
+{
+	struct location localizacao;
+	enum Natureza natureza;
+	enum Tipo tipo;
+	int tamanho;
+	int dados;
+	int outros;
+} Content;
+
+typedef struct tabela
+{
+	int chave;
+	struct content conteudo;
+	struct tabela *nextElement;
+
+} Tabela;
+
+typedef struct pilha
+{
+	struct pilha *top;
+	struct tabela *elemento_pilha;
+} Pilha;
+
+
+Pilha * create_stack(Tabela* tabela);
+
+Pilha * top_stack(Pilha* pilha);
+
+void push_stack(Tabela* tabela, Pilha* pilha);
+
+Pilha* pop_stack(Pilha* pilha);
 
 Node * create_node(char* name, char* label);
 

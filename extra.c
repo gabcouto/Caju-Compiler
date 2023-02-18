@@ -14,6 +14,52 @@ int get_line_number() {
 	return yylineno;
 }
 
+Pilha * create_stack(Tabela* tabela)
+{
+	Pilha *myStack;
+	myStack = (Pilha*) malloc (sizeof(Pilha));
+	
+	myStack->top = NULL;
+	myStack->elemento_pilha = tabela;
+
+	return myStack;
+}
+
+void push_stack(Tabela* tabela, Pilha* pilha)
+{
+	Pilha *newStackElement;
+	newStackElement = (Pilha*) malloc (sizeof(Pilha));
+
+	Pilha *topo = top_stack(pilha);
+
+	newStackElement->elemento_pilha = tabela;
+	newStackElement->top = NULL;
+
+	topo->top = newStackElement;
+
+}
+
+Pilha* top_stack(Pilha* pilha)
+{
+	Pilha *myStack = pilha;
+	while(myStack->top != NULL)
+		myStack = myStack->top;
+	
+	return myStack;
+}
+
+Pilha* pop_stack(Pilha* pilha)
+{
+	Pilha *myStack = pilha, *eliminado;
+	while(myStack->top->top != NULL)
+		myStack = myStack->top;
+
+	eliminado = myStack->top;
+	myStack->top = NULL;
+
+	return eliminado;
+}
+
 void print_node(Node *node){
 
 	//printf("Entrei na print NODO\n");
