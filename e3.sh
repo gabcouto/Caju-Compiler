@@ -6,4 +6,6 @@ rm -f temp1.dot
 rm -f temp.dot
 mv temp1.dot temp.dot
 xdot temp.dot &
-xdot tests/$1.ref.dot
+xdot tests/$1.ref.dot &
+cat tests/$1
+echo
