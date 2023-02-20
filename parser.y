@@ -71,13 +71,13 @@ lista_de_elementos: declaracao {$$=NULL;};
 /*
 	Declaração de Variáveis Globais
 */
-declaracao: tipo lista_de_nome_de_variaveis;
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional;
-lista_de_nome_de_variaveis: multidimensional;
-multidimensional: IDENTIFICADOR '[' lista_literais ']';
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
-lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1);};
-multidimensional: IDENTIFICADOR;// {$$ = $1;};
+declaracao: tipo lista_de_nome_de_variaveis {$$=NULL;};
+lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=NULL;};
+lista_de_nome_de_variaveis: multidimensional {$$=NULL;};
+multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL;};
+lista_literais: TK_LIT_INT '^' lista_literais {$$=NULL;};//{$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
+lista_literais: TK_LIT_INT {$$=NULL;};//{$$ = create_node_from_token("TK_LIT_INT", $1);};
+multidimensional: IDENTIFICADOR {$$=NULL;};// {$$ = $1;};
 
 /*
 	Definição de Função
@@ -102,12 +102,13 @@ comandos_simples: bloco_comandos {$$=$1;};
 /*
 	Declaração de Variável Local
 */
+
 declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2;};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais 
 {if($1 != NULL) if ($3 != NULL){ $$=$1; add_child($$, $3);} else $$=$1; else $$=$3;};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1;};
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); add_child($$, $3); };
-variavel_local: IDENTIFICADOR {$$=NULL;}; 
+variavel_local: IDENTIFICADOR {$$=NULL;};
 
 /*
 	Atribuição local
@@ -141,7 +142,7 @@ chamada_ctrl_fluxo: ctrl_condicional {$$ = $1;};
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1;};
 ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3); add_child($$, $5); };
 ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3); add_child($$, $6); if($7 != NULL){add_child($$, $7);} };
-cond_else: TK_PR_ELSE bloco_comandos {$$ = create_node("TK_PR_ELSE", "else"); add_child($$, $2); };
+cond_else: TK_PR_ELSE bloco_comandos {$$ = $2; };
 cond_else: {$$=NULL;};
 
 
