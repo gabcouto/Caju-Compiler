@@ -184,23 +184,16 @@ void libera(void *arvore)
 
 void exclude_node(Node* node)
 {
-
-	//printf("Entrei na exclude node\n");
-	// When removing a node, we remove and release it and its children recursively.
 	if(node != NULL)
 	{
-		exclude_node(node->firstChild);
-		exclude_node(node->nextSibling);		
-
-		/*
-		Reavaliar a liberação de memória.
-
-
-		free(node->name);
-		free(node->label);
+		if(node->firstChild != NULL){
+			exclude_node(node->firstChild);
+			}
+		if(node->nextSibling != NULL){
+			exclude_node(node->nextSibling);
+		}
 		free(node);
-		*/		
-	}	
+	}		
 }
 
 
