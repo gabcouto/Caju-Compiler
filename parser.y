@@ -77,7 +77,7 @@ lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=
 lista_de_nome_de_variaveis: multidimensional {$$=NULL;};
 multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL;};
 lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); free($1.valor.cadeia); add_child($$, $3); };
-lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); free($1.valor.cadeia);};
+lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); };
 multidimensional: IDENTIFICADOR {$$ = $1; };
 
 /*
@@ -195,7 +195,7 @@ tipo: TK_PR_INT {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_toke
 tipo: TK_PR_FLOAT {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);} ;
 tipo: TK_PR_CHAR {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);} ;
 tipo: TK_PR_BOOL {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);} ;
-literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); free($1.valor.cadeia); } ;
+literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); } ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); free($1.valor.cadeia); } ;
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1); free($1.valor.cadeia); }; 
 IDENTIFICADOR: TK_IDENTIFICADOR { $$ = create_node_from_token("TK_IDENTIFICADOR", $1); free($1.valor.cadeia); };
