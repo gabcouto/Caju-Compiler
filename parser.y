@@ -1,3 +1,4 @@
+
 /* Gabriel Couto & Felippo Stédile: Dupla */
 
 %{
@@ -106,7 +107,7 @@ declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2; };
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais 
 {if($1 != NULL) if ($3 != NULL){ $$=$1;  add_child($$, $3); } else {$$=$1; } else { $$=$3; }};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1; };
-variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1);  add_child($$, $3); };
+variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); free($2.valor.cadeia); add_child($$, $3); };
 variavel_local: IDENTIFICADOR {$$=NULL;}; 
 
 /*
@@ -132,16 +133,16 @@ lista_expressoes_funcao: expressao {$$ = $1; };
 /*
 	Chamada de retorno
 */
-chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); };
+chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); free($1.valor.cadeia); };
 
 /*
 	Controle de Fluxo
 */
 chamada_ctrl_fluxo: ctrl_condicional {$$ = $1; };
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1; };
-ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3);  add_child($$, $5); };
-ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3);  add_child($$, $6);  if($7 != NULL){add_child($$, $7); } };
-cond_else: TK_PR_ELSE bloco_comandos {$$ = $2; };
+ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3); free($1.valor.cadeia); add_child($$, $5); };
+ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3);  add_child($$, $6); free($1.valor.cadeia);free($5.valor.cadeia); if($7 != NULL){add_child($$, $7); } };
+cond_else: TK_PR_ELSE bloco_comandos {$$ = $2; free($1.valor.cadeia);};
 cond_else: {$$=NULL;};
 
 
@@ -155,20 +156,20 @@ operandos: literal { $$ = $1; } ;
 operandos: multidimensional { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
-expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", "||" );  add_child($$, $1);   add_child($$, $3);  }; 
+expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", "||" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3);  }; 
 expressao: exp1 { $$ = $1; } ;
 
-exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", "&&" );  add_child($$, $1);  add_child($$, $3);  };
+exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", "&&" );  add_child($$, $1); free($2.valor.cadeia); add_child($$, $3);  };
 exp1: exp2  { $$ = $1; } ;
 
-exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", "==" );  add_child($$, $1);  add_child($$, $3); };
-exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", "!=" );  add_child($$, $1);  add_child($$, $3); };
+exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", "==" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3); };
+exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", "!=" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3); };
 exp2: exp3 { $$ = $1; } ;
 
 exp3: exp3 '<' exp4 {$$ = create_node("LT", "<" );  add_child($$, $1);   add_child($$, $3); };
 exp3: exp3 '>' exp4 {$$ = create_node("GT", ">" );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", "<=" );  add_child($$, $1);   add_child($$, $3);  };
-exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", ">=" );  add_child($$, $1);  add_child($$, $3);  };
+exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", "<=" );  add_child($$, $1);  free($2.valor.cadeia); add_child($$, $3);  };
+exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", ">=" );  add_child($$, $1);  free($2.valor.cadeia); add_child($$, $3);  };
 exp3: exp4 { $$ = $1;  } ;
 
 
@@ -190,7 +191,7 @@ exp7: operandos { $$ = $1; } ;
 
 
 ////////////////////////////////////////////////////////////////////////////
-tipo: TK_PR_INT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_INT", $1);};
+tipo: TK_PR_INT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_INT", $1); free($1.valor.cadeia);};
 tipo: TK_PR_FLOAT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);};
 tipo: TK_PR_CHAR {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);};
 tipo: TK_PR_BOOL {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);};
