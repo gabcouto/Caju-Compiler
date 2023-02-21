@@ -192,9 +192,9 @@ exp7: operandos { $$ = $1; } ;
 
 ////////////////////////////////////////////////////////////////////////////
 tipo: TK_PR_INT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_INT", $1); free($1.valor.cadeia);};
-tipo: TK_PR_FLOAT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);};
-tipo: TK_PR_CHAR {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);};
-tipo: TK_PR_BOOL {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);};
+tipo: TK_PR_FLOAT {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1); free($1.valor.cadeia);};
+tipo: TK_PR_CHAR {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_CHAR", $1); free($1.valor.cadeia);};
+tipo: TK_PR_BOOL {$$=NULL;}; //{$$ = create_node_from_token("TK_PR_BOOL", $1); free($1.valor.cadeia);};
 literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); free($1.valor.cadeia); } ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); free($1.valor.cadeia); } ;
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1); free($1.valor.cadeia); }; 
