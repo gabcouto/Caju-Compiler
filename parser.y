@@ -65,7 +65,7 @@
 
 programa: lista_de_elementos {if($1!=NULL){$$=$1;  arvore = $$; }};
 programa: {$$=NULL;};
-lista_de_elementos: cabecalho_funcao lista_de_elementos { if($2!=NULL) {add_child($$, $2); printf("Não era null\n"); } else {$$=$1; printf("Era null mesmo.\n"); }};
+lista_de_elementos: cabecalho_funcao lista_de_elementos { if($2!=NULL) {add_child($$, $2); } else {$$=$1; }};
 lista_de_elementos: declaracao ';' lista_de_elementos {$$ = $3; };
 lista_de_elementos: cabecalho_funcao {$$=$1; };
 lista_de_elementos: declaracao ';'{$$=NULL;};
