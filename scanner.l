@@ -41,7 +41,7 @@ espaco [ \t\r]
 <barrabarra>.* {};
 <barrabarra>\n { ++line_number; BEGIN(INITIAL);}
 
-[,;:(){}+\-*/%^<>=!\[\]] { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = caractere_especial; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return yytext[0]; }
+[,;:(){}+\-*/%^<>=!\[\]] { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = caractere_especial; yylval.valor_lexico.genero = 0; return yytext[0]; }
 
 "<="   { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = operador_composto; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_OC_LE; }
 ">="   { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = operador_composto; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_OC_GE; }
