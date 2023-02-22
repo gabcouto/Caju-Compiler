@@ -108,6 +108,8 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 		sprintf(myNode->label, "%d", valor_lexico.valor.inteiro);
 	else if(valor_lexico.genero == 2)
 		sprintf(myNode->label, "%f", valor_lexico.valor.flutuante);
+	else if(valor_lexico.genero == 3)
+		sprintf(myNode->label, "%c", valor_lexico.valor.caractere);
 
 	
 	myNode->firstChild = NULL;

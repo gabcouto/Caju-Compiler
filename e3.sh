@@ -9,3 +9,4 @@ xdot temp.dot &
 xdot tests/$1.ref.dot &
 cat tests/$1
 echo
+valgrind -v --leak-check=full ./etapa3 < tests/$1
