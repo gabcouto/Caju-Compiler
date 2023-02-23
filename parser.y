@@ -49,12 +49,12 @@
 %type<node> operandos expressao
 %type<node> exp7 exp6 exp5 exp4 exp3 exp2 exp1
 %type<node> chamada_funcao chamada_retorno chamada_ctrl_fluxo
-%type<node> multidimensional variavel_local 
+%type<node> multidimensional variavel_local multidimensional_
 %type<node> declaracao_local declaracao atribuicao_local
 %type<node> cabecalho_funcao programa
 %type<node> comandos_simples bloco_comandos
 %type<node> ctrl_repeticao ctrl_condicional cond_else
-%type<node> lista_literais lista_de_nome_de_variaveis lista_de_elementos lista_parametros lista_comandos_simples lista_de_nome_de_variaveis_locais lista_de_expressoes lista_de_expressoes_ lista_expressoes_funcao
+%type<node> lista_literais lista_de_nome_de_variaveis lista_de_elementos lista_parametros lista_comandos_simples lista_de_nome_de_variaveis_locais lista_de_expressoes lista_de_expressoes_ lista_expressoes_funcao lista_literais_
 
 %start programa
 
@@ -63,19 +63,19 @@
 programa: lista_de_elementos {if($1!=NULL){$$=$1;  arvore = $$; }};
 programa: {$$=NULL;};
 lista_de_elementos: cabecalho_funcao lista_de_elementos { if($2!=NULL) {add_child($$, $2); } else {$$=$1; }};
-lista_de_elementos: declaracao ';' lista_de_elementos {$$=NULL;}; //{$$ = $3; add_child($$, $1);};
+lista_de_elementos: declaracao ';' lista_de_elementos {$$ = $3;};
 lista_de_elementos: cabecalho_funcao {$$=$1; };
-lista_de_elementos: declaracao ';'{$$=NULL;};//{$$=$1;};
+lista_de_elementos: declaracao ';'{$$=NULL;};
 /*
 	Declaração de Variáveis Globais
 */
-declaracao: tipo lista_de_nome_de_variaveis {$$=NULL;}; //{$$=$2;};
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=NULL;}; //{$$=$3; add_child($$, $1);};
-lista_de_nome_de_variaveis: multidimensional {$$=NULL;}; //{$$=$1;};
-multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL;}; //{$$=$3; add_child($$, $1);};
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3); };
-lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); };
-multidimensional: IDENTIFICADOR {$$ = $1; };
+declaracao: tipo lista_de_nome_de_variaveis {$$=NULL;};
+lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=NULL;};
+lista_de_nome_de_variaveis: multidimensional {$$=NULL;};
+multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL;};
+lista_literais: TK_LIT_INT '^' lista_literais {$$ = NULL; };
+lista_literais: TK_LIT_INT {$$ = NULL; };
+multidimensional: IDENTIFICADOR {$$ = NULL; };
 
 /*
 	Definição de Função
@@ -150,8 +150,14 @@ cond_else: {$$=NULL;};
 
 */
 
+multidimensional_: IDENTIFICADOR '[' lista_literais_ ']' {$$=$3; add_child($$, $1);};
+multidimensional_: IDENTIFICADOR {$$ = $1; };
+lista_literais_: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); };
+lista_literais_: TK_LIT_INT '^' lista_literais_ {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3); };
+
+
 operandos: literal { $$ = $1; } ;
-operandos: multidimensional { $$ = $1; } ;
+operandos: multidimensional_ { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
 expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", "||" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3);  }; 
