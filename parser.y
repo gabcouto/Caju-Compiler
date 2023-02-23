@@ -54,8 +54,7 @@
 %type<node> cabecalho_funcao programa
 %type<node> comandos_simples bloco_comandos
 %type<node> ctrl_repeticao ctrl_condicional cond_else
-%type<node> lista_literais lista_de_nome_de_variaveis lista_de_elementos lista_parametros lista_comandos_simples lista_de_nome_de_variaveis_locais lista_de_expressoes lista_de_expressoes_ lista_expressoes_funcao lista_literais_
-
+%type<node> lista_literais lista_de_nome_de_variaveis lista_de_elementos lista_parametros lista_comandos_simples lista_de_nome_de_variaveis_locais lista_de_expressoes lista_de_expressoes_ lista_expressoes_funcao
 %start programa
 
 %%
@@ -161,11 +160,7 @@ cond_else: {$$=NULL;};
 
 */
 
-multidimensional_: IDENTIFICADOR '[' lista_literais_ ']' {$$=$1; add_child($$, $3);};
-multidimensional_: IDENTIFICADOR {$$ = $1; };
-lista_literais_: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); };
-lista_literais_: TK_LIT_INT '^' lista_literais_ {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3); };
-
+multidimensional_: IDENTIFICADOR lista_de_expressoes {$$=$1; add_child($$, $2);};
 
 operandos: literal { $$ = $1; } ;
 operandos: multidimensional_ { $$ = $1; } ;
