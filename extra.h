@@ -95,4 +95,6 @@ void print_node(Node *node);
 
 void exclude_node(Node* node);
 
+Node * ultimaInit(Node * parentNode);
+
 #endif

@@ -198,6 +198,21 @@ void exclude_node(Node* node)
 	}		
 }
 
+Node * ultimaInit(Node * parentNode){
+	
+	Node *node = parentNode->firstChild;
+	Node *final;
+	while (node->nextSibling != NULL)
+		node = node->nextSibling;
+	
+	if (!strcmp(node->label, "<="))
+		final = ultimaInit(node);
+	else return parentNode;
+
+	return final;
+
+}
+
 
 
 

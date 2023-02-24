@@ -3,6 +3,7 @@
 
 %{
 	#include <stdio.h>
+	#include <string.h>
 	#include "../extra.h"
 	extern int yylineno;
 	extern void *arvore;
@@ -79,26 +80,20 @@ lista_literais: TK_LIT_INT {$$ = NULL; };
 multidimensional: IDENTIFICADOR {$$ = NULL; free($1); };
 
 /*
-declaracao: tipo lista_de_nome_de_variaveis {$$=$2;};
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=$3; add_child($$, $1);};
-lista_de_nome_de_variaveis: multidimensional {$$=$1;};
-multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL; free($1); free($3); };
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = create_node("LISTA_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
-lista_literais: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1);};
-multidimensional: IDENTIFICADOR {$$ = NULL;  free($1);};
-*/
-/*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } }; //add_child($$, $4);
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } };
 cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); }};
-lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL; free($2);}; // {$$ = $2; add_child($$, $4);};
-lista_parametros: tipo IDENTIFICADOR {$$=NULL; free($2);}; //{$$=$2;};
+lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL; free($2);};
+lista_parametros: tipo IDENTIFICADOR {$$=NULL; free($2);}; 
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2; };
 bloco_comandos: '{' '}' {$$=NULL; };
 
 
-lista_comandos_simples: comandos_simples ';' lista_comandos_simples {if ($1!=NULL) if($3!=NULL) {$$=$1;  add_child($1, $3); } else {$$=$1; } else {$$=$3; }};
+lista_comandos_simples: comandos_simples ';' lista_comandos_simples 
+{if ($1!=NULL)  if($3!=NULL) {$$=$1;  
+if(!strcmp($1->label, "<=")) {$1=ultimaInit($1);}
+add_child($1, $3); } else {$$=$1; } else {$$=$3; }};
 //
 lista_comandos_simples: comandos_simples ';' {$$=$1;};
 comandos_simples: declaracao_local {$$=$1; };
@@ -160,7 +155,7 @@ cond_else: {$$=NULL;};
 
 */
 
-multidimensional_: IDENTIFICADOR lista_de_expressoes {$$=$1; add_child($$, $2);};
+multidimensional_: IDENTIFICADOR lista_de_expressoes {if ($2==NULL) $$=$1; else {$$=$2; add_child($$, $1);}};
 
 operandos: literal { $$ = $1; } ;
 operandos: multidimensional_ { $$ = $1; } ;
@@ -196,7 +191,7 @@ exp6: '-' exp7 { $$ = create_node("SUB_UNARIO", "-"); add_child($$, $2); } ;
 exp6: '!' exp7 { $$ = create_node("NOT", "!"); add_child($$, $2); } ;
 exp6: exp7 { $$ = $1; } ;
 
-exp7: '(' expressao ')' { $$ = create_node("PARENTESES", "()"); add_child($$, $2);  };
+exp7: '(' expressao ')' { $$ = $2;  };
 exp7: operandos { $$ = $1; } ;
 
 
@@ -215,4 +210,5 @@ void yyerror(const char *mensagem){
 	printf("Erro Sintático: [%s] na linha %d\n", mensagem, yylineno);
 	return;
 }
+
 
