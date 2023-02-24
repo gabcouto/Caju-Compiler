@@ -53,7 +53,7 @@ espaco [ \t\r]
 [a-zA-Z]+ { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = identificador; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_IDENTIFICADOR; }
 [0-9]+ { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = literal; yylval.valor_lexico.valor.inteiro = atoi(yytext); yylval.valor_lexico.genero = 1; return TK_LIT_INT; } //////////////////////////
 [0-9]+\.([0-9]+E)?[0-9]+ { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = literal; yylval.valor_lexico.valor.flutuante = atof(yytext); yylval.valor_lexico.genero = 2; return TK_LIT_FLOAT; } ////////////////////
-'[^'\n]' { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = literal; yylval.valor_lexico.valor.caractere = yytext[0]; yylval.valor_lexico.genero = 3; return TK_LIT_CHAR; } ////////////////////////
+'[^'\n]' { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = literal; yylval.valor_lexico.valor.caractere = yytext[1]; yylval.valor_lexico.genero = 3; return TK_LIT_CHAR; } ////////////////////////
 
 "/*"         BEGIN(comment);
 
