@@ -84,7 +84,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 		if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
 			enum Tipo type;
-			int outros = 0;
+			char outros[60] = '';
 			switch(tipo->label)
 			{
 				case 'i':
@@ -107,7 +107,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			arvore = arvore->nextSibling->firstChild;
 			int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
 			enum Tipo type;
-			int outros = 0;
+			char outros[60] = '';
 			char dados[60];
 			strcpy(dados, arvore->label);
 			switch(tipo->label)
@@ -128,6 +128,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			{
 				arvore = arvore->nextSibling->firstChild;
 				tamanho++;
+				if(outros != NULL)
+					sprintf(outros, "^%d", arvore->label);
+				else
+					sprintf(outros, "%d", arvore->label);
 			}
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Arranjo, type, tamanho_tipo(type)*tamanho, dados, outros);
