@@ -41,12 +41,6 @@ Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tama
 
 }
 
-struct location localizacao;
-	enum Natureza natureza;
-	enum Tipo tipo;
-	int tamanho;
-	int dados;
-	int outros;
 
 Tabela* find_free_place(Tabela* myTable)
 {
