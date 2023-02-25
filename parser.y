@@ -77,7 +77,7 @@ lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=
 lista_de_nome_de_variaveis: multidimensional {$$=$1;};
 multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=create_node("LISTA_LIT", "[]"); add_child($$, $1); add_child($$, $3);};
 lista_literais: TK_LIT_INT '^' lista_literais {$$=create_node("PROX_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
-lista_literais: TK_LIT_INT {$$=create_node_fromt_token("TK_LIT_INT", $1);}; 
+lista_literais: TK_LIT_INT {$$=create_node_from_token("TK_LIT_INT", $1);}; 
 multidimensional: IDENTIFICADOR {$$=$1;}; 
 
 /*

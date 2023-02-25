@@ -78,14 +78,14 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 	if(arvore != NULL)
 	{
-		if(arvore->firstChild->label == ','){
-			analisa_e_insere(myTable, node->firstChild, tipo);
+		if(arvore->firstChild->label[0] == ','){
+			analisa_e_insere(myTable, arvore->firstChild, tipo);
 		}
 		if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
 			enum Tipo type;
-			char outros[60] = '';
-			switch(tipo->label)
+			char outros[60] = {};
+			switch(tipo->label[0])
 			{
 				case 'i':
 					type = inteiro; break;
@@ -97,7 +97,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; break;
 			}
 
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho_tipo(type), arvore->label, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho_tipo(type), arvore->label, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 
@@ -107,10 +107,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			arvore = arvore->nextSibling->firstChild;
 			int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
 			enum Tipo type;
-			char outros[60] = '';
+			char outros[60] = {};
 			char dados[60];
 			strcpy(dados, arvore->label);
-			switch(tipo->label)
+			switch(tipo->label[0])
 			{
 				case 'i':
 					type = inteiro; break;
@@ -128,13 +128,15 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			{
 				arvore = arvore->nextSibling->firstChild;
 				tamanho++;
-				if(outros != NULL)
-					sprintf(outros, "^%d", arvore->label);
+				if(outros != NULL){
+					outros[0] = '^';
+					strcpy(&outros[1], arvore->label);//sprintf(outros, "^%d", arvore->label);
+					}
 				else
-					sprintf(outros, "%d", arvore->label);
+					strcpy(outros, arvore->label);//sprintf(outros, "%d", arvore->label);
 			}
 
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Arranjo, type, tamanho_tipo(type)*tamanho, dados, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho_tipo(type)*tamanho, dados, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 	}	
