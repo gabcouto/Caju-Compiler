@@ -35,7 +35,7 @@ Tabela* create_simbolo()
 	return myTable;
 }
 
-Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, int dados, int outros)
+Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, char *dados, char *outros)
 {
 	Content* myContent;
 	myContent = (Content*) malloc (sizeof(Content));
@@ -47,8 +47,8 @@ Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tama
 	myContent->localizacao = myLocation;
 	myContent->natureza = natureza;
 	myContent->tamanho = tamanho;
-	myContent->dados = dados;
-	myContent->outros = outros;
+	strcpy(myContent->dados, dados);
+	strcpy(myContent->outros, outros);
 
 	return myContent;
 

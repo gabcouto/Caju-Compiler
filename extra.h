@@ -59,8 +59,8 @@ typedef struct content
 	enum Natureza natureza;
 	enum Tipo tipo;
 	int tamanho;
-	int dados;
-	int outros;
+	char dados[60];
+	char outros[60];
 } Content;
 
 typedef struct tabela
@@ -77,6 +77,18 @@ typedef struct pilha
 	struct tabela *elemento_pilha;
 } Pilha;
 
+
+int tamanho_tipo(enum Tipo tipo);
+
+Tabela* create_simbolo();
+
+Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, char *dados, char *outros);
+
+Tabela* find_free_place(Tabela* myTable);
+
+void add_to_table(Tabela* myTable, Content* conteudo);
+
+void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo);
 
 Pilha * create_stack(Tabela* tabela);
 
