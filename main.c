@@ -14,6 +14,7 @@ Este arquivo será posterioremente substituído, não acrescente nada.
 extern int yyparse(void);
 extern int yylex_destroy(void);
 
+Pilha* myStack;
 void *arvore = NULL;
 void exporta (void *arvore);
 void libera (void *arvore);
@@ -21,6 +22,8 @@ void libera (void *arvore);
 int main (int argc, char **argv)
 {
   //yydebug = 1;
+  Tabela* myTable = create_simbolo();
+  myStack = create_stack(myTable);
   int ret = yyparse(); 
   exporta (arvore);
   libera(arvore);

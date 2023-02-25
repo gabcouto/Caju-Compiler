@@ -7,6 +7,7 @@
 	#include "../extra.h"
 	extern int yylineno;
 	extern void *arvore;
+	extern Pilha *pilha;
 	int yylex(void);
 	void yyerror(const char *);
 %}
@@ -71,13 +72,13 @@ lista_de_elementos: declaracao ';'{$$=$1;};
 */
 
 
-declaracao: tipo lista_de_nome_de_variaveis {$$=NULL;};
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=NULL;};
-lista_de_nome_de_variaveis: multidimensional {$$=NULL;};
-multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=NULL; free($1); free($3);};
-lista_literais: TK_LIT_INT '^' lista_literais {$$ = NULL; };
-lista_literais: TK_LIT_INT {$$ = NULL; };
-multidimensional: IDENTIFICADOR {$$ = NULL; free($1); };
+declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(pilha); temp->elemento_pilha   exclude_node($2);};
+lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=create_node("PROX_VARG", ",");  add_child($$, $1); add_child($$, $3);}; 
+lista_de_nome_de_variaveis: multidimensional {$$=$1;};
+multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=create_node("LISTA_LIT", "[]"); add_child($$, $1); add_child($$, $3);};
+lista_literais: TK_LIT_INT '^' lista_literais {$$=create_node("PROX_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
+lista_literais: TK_LIT_INT {$$=create_node_fromt_token("TK_LIT_INT", $1);}; 
+multidimensional: IDENTIFICADOR {$$=$1;}; 
 
 /*
 	Definição de Função

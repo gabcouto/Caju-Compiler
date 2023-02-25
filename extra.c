@@ -14,6 +14,57 @@ int get_line_number() {
 	return yylineno;
 }
 
+Tabela* create_simbolo()
+{
+	Tabela* myTable;
+	myTable = (Tabela*) malloc (sizeof(Tabela));
+	myTable->nextElement = NULL;
+	return myTable;
+}
+
+Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, int dados, int outros)
+{
+	Content* myContent;
+	myContent = (Content*) malloc (sizeof(Content));
+	Location* myLocation;
+	myLocation = (Location*) malloc (sizeof(Location));
+	myLocation->linha = linha;
+	myLocation->coluna = coluna;
+
+	myContent->localizacao = myLocation;
+	myContent->natureza = natureza;
+	myContent->tamanho = tamanho;
+	myContent->dados = dados;
+	myContent->outros = outros;
+
+	return myContent;
+
+}
+
+struct location localizacao;
+	enum Natureza natureza;
+	enum Tipo tipo;
+	int tamanho;
+	int dados;
+	int outros;
+
+Tabela* find_free_place(Tabela* myTable)
+{
+	if(myTable->nextElement != NULL)
+		find_free_place(myTable->nextElement);
+	else
+		return myTable;
+}
+
+void add_to_table(Tabela* myTable, Content* conteudo)
+{
+	Tabela* newSimbolo = create_simbolo();
+	find_free_place(myTable)->nextElement = newSimbolo;
+	newSimbolo->conteudo = conteudo;
+
+}
+
+
 Pilha * create_stack(Tabela* tabela)
 {
 	Pilha *myStack;

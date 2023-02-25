@@ -52,7 +52,7 @@ typedef struct location
 
 typedef struct content
 {
-	struct location localizacao;
+	struct location *localizacao;
 	enum Natureza natureza;
 	enum Tipo tipo;
 	int tamanho;
@@ -63,7 +63,7 @@ typedef struct content
 typedef struct tabela
 {
 	int chave;
-	struct content conteudo;
+	struct content *conteudo;
 	struct tabela *nextElement;
 
 } Tabela;
