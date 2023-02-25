@@ -72,7 +72,7 @@ lista_de_elementos: declaracao ';'{$$=$1;};
 */
 
 
-declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(pilha); temp->elemento_pilha   exclude_node($2);};
+declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(pilha); analisa_e_insere(temp->elemento_pilha, $2, $1); exclude_node($2); free($1);};
 lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=create_node("PROX_VARG", ",");  add_child($$, $1); add_child($$, $3);}; 
 lista_de_nome_de_variaveis: multidimensional {$$=$1;};
 multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=create_node("LISTA_LIT", "[]"); add_child($$, $1); add_child($$, $3);};
@@ -83,10 +83,10 @@ multidimensional: IDENTIFICADOR {$$=$1;};
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } };
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); }};
-lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL; free($2);};
-lista_parametros: tipo IDENTIFICADOR {$$=NULL; free($2);}; 
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } free($1);};
+cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1);};
+lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL; free($2); free($1);};
+lista_parametros: tipo IDENTIFICADOR {$$=NULL; free($2); free($1);}; 
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2; };
 bloco_comandos: '{' '}' {$$=NULL; };
 
@@ -107,7 +107,7 @@ comandos_simples: bloco_comandos {$$=$1; };
 /*
 	Declaração de Variável Local
 */
-declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2; };
+declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2; free($1);};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais 
 {if($1 != NULL) if ($3 != NULL){ $$=$1;  add_child($$, $3); } else {$$=$1; } else { $$=$3; }};
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1; };
@@ -196,10 +196,10 @@ exp7: '(' expressao ')' { $$ = $2;  };
 exp7: operandos { $$ = $1; } ;
 
 
-tipo: TK_PR_INT {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_INT", $1);};
-tipo: TK_PR_FLOAT {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);} ;
-tipo: TK_PR_CHAR {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);} ;
-tipo: TK_PR_BOOL {$$=NULL; free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);} ;
+tipo: TK_PR_INT {$$=create_node("int", "i"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_INT", $1);};
+tipo: TK_PR_FLOAT {$$=create_node("float", "f"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);} ;
+tipo: TK_PR_CHAR {$$=create_node("char", "c"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);} ;
+tipo: TK_PR_BOOL {$$=create_node("bool", "b"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);} ;
 literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); } ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); } ;
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);  }; 

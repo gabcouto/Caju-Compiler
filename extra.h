@@ -29,6 +29,7 @@ union Valor {
 typedef struct valor_lexico_t
 {
 	int line_no;
+	int col_no;
 	enum token_type tipo;
 	int genero;
 	union Valor valor;
@@ -39,6 +40,8 @@ typedef struct node
 {
 	char name[60];
 	char label[60];
+	int line_no;
+	int col_no;
 	enum Tipo tipo;
 	struct node *firstChild;
 	struct node *nextSibling;

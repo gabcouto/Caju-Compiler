@@ -14,6 +14,19 @@ int get_line_number() {
 	return yylineno;
 }
 
+int tamanho_tipo(enum Tipo tipo)
+{
+	if(tipo == inteiro)
+		return 4;
+	else if(tipo == flutuante)
+		return 4;	
+	else if(tipo == booleano)
+		return 4; // é int
+	else if(tipo == caractere)
+		return 1;
+
+}
+
 Tabela* create_simbolo()
 {
 	Tabela* myTable;
@@ -40,8 +53,10 @@ Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tama
 	return myContent;
 
 }
-
-
+/*
+	Content* conteudo_de_simbolo = create_conteudo();
+	add_to_table(tabela_raiz, conteudo_de_simbolo);
+*/
 Tabela* find_free_place(Tabela* myTable)
 {
 	if(myTable->nextElement != NULL)
@@ -58,6 +73,69 @@ void add_to_table(Tabela* myTable, Content* conteudo)
 
 }
 
+void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
+{
+
+	if(arvore != NULL)
+	{
+		if(arvore->firstChild->label == ','){
+			analisa_e_insere(myTable, node->firstChild, tipo);
+		}
+		if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
+		{
+			enum Tipo type;
+			int outros = 0;
+			switch(tipo->label)
+			{
+				case 'i':
+					type = inteiro; break;
+				case 'f':
+					type = flutuante; break;
+				case 'b':
+					type = booleano; break;
+				case 'c':
+					type = caractere; break;
+			}
+
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho_tipo(type), arvore->label, outros);
+			add_to_table(myTable, conteudo_de_simbolo);
+		}
+
+	
+		if(strcmp(arvore->nextSibling->label, "[]") == 0)
+		{
+			arvore = arvore->nextSibling->firstChild;
+			int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
+			enum Tipo type;
+			int outros = 0;
+			char dados[60];
+			strcpy(dados, arvore->label);
+			switch(tipo->label)
+			{
+				case 'i':
+					type = inteiro; break;
+				case 'f':
+					type = flutuante; break;
+				case 'b':
+					type = booleano; break;
+				case 'c':
+					type = caractere; break;
+			}
+
+			tamanho = 0;
+			
+			while(arvore->nextSibling != NULL)
+			{
+				arvore = arvore->nextSibling->firstChild;
+				tamanho++;
+			}
+
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Arranjo, type, tamanho_tipo(type)*tamanho, dados, outros);
+			add_to_table(myTable, conteudo_de_simbolo);
+		}
+	}	
+
+}
 
 Pilha * create_stack(Tabela* tabela)
 {
@@ -140,6 +218,8 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 	Node *myNode;
 	myNode = (Node*) malloc (sizeof(Node));
 	strcpy(myNode->name, name);
+	myNode->line_no = valor_lexico.line_no;
+	myNode->col_no = valor_lexico.col_no;
 	if(valor_lexico.genero == 0)
 		if(strcmp("CHAMA_FUNCAO", name) == 0)
 		{
