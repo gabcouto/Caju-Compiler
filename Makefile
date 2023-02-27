@@ -45,3 +45,4 @@ clean:
 	rm -rf temp
 	rm -f parser
 	rm -f *.tgz
+	rm -f $(ETAPA_ATUAL)
