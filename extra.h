@@ -106,6 +106,8 @@ void add_child(Node *parentNode, Node *childNode);
 
 void print_tree(Node* node);
 
+void print_parentship(Node* node);
+
 void print_node(Node *node);
 
 void exclude_node(Node* node);

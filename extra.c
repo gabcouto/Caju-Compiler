@@ -67,10 +67,15 @@ Tabela* find_free_place(Tabela* myTable)
 
 void add_to_table(Tabela* myTable, Content* conteudo)
 {
-	Tabela* newSimbolo = create_simbolo();
-	find_free_place(myTable)->nextElement = newSimbolo;
-	newSimbolo->conteudo = conteudo;
-
+	Tabela* espaco_vazio = find_free_place(myTable);
+	if(espaco_vazio->conteudo == NULL)
+		espaco_vazio->conteudo = conteudo;
+	else
+	{
+		Tabela* newSimbolo = create_simbolo();
+		espaco_vazio->nextElement = newSimbolo;
+		newSimbolo->conteudo = conteudo;
+	}
 }
 
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
@@ -78,11 +83,16 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 	if(arvore != NULL)
 	{
-		if(arvore->firstChild->label[0] == ','){
-			analisa_e_insere(myTable, arvore->firstChild, tipo);
+		if(arvore->firstChild != NULL)
+		{
+			if(arvore->firstChild->label[0] == ',')
+			{
+				analisa_e_insere(myTable, arvore->firstChild, tipo);
+			}
 		}
 		if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
+			printf("Chegamos aqui\n");
 			enum Tipo type;
 			char outros[60] = {};
 			switch(tipo->label[0])
@@ -96,51 +106,53 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'c':
 					type = caractere; break;
 			}
+			printf("Chegamos aqui tbm: %c\n", tipo->label[0]);
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho_tipo(type), arvore->label, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 
-	
-		if(strcmp(arvore->nextSibling->label, "[]") == 0)
+		if(arvore->nextSibling != NULL)
 		{
-			arvore = arvore->nextSibling->firstChild;
-			int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
-			enum Tipo type;
-			char outros[60] = {};
-			char dados[60];
-			strcpy(dados, arvore->label);
-			switch(tipo->label[0])
-			{
-				case 'i':
-					type = inteiro; break;
-				case 'f':
-					type = flutuante; break;
-				case 'b':
-					type = booleano; break;
-				case 'c':
-					type = caractere; break;
-			}
-
-			tamanho = 0;
-			
-			while(arvore->nextSibling != NULL)
+			if(strcmp(arvore->nextSibling->label, "[]") == 0)
 			{
 				arvore = arvore->nextSibling->firstChild;
-				tamanho++;
-				if(outros != NULL){
-					outros[0] = '^';
-					strcpy(&outros[1], arvore->label);//sprintf(outros, "^%d", arvore->label);
-					}
-				else
-					strcpy(outros, arvore->label);//sprintf(outros, "%d", arvore->label);
-			}
+				int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
+				enum Tipo type;
+				char outros[60] = {};
+				char dados[60];
+				strcpy(dados, arvore->label);
+				switch(tipo->label[0])
+				{
+					case 'i':
+						type = inteiro; break;
+					case 'f':
+						type = flutuante; break;
+					case 'b':
+						type = booleano; break;
+					case 'c':
+						type = caractere; break;
+				}
 
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho_tipo(type)*tamanho, dados, outros);
-			add_to_table(myTable, conteudo_de_simbolo);
+				tamanho = 0;
+			
+				while(arvore->nextSibling != NULL)
+				{
+					arvore = arvore->nextSibling->firstChild;
+					tamanho++;
+					if(outros != NULL){
+						outros[0] = '^';
+						strcpy(&outros[1], arvore->label);//sprintf(outros, "^%d", arvore->label);
+						}
+					else
+						strcpy(outros, arvore->label);//sprintf(outros, "%d", arvore->label);
+				}
+
+				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho_tipo(type)*tamanho, dados, outros);
+				add_to_table(myTable, conteudo_de_simbolo);
+			}
 		}
 	}	
-
 }
 
 Pilha * create_stack(Tabela* tabela)

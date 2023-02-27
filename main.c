@@ -25,7 +25,10 @@ int main (int argc, char **argv)
   Tabela* myTable = create_simbolo();
   myStack = create_stack(myTable);
   int ret = yyparse(); 
-  exporta (arvore);
+  Content* resultado = top_stack(myStack)->elemento_pilha->conteudo;
+  printf("Linha: %d, Coluna: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->localizacao->linha, resultado->localizacao->coluna, resultado->tamanho, resultado->dados, resultado->outros);
+
+  exporta(arvore);
   libera(arvore);
   arvore = NULL;
   yylex_destroy();

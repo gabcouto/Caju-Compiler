@@ -72,7 +72,7 @@ lista_de_elementos: declaracao ';'{$$=$1;};
 */
 
 
-declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); exclude_node($2); free($1);};
+declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(myStack); print_tree($2); print_parentship($2); analisa_e_insere(temp->elemento_pilha, $2, $1); exclude_node($2); free($1);};
 lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=create_node("PROX_VARG", ",");  add_child($$, $1); add_child($$, $3);}; 
 lista_de_nome_de_variaveis: multidimensional {$$=$1;};
 multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=create_node("LISTA_LIT", "[]"); add_child($$, $1); add_child($$, $3);};
