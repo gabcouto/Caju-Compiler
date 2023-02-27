@@ -1,7 +1,7 @@
 # Gabriel Couto & Felippo Stédile: Dupla 
-ETAPA_ATUAL = etapa3
+ETAPA_ATUAL = etapa4
 FILES_TO_TAR = extra.c main.c scanner.l parser.y extra.h Makefile
-OUT = etapa3
+OUT = etapa4
 LINUXCC  = gcc
 LINUXFLEX = flex
 LINUXBISON = bison
