@@ -83,6 +83,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 	if(arvore != NULL)
 	{
+	int tamanho = 0;
 		if(arvore->firstChild != NULL)
 		{
 			if(arvore->firstChild->label[0] == ',')
@@ -98,17 +99,17 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			switch(tipo->label[0])
 			{
 				case 'i':
-					type = inteiro; break;
+					type = inteiro; tamanho = 4; break;
 				case 'f':
-					type = flutuante; break;
+					type = flutuante; tamanho = 4; break;
 				case 'b':
-					type = booleano; break;
+					type = booleano; tamanho = 4;  break;
 				case 'c':
-					type = caractere; break;
+					type = caractere; tamanho = 1;  break;
 			}
 			printf("Chegamos aqui tbm: %c\n", tipo->label[0]);
 
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho_tipo(type), arvore->label, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 
@@ -116,8 +117,8 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 		{
 			if(strcmp(arvore->nextSibling->label, "[]") == 0)
 			{
-				arvore = arvore->nextSibling->firstChild;
-				int line_no = arvore->line_no, col_no = arvore->col_no, tamanho;
+				arvore = arvore->nextSibling->firstChild;//aqui tem o id do var global multidimensional
+				int line_no = arvore->line_no, col_no = arvore->col_no;
 				enum Tipo type;
 				char outros[60] = {};
 				char dados[60];
@@ -125,30 +126,34 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				switch(tipo->label[0])
 				{
 					case 'i':
-						type = inteiro; break;
+						type = inteiro; tamanho = 4; break;
 					case 'f':
-						type = flutuante; break;
+						type = flutuante; tamanho = 4; break;
 					case 'b':
-						type = booleano; break;
+						type = booleano; tamanho = 4; break;
 					case 'c':
-						type = caractere; break;
+						type = caractere; tamanho = 1; break;
 				}
-
-				tamanho = 0;
-			
-				while(arvore->nextSibling != NULL)
-				{
+				int EOS=0; //end of string
+				while (arvore->nextSibling->label[0]== '^'){
 					arvore = arvore->nextSibling->firstChild;
-					tamanho++;
-					if(outros != NULL){
-						outros[0] = '^';
-						strcpy(&outros[1], arvore->label);//sprintf(outros, "^%d", arvore->label);
-						}
-					else
-						strcpy(outros, arvore->label);//sprintf(outros, "%d", arvore->label);
+					tamanho*=atoi(arvore->label);
+					strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
+					EOS+=sizeof(arvore->label);
+					outros[EOS] = '^';
+					EOS++;
 				}
+				strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
+				tamanho*=atoi(arvore->label);
+				EOS+=sizeof(arvore->label);
+				outros[EOS] = '^';
+				EOS++;
+				arvore=arvore->nextSibling;
+				strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
+				tamanho*=atoi(arvore->nextSibling->label);
+				
 
-				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho_tipo(type)*tamanho, dados, outros);
+				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
 				add_to_table(myTable, conteudo_de_simbolo);
 			}
 		}
