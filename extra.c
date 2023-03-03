@@ -91,7 +91,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 		}
 	if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
-			printf("Chegamos aqui\n");
 			enum Tipo type;
 			char outros[60] = {};
 			switch(tipo->label[0])
@@ -105,12 +104,11 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
-			printf("Chegamos aqui tbm: %c\n", tipo->label[0]);
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
-	else if(strcmp(arvore->label, "[]") == 0)
+	else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
 			arvore = arvore->firstChild;//aqui tem o id do var global multidimensional
 			int line_no = arvore->line_no, col_no = arvore->col_no;
@@ -135,7 +133,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					calctam = calctam->nextSibling->firstChild;
 					tamanho*=atoi(calctam->label);
 					strcpy(&outros[EOS], calctam->label);//sprintf
-					EOS+=sizeof(calctam->label);
+					for(int i=0; calctam->label[i]!='\0'; i++, EOS++);
 					outros[EOS] = '^';
 					EOS++;
 				}
@@ -143,7 +141,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				strcpy(&outros[EOS], calctam->label);//sprintf(outros, "^%d", calctam->label);
 				tamanho*=atoi(calctam->label);
 				
-
 				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
 				add_to_table(myTable, conteudo_de_simbolo);
 		}
