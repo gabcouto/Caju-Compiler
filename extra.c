@@ -84,14 +84,12 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 	if(arvore != NULL)
 	{
 	int tamanho = 0;
-		if(arvore->firstChild != NULL)
+		if(arvore->label[0] == ',')
 		{
-			if(arvore->firstChild->label[0] == ',')
-			{
-				analisa_e_insere(myTable, arvore->firstChild, tipo);
-			}
+			analisa_e_insere(myTable, arvore->firstChild, tipo);
+			analisa_e_insere(myTable, arvore->firstChild->nextSibling, tipo);
 		}
-		if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
+	if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
 			printf("Chegamos aqui\n");
 			enum Tipo type;
@@ -112,18 +110,15 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
-
-		if(arvore->nextSibling != NULL)
+	else if(strcmp(arvore->label, "[]") == 0)
 		{
-			if(strcmp(arvore->nextSibling->label, "[]") == 0)
-			{
-				arvore = arvore->nextSibling->firstChild;//aqui tem o id do var global multidimensional
-				int line_no = arvore->line_no, col_no = arvore->col_no;
-				enum Tipo type;
-				char outros[60] = {};
-				char dados[60];
-				strcpy(dados, arvore->label);
-				switch(tipo->label[0])
+			arvore = arvore->firstChild;//aqui tem o id do var global multidimensional
+			int line_no = arvore->line_no, col_no = arvore->col_no;
+			enum Tipo type;
+			char outros[60] = {};
+			char dados[60];
+			strcpy(dados, arvore->label);
+			switch(tipo->label[0])
 				{
 					case 'i':
 						type = inteiro; tamanho = 4; break;
@@ -135,30 +130,26 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 						type = caractere; tamanho = 1; break;
 				}
 				int EOS=0; //end of string
-				while (arvore->nextSibling->label[0]== '^'){
-					arvore = arvore->nextSibling->firstChild;
-					tamanho*=atoi(arvore->label);
-					strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
-					EOS+=sizeof(arvore->label);
+				Node* calctam = arvore;
+				while (calctam->nextSibling->label[0]== '^'){
+					calctam = calctam->nextSibling->firstChild;
+					tamanho*=atoi(calctam->label);
+					strcpy(&outros[EOS], calctam->label);//sprintf
+					EOS+=sizeof(calctam->label);
 					outros[EOS] = '^';
 					EOS++;
 				}
-				strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
-				tamanho*=atoi(arvore->label);
-				EOS+=sizeof(arvore->label);
-				outros[EOS] = '^';
-				EOS++;
-				arvore=arvore->nextSibling;
-				strcpy(&outros[EOS], arvore->label);//sprintf(outros, "^%d", arvore->nextSibling->label);
-				tamanho*=atoi(arvore->nextSibling->label);
+				calctam=calctam->nextSibling;
+				strcpy(&outros[EOS], calctam->label);//sprintf(outros, "^%d", calctam->label);
+				tamanho*=atoi(calctam->label);
 				
 
 				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
 				add_to_table(myTable, conteudo_de_simbolo);
-			}
 		}
-	}	
-}
+		//else if()
+	}
+}	
 
 Pilha * create_stack(Tabela* tabela)
 {
