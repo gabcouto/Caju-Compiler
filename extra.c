@@ -7,7 +7,7 @@
 #include "extra.h"
 
 extern int yylineno;
-
+extern Pilha *myStack;
 
 int get_line_number() {
 
@@ -78,6 +78,7 @@ void add_to_table(Tabela* myTable, Content* conteudo)
 	}
 }
 
+
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 {
 
@@ -104,8 +105,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
+			/* Necessitamos pesquisar se a variável já foi declarada antes de adicioná-la na tabela.*/
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
+			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 	else if(strcmp(arvore->name, "LISTA_LIT") == 0)
@@ -142,21 +145,54 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				tamanho*=atoi(calctam->label);
 				
 				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
+				verifica_isDeclared(myTable, conteudo_de_simbolo);
 				add_to_table(myTable, conteudo_de_simbolo);
 		}
 		//else if()
 	}
 }	
 
+void verifica_isDeclared(Tabela* myTable, Content* conteudo)
+{
+	/* Temos de iterar desde a tabela mais profunda (global) da pilha até a tabela atual para ver se o símbolo já foi declarado: */
+
+	// O elemento mais profundo da pilha é myStack. Vamos de myStack->elementoPilha até myTable:
+
+	Pilha *tempPilha = myStack;
+	Tabela *tempTable;
+	int bool = 0;
+	do
+	{
+		if(bool)
+			tempPilha = tempPilha->top;
+		bool=1;
+
+		tempTable = tempPilha->elemento_pilha;
+		
+		while(tempTable->nextElement != NULL)
+		{
+			if(tempTable->conteudo != conteudo)
+				if(tempTable->conteudo->tipo == conteudo->tipo && tempTable->conteudo->dados == conteudo->dados)
+					exit(ERR_DECLARED);
+
+			tempTable = tempTable->nextElement;
+		}
+
+	} while (tempPilha->elemento_pilha != myTable);
+	
+}
+
+
+
 Pilha * create_stack(Tabela* tabela)
 {
-	Pilha *myStack;
-	myStack = (Pilha*) malloc (sizeof(Pilha));
+	Pilha *newStack;
+	newStack = (Pilha*) malloc (sizeof(Pilha));
 	
-	myStack->top = NULL;
-	myStack->elemento_pilha = tabela;
+	newStack->top = NULL;
+	newStack->elemento_pilha = tabela;
 
-	return myStack;
+	return newStack;
 }
 
 void push_stack(Tabela* tabela, Pilha* pilha)
@@ -175,21 +211,21 @@ void push_stack(Tabela* tabela, Pilha* pilha)
 
 Pilha* top_stack(Pilha* pilha)
 {
-	Pilha *myStack = pilha;
-	while(myStack->top != NULL)
-		myStack = myStack->top;
+	Pilha *topStack = pilha;
+	while(topStack->top != NULL)
+		topStack = topStack->top;
 	
-	return myStack;
+	return topStack;
 }
 
 Pilha* pop_stack(Pilha* pilha)
 {
-	Pilha *myStack = pilha, *eliminado;
-	while(myStack->top->top != NULL)
-		myStack = myStack->top;
+	Pilha *popStack = pilha, *eliminado;
+	while(popStack->top->top != NULL)
+		popStack = popStack->top;
 
-	eliminado = myStack->top;
-	myStack->top = NULL;
+	eliminado = popStack->top;
+	popStack->top = NULL;
 
 	return eliminado;
 }
