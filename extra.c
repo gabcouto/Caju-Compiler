@@ -89,8 +89,33 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 		{
 			analisa_e_insere(myTable, arvore->firstChild, tipo);
 			analisa_e_insere(myTable, arvore->firstChild->nextSibling, tipo);
+		} 
+		else
+		
+	/*será que n rola colocar essa parte aqui?, e tirar ela de dentro dos ifs
+			{
+			int line_no = arvore->line_no, col_no = arvore->col_no;
+			enum Tipo type;
+			char outros[60] = {};
+			char dados[60];
+			switch(tipo->label[0])
+			{
+				case 'i':
+					type = inteiro; tamanho = 4; break;
+				case 'f':
+					type = flutuante; tamanho = 4; break;
+				case 'b':
+					type = booleano; tamanho = 4;  break;
+				case 'c':
+					type = caractere; tamanho = 1;  break;
+			}
+	
+	
 		}
-	if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
+	
+	*/
+	 if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
+		//Acho q aqui é o lugar pra chamar a isDeclared
 		{
 			enum Tipo type;
 			char outros[60] = {};
@@ -114,6 +139,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 	else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
 			arvore = arvore->firstChild;//aqui tem o id do var global multidimensional
+			//aqui tbm chamar a isDeclared
 			int line_no = arvore->line_no, col_no = arvore->col_no;
 			enum Tipo type;
 			char outros[60] = {};
@@ -148,7 +174,24 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				verifica_isDeclared(myTable, conteudo_de_simbolo);
 				add_to_table(myTable, conteudo_de_simbolo);
 		}
-		//else if()
+		else if(strcmp(arvore->label, "<=") == 0){
+			
+			int line_no = arvore->line_no, col_no = arvore->col_no;
+			enum Tipo type;
+			char dados[60];
+			switch(tipo->label[0])
+			{
+				case 'i':
+					type = inteiro; tamanho = 4; break;
+				case 'f':
+					type = flutuante; tamanho = 4; break;
+				case 'b':
+					type = booleano; tamanho = 4;  break;
+				case 'c':
+					type = caractere; tamanho = 1;  break;
+			}
+			strcpy(dados, arvore->firstChild->label);
+		}
 	}
 }	
 

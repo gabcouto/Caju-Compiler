@@ -107,12 +107,13 @@ comandos_simples: bloco_comandos {$$=$1; };
 /*
 	Declaração de Variável Local
 */
-declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2; free($1);};
+declaracao_local: tipo lista_de_nome_de_variaveis_locais {$$ = $2; 
+Pilha* temp = top_stack(myStack); print_tree($2); print_parentship($2); analisa_e_insere(temp->elemento_pilha, $2, $1); free($1);};
 lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis_locais 
-{if($1 != NULL) if ($3 != NULL){ $$=$1;  add_child($$, $3); } else {$$=$1; } else { $$=$3; }};
+{ $$=create_node("PROX_VARL", ","); add_child($$, $1); add_child($$, $3); };
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1; };
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); free($2.valor.cadeia); add_child($$, $3); };
-variavel_local: IDENTIFICADOR {$$=NULL; free($1);};
+variavel_local: IDENTIFICADOR {$$=$1; free($1);};
 
 /*
 	Atribuição local
