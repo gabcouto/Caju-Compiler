@@ -238,7 +238,7 @@ Pilha * create_stack(Tabela* tabela)
 	return newStack;
 }
 
-void push_stack(Tabela* tabela, Pilha* pilha)
+void push_stack(Tabela* tabela, Pilha* pilha) //retornar uma Pilha*? não entendi o pq de receber uma tabela invés de inicializar em NULL ela
 {
 	Pilha *newStackElement;
 	newStackElement = (Pilha*) malloc (sizeof(Pilha));
@@ -249,7 +249,8 @@ void push_stack(Tabela* tabela, Pilha* pilha)
 	newStackElement->top = NULL;
 
 	topo->top = newStackElement;
-
+	
+	//return newStackElement;
 }
 
 Pilha* top_stack(Pilha* pilha)
