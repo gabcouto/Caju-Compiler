@@ -115,7 +115,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 	
 	*/
 	 if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
-		//Acho q aqui é o lugar pra chamar a isDeclared
 		{
 			enum Tipo type;
 			char outros[60] = {};
@@ -130,6 +129,9 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
+			else{
+			
+			}
 			/* Necessitamos pesquisar se a variável já foi declarada antes de adicioná-la na tabela.*/
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
@@ -139,7 +141,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 	else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
 			arvore = arvore->firstChild;//aqui tem o id do var global multidimensional
-			//aqui tbm chamar a isDeclared
 			int line_no = arvore->line_no, col_no = arvore->col_no;
 			enum Tipo type;
 			char outros[60] = {};
@@ -161,13 +162,13 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				while (calctam->nextSibling->label[0]== '^'){
 					calctam = calctam->nextSibling->firstChild;
 					tamanho*=atoi(calctam->label);
-					strcpy(&outros[EOS], calctam->label);//sprintf
+					strcpy(&outros[EOS], calctam->label);
 					for(int i=0; calctam->label[i]!='\0'; i++, EOS++);
 					outros[EOS] = '^';
 					EOS++;
 				}
 				calctam=calctam->nextSibling;
-				strcpy(&outros[EOS], calctam->label);//sprintf(outros, "^%d", calctam->label);
+				strcpy(&outros[EOS], calctam->label);
 				tamanho*=atoi(calctam->label);
 				
 				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
@@ -179,6 +180,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			int line_no = arvore->line_no, col_no = arvore->col_no;
 			enum Tipo type;
 			char dados[60];
+			char outros[60]={};
 			switch(tipo->label[0])
 			{
 				case 'i':
@@ -191,6 +193,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			strcpy(dados, arvore->firstChild->label);
+			
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, dados, outros);
+			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			add_to_table(myTable, conteudo_de_simbolo);
 		}
 	}
 }	
@@ -215,7 +221,7 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 		while(tempTable->nextElement != NULL)
 		{
 			if(tempTable->conteudo != conteudo)
-				if(tempTable->conteudo->tipo == conteudo->tipo && tempTable->conteudo->dados == conteudo->dados)
+				if(tempTable->conteudo->dados == conteudo->dados)
 					exit(ERR_DECLARED);
 
 			tempTable = tempTable->nextElement;
@@ -225,6 +231,45 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 	
 }
 
+/*
+void analisa_e_atualiza(Tabela *myTable, Node *variavel, Node* valor){ //tem que acertar as coisas de função aqui e na analisa
+	
+	
+	Pilha *tempPilha = myStack;
+	Tabela *tempTable;
+	int bool = 0;
+	int mult=0;
+	Node* id;
+	if variavel->label[0] == '[') {mult=1; id=variavel->firtChild;}
+	do
+	{
+		if(bool)
+			tempPilha = tempPilha->top;
+		bool=1;
+
+		tempTable = tempPilha->elemento_pilha;
+		
+		while(tempTable->nextElement != NULL)
+		{
+			if(strcmp(tempTable->conteudo->dados, variavel->label) != 0)
+				tempTable = tempTable->nextElement;
+			else {
+				if (mult){
+					if(tempTable->conteudo->outros[0]!='[')
+						exit(ERR_ARRAY);
+				}
+				else 
+					if(tempTable->conteudo->outros[0]=='[')
+						exit(ERR_VARRIABLE);
+			}
+										
+		}
+	} while (tempPilha->elemento_pilha != myTable);
+	
+	exit(ERR_UNDECLARED);
+	
+}
+*/
 
 
 Pilha * create_stack(Tabela* tabela)
@@ -238,7 +283,7 @@ Pilha * create_stack(Tabela* tabela)
 	return newStack;
 }
 
-void push_stack(Tabela* tabela, Pilha* pilha) //retornar uma Pilha*? não entendi o pq de receber uma tabela invés de inicializar em NULL ela
+void push_stack(Tabela* tabela, Pilha* pilha)
 {
 	Pilha *newStackElement;
 	newStackElement = (Pilha*) malloc (sizeof(Pilha));
@@ -249,8 +294,6 @@ void push_stack(Tabela* tabela, Pilha* pilha) //retornar uma Pilha*? não entend
 	newStackElement->top = NULL;
 
 	topo->top = newStackElement;
-	
-	//return newStackElement;
 }
 
 Pilha* top_stack(Pilha* pilha)

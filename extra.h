@@ -96,7 +96,7 @@ Pilha * create_stack(Tabela* tabela);
 
 Pilha * top_stack(Pilha* pilha);
 
-void push_stack(Tabela* tabela, Pilha* pilha); //acho melhor fazer isso retornar um Pilha* não?
+void push_stack(Tabela* tabela, Pilha* pilha);
 
 Pilha* pop_stack(Pilha* pilha);
 
