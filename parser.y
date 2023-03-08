@@ -84,7 +84,7 @@ multidimensional: IDENTIFICADOR {$$=$1;};
 	Definição de Função
 */
 cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } 
-Pilha* temp = top_stack(myStack); if ($4!=NULL){print_tree($4); print_parentship($4); analisa_e_insere(temp->elemento_pilha, $4, $1);} if($6!=NULL) analisa_e_insere(temp->elemento_pilha, $6, $1); //acho q dá pra colocar o addchild $$ $6 no mesmo if
+Pilha* temp = top_stack(myStack); if ($4!=NULL){print_tree($4); print_parentship($4);} if($6!=NULL) analisa_e_insere(temp->elemento_pilha, $6, $1); //acho q dá pra colocar o addchild $$ $6 no mesmo if
 free($1);};
 cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1);};
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL;  Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2); free($1);}; //tem que ver se isso aqui n fica testando o mesmo identificador, se ficar tem q mudar a linha de baixo tbm acho
