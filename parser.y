@@ -47,7 +47,7 @@
 %token <valor_lexico> TK_LIT_CHAR
 %token TK_ERRO
 
-%type<node> IDENTIFICADOR literal tipo
+%type<node> IDENTIFICADOR literal tipo PS
 %type<node> operandos expressao
 %type<node> exp7 exp6 exp5 exp4 exp3 exp2 exp1
 %type<node> chamada_funcao chamada_retorno chamada_ctrl_fluxo
@@ -83,14 +83,14 @@ multidimensional: IDENTIFICADOR {$$=$1;};
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); } 
-Pilha* temp = top_stack(myStack); if ($4!=NULL){print_tree($4); print_parentship($4);} if($6!=NULL) analisa_e_insere(temp->elemento_pilha, $6, $1); //acho q dá pra colocar o addchild $$ $6 no mesmo if
-free($1);};
+cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); }
+Pilha* temp = top_stack(myStack); if ($4!=NULL){print_tree($4); print_parentship($4);} free($1);};
 cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1);};
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL;  Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2); free($1);}; //tem que ver se isso aqui n fica testando o mesmo identificador, se ficar tem q mudar a linha de baixo tbm acho
 lista_parametros: tipo IDENTIFICADOR {$$=NULL; Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2); free($1);}; 
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2; };
 bloco_comandos: '{' '}' {$$=NULL; };
+PS: '(' {$$=NULL; Tabela* temptable = create_simbolo(); push_stack(temptable, myStack);};
 
 
 lista_comandos_simples: comandos_simples ';' lista_comandos_simples 

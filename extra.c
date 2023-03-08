@@ -129,9 +129,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
-			else{
-			
-			}
 			/* Necessitamos pesquisar se a variável já foi declarada antes de adicioná-la na tabela.*/
 
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
