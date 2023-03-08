@@ -314,6 +314,24 @@ Pilha* pop_stack(Pilha* pilha)
 	return eliminado;
 }
 
+void print_full_stack()
+{
+  Pilha* tempStack = myStack;
+  int nivel = 0;
+  while(tempStack != NULL)
+  {
+    Tabela* resultado = tempStack->elemento_pilha;
+    printf("Nivel %d:\n", nivel);
+    while(resultado != NULL)
+    {
+      printf("\tLinha: %d, Coluna: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
+      resultado = resultado->nextElement;
+    }
+    tempStack = tempStack->top;
+  }
+
+}
+
 void print_node(Node *node){
 
 	//printf("Entrei na print NODO\n");
