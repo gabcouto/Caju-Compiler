@@ -324,10 +324,11 @@ void print_full_stack()
     printf("Nivel %d:\n", nivel);
     while(resultado != NULL)
     {
-      printf("\tLinha: %d, Coluna: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
+      printf("\tLinha: %d, Coluna: %d, Natureza: %d, Tipo: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->natureza, resultado->conteudo->tipo, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
       resultado = resultado->nextElement;
     }
     tempStack = tempStack->top;
+    nivel++;
   }
 
 }

@@ -98,6 +98,8 @@ Pilha * top_stack(Pilha* pilha);
 
 void push_stack(Tabela* tabela, Pilha* pilha);
 
+void print_full_stack();
+
 Pilha* pop_stack(Pilha* pilha);
 
 Node * create_node(char* name, char* label);
