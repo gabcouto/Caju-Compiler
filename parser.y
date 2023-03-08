@@ -83,11 +83,11 @@ multidimensional: IDENTIFICADOR {$$=$1;};
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($6!=NULL) {add_child($$, $6); }
-Pilha* temp = top_stack(myStack); if ($4!=NULL){print_tree($4); print_parentship($4);} free($1);};
-cabecalho_funcao: tipo TK_IDENTIFICADOR '(' ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1);};
-lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=NULL;  Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2); free($1);}; //tem que ver se isso aqui n fica testando o mesmo identificador, se ficar tem q mudar a linha de baixo tbm acho
-lista_parametros: tipo IDENTIFICADOR {$$=NULL; Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2); free($1);}; 
+cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos {$$ = create_node_from_token("FuncaoL", $2); free($2.valor.cadeia); add_child($$, $4); if($6!=NULL) {add_child($$, $6); }
+Pilha* temp = top_stack(myStack); free($1); print_full_stack(); pop_stack(myStack); temp = top_stack(myStack);analisa_e_insere(temp->elemento_pilha, $$, $1);};
+cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1); print_full_stack(); pop_stack(myStack);};
+lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=create_node("LIST_PARAM", ","); add_child($$, $1); add_child($$, $4); Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2);}; 
+lista_parametros: tipo IDENTIFICADOR {$$=$1; Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2);};
 bloco_comandos: '{' lista_comandos_simples '}' {$$ = $2; };
 bloco_comandos: '{' '}' {$$=NULL; };
 PS: '(' {$$=NULL; Tabela* temptable = create_simbolo(); push_stack(temptable, myStack);};
@@ -115,7 +115,7 @@ lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis
 { $$=create_node("PROX_VARL", ","); add_child($$, $1); add_child($$, $3); };
 lista_de_nome_de_variaveis_locais: variavel_local {$$ = $1; };
 variavel_local: IDENTIFICADOR TK_OC_LE literal {$$ = create_node("TK_OC_LE", "<="); add_child($$, $1); free($2.valor.cadeia); add_child($$, $3); };
-variavel_local: IDENTIFICADOR {$$=$1; free($1);};
+variavel_local: IDENTIFICADOR {$$=$1;};
 
 /*
 	Atribuição local

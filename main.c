@@ -25,12 +25,6 @@ int main (int argc, char **argv)
   Tabela* myTable = create_simbolo();
   myStack = create_stack(myTable);
   int ret = yyparse(); 
-  Tabela* resultado = top_stack(myStack)->elemento_pilha;
-  while(resultado != NULL)
-  {
-    printf("Linha: %d, Coluna: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
-    resultado = resultado->nextElement;
-  }
   exporta(arvore);
   libera(arvore);
   arvore = NULL;

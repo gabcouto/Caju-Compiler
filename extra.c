@@ -195,6 +195,50 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
+		else if(strcmp(arvore->name, "FuncaoL") == 0){
+			int line_no = arvore->line_no, col_no = arvore->col_no;
+			enum Tipo type;
+			char dados[60];
+			char outros[60]={};
+			switch(tipo->label[0])
+			{
+				case 'i':
+					type = inteiro; tamanho = 4; break;
+				case 'f':
+					type = flutuante; tamanho = 4; break;
+				case 'b':
+					type = booleano; tamanho = 4;  break;
+				case 'c':
+					type = caractere; tamanho = 1;  break;
+			}
+			strcpy(dados, arvore->label);
+			int EOS=0; //end of string
+			Node* parametros = arvore->firstChild;
+			while (parametros->label[0] == ','){
+				strcpy(&outros[EOS], parametros->firstChild->name);
+				for(int i=0; parametros->firstChild->name[i]!='\0'; i++, EOS++);
+				outros[EOS] = ' ';
+				EOS++;
+				strcpy(&outros[EOS], parametros->firstChild->label);
+				for(int i=0; parametros->firstChild->label[i]!='\0'; i++, EOS++);
+				outros[EOS] = ',';
+				EOS++;
+				outros[EOS] = ' ';
+				EOS++;
+				parametros=parametros->firstChild->nextSibling;
+			}
+			strcpy(&outros[EOS], parametros->name);
+			for(int i=0; parametros->name[i]!='\0'; i++, EOS++);
+			outros[EOS] = ' ';
+			EOS++;
+			strcpy(&outros[EOS], parametros->label);
+			for(int i=0; parametros->label[i]!='\0'; i++, EOS++);
+			
+			
+		Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, dados, outros);
+			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			add_to_table(myTable, conteudo_de_simbolo);
+		}
 	}
 }	
 
@@ -324,10 +368,11 @@ void print_full_stack()
     printf("Nivel %d:\n", nivel);
     while(resultado != NULL)
     {
-      printf("\tLinha: %d, Coluna: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
+      printf("\tLinha: %d, Coluna: %d, Natureza: %d, Tipo: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->natureza, resultado->conteudo->tipo, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
       resultado = resultado->nextElement;
     }
     tempStack = tempStack->top;
+    nivel++;
   }
 
 }
@@ -338,7 +383,6 @@ void print_node(Node *node){
 
 	if(node != NULL)
 	{
-		printf("eu estou em: %p\n", node);
 		printf("%s\n %s\n & do meu filho: %p\n &do meu irmao: %p\n",
 		node->name, node->label, node->firstChild, node->nextSibling);
 	}	
