@@ -29,10 +29,10 @@ int tamanho_tipo(enum Tipo tipo)
 
 Tabela* create_simbolo()
 {
-	Tabela* myTable;
-	myTable = (Tabela*) malloc (sizeof(Tabela));
-	myTable->nextElement = NULL;
-	return myTable;
+	Tabela* minhaTabela;
+	minhaTabela = (Tabela*) malloc (sizeof(Tabela));
+	minhaTabela->nextElement = NULL;
+	return minhaTabela;
 }
 
 Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, char *dados, char *outros)
@@ -81,18 +81,15 @@ void add_to_table(Tabela* myTable, Content* conteudo)
 
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 {
-
 	if(arvore != NULL)
 	{
-	int tamanho = 0;
+		int tamanho = 0;
 		if(arvore->label[0] == ',')
 		{
 			analisa_e_insere(myTable, arvore->firstChild, tipo);
 			analisa_e_insere(myTable, arvore->firstChild->nextSibling, tipo);
 		} 
-		else
-		
-	 if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
+		else if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
 			enum Tipo type;
 			char outros[60] = {};
@@ -108,12 +105,11 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			/* Necessitamos pesquisar se a variável já foi declarada antes de adicioná-la na tabela.*/
-
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
-	else if(strcmp(arvore->name, "LISTA_LIT") == 0)
+		else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
 			arvore = arvore->firstChild;//aqui tem o id do var global multidimensional
 			int line_no = arvore->line_no, col_no = arvore->col_no;
@@ -122,36 +118,37 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			char dados[60];
 			strcpy(dados, arvore->label);
 			switch(tipo->label[0])
-				{
-					case 'i':
-						type = inteiro; tamanho = 4; break;
-					case 'f':
-						type = flutuante; tamanho = 4; break;
-					case 'b':
-						type = booleano; tamanho = 4; break;
-					case 'c':
-						type = caractere; tamanho = 1; break;
-				}
-				int EOS=0; //end of string
-				Node* calctam = arvore;
-				while (calctam->nextSibling->label[0]== '^'){
-					calctam = calctam->nextSibling->firstChild;
-					tamanho*=atoi(calctam->label);
-					strcpy(&outros[EOS], calctam->label);
-					for(int i=0; calctam->label[i]!='\0'; i++, EOS++);
-					outros[EOS] = '^';
-					EOS++;
-				}
-				calctam=calctam->nextSibling;
-				strcpy(&outros[EOS], calctam->label);
+			{
+				case 'i':
+					type = inteiro; tamanho = 4; break;
+				case 'f':
+					type = flutuante; tamanho = 4; break;
+				case 'b':
+					type = booleano; tamanho = 4; break;
+				case 'c':
+					type = caractere; tamanho = 1; break;
+			}
+			int EOS=0; //end of string
+			Node* calctam = arvore;
+			while (calctam->nextSibling->label[0]== '^')
+			{
+				calctam = calctam->nextSibling->firstChild;
 				tamanho*=atoi(calctam->label);
+				strcpy(&outros[EOS], calctam->label);
+				for(int i=0; calctam->label[i]!='\0'; i++, EOS++);
+				outros[EOS] = '^';
+				EOS++;
+			}
+			calctam=calctam->nextSibling;
+			strcpy(&outros[EOS], calctam->label);
+			tamanho*=atoi(calctam->label);
 				
-				Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
-				verifica_isDeclared(myTable, conteudo_de_simbolo);
-				add_to_table(myTable, conteudo_de_simbolo);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
+			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			add_to_table(myTable, conteudo_de_simbolo);
 		}
-		else if(strcmp(arvore->label, "<=") == 0){
-			
+		else if(strcmp(arvore->label, "<=") == 0)
+		{
 			int line_no = arvore->line_no, col_no = arvore->col_no;
 			enum Tipo type;
 			char dados[60];
@@ -168,12 +165,12 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			strcpy(dados, arvore->firstChild->label);
-			
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-		}
-		else if(strcmp(arvore->name, "FuncaoL") == 0){
+		}	
+		else if(strcmp(arvore->name, "FuncaoL") == 0)
+		{
 			int line_no = arvore->line_no, col_no = arvore->col_no;
 			enum Tipo type;
 			char dados[60];
@@ -192,7 +189,8 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			strcpy(dados, arvore->label);
 			int EOS=0; //end of string
 			Node* parametros = arvore->firstChild;
-			while (parametros->label[0] == ','){
+			while (parametros->label[0] == ',')
+			{
 				strcpy(&outros[EOS], parametros->firstChild->name);
 				for(int i=0; parametros->firstChild->name[i]!='\0'; i++, EOS++);
 				outros[EOS] = ' ';
@@ -210,10 +208,9 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			outros[EOS] = ' ';
 			EOS++;
 			strcpy(&outros[EOS], parametros->label);
-			for(int i=0; parametros->label[i]!='\0'; i++, EOS++);
+			for(int i=0; parametros->label[i]!='\0'; i++, EOS++);	
 			
-			
-		Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, dados, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
@@ -355,7 +352,7 @@ void print_full_stack()
     printf("Nivel %d:\n", nivel);
     while(resultado != NULL)
     {
-      printf("\tLinha: %d, Coluna: %d, Natureza: %d, Tipo: %d, Tamanho: %d, Dados: [%s], Outros: [%s]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->natureza, resultado->conteudo->tipo, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros);
+      printf("\tLinha: %d, Coluna: %d, Natureza: %d, Tipo: %d, Tamanho: %d, Dados: [%s], Outros: [%s], Endereço: [%p]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->natureza, resultado->conteudo->tipo, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros, resultado);
       resultado = resultado->nextElement;
     }
     tempStack = tempStack->top;

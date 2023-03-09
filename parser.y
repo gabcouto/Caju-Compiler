@@ -72,13 +72,52 @@ lista_de_elementos: declaracao ';'{$$=$1;};
 */
 
 
-declaracao: tipo lista_de_nome_de_variaveis {$$=NULL; Pilha* temp = top_stack(myStack); print_tree($2); print_parentship($2); analisa_e_insere(temp->elemento_pilha, $2, $1); exclude_node($2); free($1);};
-lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional {$$=create_node("PROX_VARG", ",");  add_child($$, $1); add_child($$, $3);}; 
-lista_de_nome_de_variaveis: multidimensional {$$=$1;};
-multidimensional: IDENTIFICADOR '[' lista_literais ']' {$$=create_node("LISTA_LIT", "[]"); add_child($$, $1); add_child($$, $3);};
-lista_literais: TK_LIT_INT '^' lista_literais {$$=create_node("PROX_LIT", "^"); add_child($$, create_node_from_token("TK_LIT_INT", $1)); add_child($$, $3);};
-lista_literais: TK_LIT_INT {$$=create_node_from_token("TK_LIT_INT", $1); }; 
-multidimensional: IDENTIFICADOR {$$=$1;}; 
+declaracao: tipo lista_de_nome_de_variaveis 
+{
+	$$=NULL; 
+	Pilha* temp = top_stack(myStack); 
+	print_tree($2); 
+	print_parentship($2); 
+	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	exclude_node($2); 
+	free($1);
+};
+
+lista_de_nome_de_variaveis: lista_de_nome_de_variaveis ',' multidimensional 
+{
+	$$=create_node("PROX_VARG", ",");
+	add_child($$, $1); 
+	add_child($$, $3);
+}; 
+
+lista_de_nome_de_variaveis: multidimensional 
+{
+	$$=$1;
+};
+
+multidimensional: IDENTIFICADOR '[' lista_literais ']' 
+{
+	$$=create_node("LISTA_LIT", "[]"); 
+	add_child($$, $1); 
+	add_child($$, $3);
+};
+
+lista_literais: TK_LIT_INT '^' lista_literais 
+{
+	$$=create_node("PROX_LIT", "^"); 
+	add_child($$, create_node_from_token("TK_LIT_INT", $1)); 
+	add_child($$, $3);
+};
+
+lista_literais: TK_LIT_INT 
+{
+	$$=create_node_from_token("TK_LIT_INT", $1); 
+}; 
+
+multidimensional: IDENTIFICADOR 
+{
+	$$=$1;
+}; 
 
 /*
 	Definição de Função
@@ -94,10 +133,13 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos
 	}
 	Pilha* temp = top_stack(myStack);  
 	print_full_stack(); 
-	pop_stack(myStack); 
+	pop_stack(myStack);
 	temp = top_stack(myStack);
+
+	// Esta linha abaixo serve para adicionar foo ao escopo imediatamente anterior.
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
 	free($1);
+	print_full_stack(); 
 };
 
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos 
@@ -129,7 +171,7 @@ lista_parametros: tipo IDENTIFICADOR ',' lista_parametros
 lista_parametros: tipo IDENTIFICADOR 
 {
 	$$=$1; 
-	Pilha* temp = top_stack(myStack); 
+	Pilha* temp = top_stack(myStack);
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
 	free($2);
 };
@@ -147,7 +189,7 @@ bloco_comandos: '{' '}'
 PS: '(' 
 {
 	$$=NULL; 
-	Tabela* temptable = create_simbolo(); 
+	Tabela* temptable = create_simbolo();
 	push_stack(temptable, myStack);
 };
 
