@@ -92,28 +92,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 		} 
 		else
 		
-	/*será que n rola colocar essa parte aqui?, e tirar ela de dentro dos ifs
-			{
-			int line_no = arvore->line_no, col_no = arvore->col_no;
-			enum Tipo type;
-			char outros[60] = {};
-			char dados[60];
-			switch(tipo->label[0])
-			{
-				case 'i':
-					type = inteiro; tamanho = 4; break;
-				case 'f':
-					type = flutuante; tamanho = 4; break;
-				case 'b':
-					type = booleano; tamanho = 4;  break;
-				case 'c':
-					type = caractere; tamanho = 1;  break;
-			}
-	
-	
-		}
-	
-	*/
 	 if(strcmp(arvore->name, "TK_IDENTIFICADOR") == 0)
 		{
 			enum Tipo type;
@@ -247,8 +225,9 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 	/* Temos de iterar desde a tabela mais profunda (global) da pilha até a tabela atual para ver se o símbolo já foi declarado: */
 
 	// O elemento mais profundo da pilha é myStack. Vamos de myStack->elementoPilha até myTable:
-
 	Pilha *tempPilha = myStack;
+	//taestranho isso aqui, n to conseguindo fazer print_full_stack();
+	//teste 01 ta dando seg fault aqui
 	Tabela *tempTable;
 	int bool = 0;
 	do
@@ -261,6 +240,7 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 		
 		while(tempTable->nextElement != NULL)
 		{
+		printf("element: %s\n", tempTable->conteudo->dados);
 			if(tempTable->conteudo != conteudo)
 				if(tempTable->conteudo->dados == conteudo->dados)
 					exit(ERR_DECLARED);
@@ -272,16 +252,20 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 	
 }
 
-/*
-void analisa_e_atualiza(Tabela *myTable, Node *variavel, Node* valor){ //tem que acertar as coisas de função aqui e na analisa
-	
+
+void analisa_uso(Tabela *myTable, Node *variavel, Node* valor){ //tem que acertar as coisas de função aqui e na analisa
 	
 	Pilha *tempPilha = myStack;
 	Tabela *tempTable;
 	int bool = 0;
 	int mult=0;
 	Node* id;
-	if variavel->label[0] == '[') {mult=1; id=variavel->firtChild;}
+	Node *circunflexos = id;
+	if (variavel->label[0] == '[') {
+		mult=1;
+		circunflexos=id->firstChild;
+		id=variavel->firstChild->nextSibling;
+		}
 	do
 	{
 		if(bool)
@@ -292,25 +276,28 @@ void analisa_e_atualiza(Tabela *myTable, Node *variavel, Node* valor){ //tem que
 		
 		while(tempTable->nextElement != NULL)
 		{
-			if(strcmp(tempTable->conteudo->dados, variavel->label) != 0)
+			if(strcmp(tempTable->conteudo->dados, id->label) != 0)
 				tempTable = tempTable->nextElement;
 			else {
 				if (mult){
-					if(tempTable->conteudo->outros[0]!='[')
-						exit(ERR_ARRAY);
+					if (tempTable->conteudo->outros==NULL) 
+						exit(ERR_VARIABLE);
+					else if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
+						exit(ERR_FUNCTION); //problema é q n pega o caso da funcão não ter parametros
 				}
 				else 
-					if(tempTable->conteudo->outros[0]=='[')
-						exit(ERR_VARRIABLE);
-			}
-										
+					if(tempTable->conteudo->outros!=NULL)
+						exit(ERR_ARRAY);
+					else if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
+						exit(ERR_FUNCTION); //problema é q n pega o caso da funcão não ter parametros
+			}						
 		}
 	} while (tempPilha->elemento_pilha != myTable);
 	
 	exit(ERR_UNDECLARED);
 	
 }
-*/
+
 
 
 Pilha * create_stack(Tabela* tabela)

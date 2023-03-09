@@ -90,6 +90,8 @@ void add_to_table(Tabela* myTable, Content* conteudo);
 
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo);
 
+void analisa_uso(Tabela *myTable, Node *variavel, Node* valor);
+
 void verifica_isDeclared(Tabela* myTable, Content* conteudo);
 
 Pilha * create_stack(Tabela* tabela);

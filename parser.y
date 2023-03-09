@@ -84,7 +84,8 @@ multidimensional: IDENTIFICADOR {$$=$1;};
 	Definição de Função
 */
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos {$$ = create_node_from_token("FuncaoL", $2); free($2.valor.cadeia); add_child($$, $4); if($6!=NULL) {add_child($$, $6); }
-Pilha* temp = top_stack(myStack); free($1); print_full_stack(); pop_stack(myStack); temp = top_stack(myStack);analisa_e_insere(temp->elemento_pilha, $$, $1);};
+Pilha* temp = top_stack(myStack); free($1); print_full_stack(); pop_stack(myStack); 
+temp = top_stack(myStack);analisa_e_insere(temp->elemento_pilha, $$, $1);};
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos {$$ = create_node_from_token("Funcao", $2); free($2.valor.cadeia); if($5!=NULL){add_child($$, $5); } free($1); print_full_stack(); pop_stack(myStack);};
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros {$$=create_node("LIST_PARAM", ","); add_child($$, $1); add_child($$, $4); Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2);}; 
 lista_parametros: tipo IDENTIFICADOR {$$=$1; Pilha* temp = top_stack(myStack); analisa_e_insere(temp->elemento_pilha, $2, $1); free($2);};
@@ -122,8 +123,8 @@ variavel_local: IDENTIFICADOR {$$=$1;};
 */
 
 atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao {$$ = create_node("ATRIBUICAO", "="); 
-if ($2!= NULL) { add_child($2, $1);  add_child($$, $2);  }
-else { add_child($$, $1); } add_child($$, $4); };
+if ($2!= NULL) { add_child($2, $1);  add_child($$, $2); analisa_uso(top_stack(myStack)->elemento_pilha, $2, $4); }
+else { add_child($$, $1); analisa_uso(top_stack(myStack)->elemento_pilha, $1, $4); } add_child($$, $4);};
 lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' { $$ = create_node("ARRANJO", "[]");  if ($2!= NULL) { add_child($2, $3); add_child($$, $2);} else add_child($$, $3); };
 lista_de_expressoes_: lista_de_expressoes_ expressao '^' {$$ = create_node("LISTA_EXP", "^");  if ($1!=NULL) {add_child($1, $2);add_child($$, $1);} else add_child($$, $2); };
 lista_de_expressoes_: {$$=NULL;};
