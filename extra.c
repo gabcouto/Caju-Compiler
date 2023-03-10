@@ -21,7 +21,7 @@ int tamanho_tipo(enum Tipo tipo)
 	else if(tipo == flutuante)
 		return 4;	
 	else if(tipo == booleano)
-		return 4; // é int
+		return 1; // é int
 	else if(tipo == caractere)
 		return 1;
 
@@ -100,7 +100,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'f':
 					type = flutuante; tamanho = 4; break;
 				case 'b':
-					type = booleano; tamanho = 4;  break;
+					type = booleano; tamanho = 1;  break;
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
@@ -124,7 +124,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'f':
 					type = flutuante; tamanho = 4; break;
 				case 'b':
-					type = booleano; tamanho = 4; break;
+					type = booleano; tamanho = 1; break;
 				case 'c':
 					type = caractere; tamanho = 1; break;
 			}
@@ -160,7 +160,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'f':
 					type = flutuante; tamanho = 4; break;
 				case 'b':
-					type = booleano; tamanho = 4;  break;
+					type = booleano; tamanho = 1;  break;
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
@@ -182,7 +182,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'f':
 					type = flutuante; tamanho = 4; break;
 				case 'b':
-					type = booleano; tamanho = 4;  break;
+					type = booleano; tamanho = 1;  break;
 				case 'c':
 					type = caractere; tamanho = 1;  break;
 			}
@@ -214,6 +214,27 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
+		else if(strcmp(arvore->name, "Funcao") == 0)
+		{
+			enum Tipo type;
+			char outros[60] = {};
+			switch(tipo->label[0])
+			{
+				case 'i':
+					type = inteiro; tamanho = 4; break;
+				case 'f':
+					type = flutuante; tamanho = 4; break;
+				case 'b':
+					type = booleano; tamanho = 1;  break;
+				case 'c':
+					type = caractere; tamanho = 1;  break;
+			}
+			/* Necessitamos pesquisar se a funcao já foi declarada antes de adicioná-la na tabela.*/
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, arvore->label, outros);
+			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			add_to_table(myTable, conteudo_de_simbolo);
+		}
+
 	}
 }	
 
@@ -222,73 +243,85 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 	/* Temos de iterar desde a tabela mais profunda (global) da pilha até a tabela atual para ver se o símbolo já foi declarado: */
 
 	// O elemento mais profundo da pilha é myStack. Vamos de myStack->elementoPilha até myTable:
-	Pilha *tempPilha = myStack;
-	//taestranho isso aqui, n to conseguindo fazer print_full_stack();
-	//teste 01 ta dando seg fault aqui
+	/*Pilha *tempPilha = myStack;
 	Tabela *tempTable;
 	int bool = 0;
 	do
-	{
+	{	
 		if(bool)
 			tempPilha = tempPilha->top;
 		bool=1;
 
 		tempTable = tempPilha->elemento_pilha;
 		
-		while(tempTable->nextElement != NULL)
+		while(tempTable->conteudo != NULL)
 		{
-		printf("element: %s\n", tempTable->conteudo->dados);
-			if(tempTable->conteudo != conteudo)
-				if(tempTable->conteudo->dados == conteudo->dados)
+			if(strcmp(tempTable->conteudo->dados, conteudo->dados) == 0)
+				//if(tempTable->conteudo->tipo == funcao || tempPilha->elemento_pilha == myTable)
 					exit(ERR_DECLARED);
 
-			tempTable = tempTable->nextElement;
+			if (tempTable->nextElement!= NULL) tempTable = tempTable->nextElement;
+			else break;
 		}
-
 	} while (tempPilha->elemento_pilha != myTable);
-	
+*/	
+	//solução que compreende mascaras, mas acho q é pra ser como a anterior caso haja uma função com o mesmo identificador
+	// ou seja, qnd acertar o tipo e a natureza, voltar ao método anterior 
+	while(myTable->conteudo != NULL)
+	{
+		if(strcmp(myTable->conteudo->dados, conteudo->dados) == 0)
+			exit(ERR_DECLARED);
+
+		if (myTable->nextElement!= NULL) myTable = myTable->nextElement;
+		else break;
+	}
 }
 
 
-void analisa_uso(Tabela *myTable, Node *variavel, Node* valor){ //tem que acertar as coisas de função aqui e na analisa
-	
+int analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de função aqui e na analisa
 	Pilha *tempPilha = myStack;
 	Tabela *tempTable;
 	int bool = 0;
 	int mult=0;
-	Node* id;
-	Node *circunflexos = id;
+	Node* id = variavel;
 	if (variavel->label[0] == '[') {
 		mult=1;
-		circunflexos=id->firstChild;
 		id=variavel->firstChild->nextSibling;
-		}
+	}
 	do
-	{
+	{	//printf("entrei no do da uso\n");
 		if(bool)
 			tempPilha = tempPilha->top;
 		bool=1;
 
 		tempTable = tempPilha->elemento_pilha;
 		
-		while(tempTable->nextElement != NULL)
-		{
+		while(tempTable->conteudo != NULL)
+		{	//printf("entrei no while da uso\n");
 			if(strcmp(tempTable->conteudo->dados, id->label) != 0)
-				tempTable = tempTable->nextElement;
-			else {
-				if (mult){
+				if (myTable->nextElement!= NULL)
+					tempTable = tempTable->nextElement;
+				else break;
+			else { //printf("entrei no elsezao da uso\n");
+				if (mult){ //printf("entrei no mult da uso\n");
 					if (tempTable->conteudo->outros==NULL) 
 						exit(ERR_VARIABLE);
 					else if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
 						exit(ERR_FUNCTION); //problema é q n pega o caso da funcão não ter parametros
 				}
-				else 
-					if(tempTable->conteudo->outros!=NULL)
-						exit(ERR_ARRAY);
-					else if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
-						exit(ERR_FUNCTION); //problema é q n pega o caso da funcão não ter parametros
-			}						
+				else {	//printf("entrei no mult = 0 da uso\n");
+					if(tempTable->conteudo->outros[0]!='\0'){
+						//printf("entrei no outros n nulo: %s\n", tempTable->conteudo->outros );
+						if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
+							exit(ERR_ARRAY); //problema é q n pega o caso da funcão não ter parametros
+						else exit(ERR_FUNCTION);
+					}
+					else return 0;
+				}
+			}
+						
 		}
+		//printf("sai do while da uso\n");
 	} while (tempPilha->elemento_pilha != myTable);
 	
 	exit(ERR_UNDECLARED);

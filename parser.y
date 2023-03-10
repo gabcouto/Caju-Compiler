@@ -132,14 +132,14 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos
 		add_child($$, $6); 
 	}
 	Pilha* temp = top_stack(myStack);  
-	print_full_stack(); 
+	//print_full_stack(); 
 	pop_stack(myStack);
 	temp = top_stack(myStack);
 
 	// Esta linha abaixo serve para adicionar foo ao escopo imediatamente anterior.
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
 	free($1);
-	print_full_stack(); 
+	//print_full_stack(); 
 };
 
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos 
@@ -150,11 +150,11 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos
 	{
 		add_child($$, $5); 
 	}  
-	print_full_stack(); 
+	//print_full_stack(); 
 	pop_stack(myStack);
 	Pilha* temp = top_stack(myStack);
 	// precisamos adicionar "Funcao" no analisa e insere antes de descomentar a linha abaixo:
-	// analisa_e_insere(temp->elemento_pilha, $$, $1);
+	analisa_e_insere(temp->elemento_pilha, $$, $1);
 	free($1);
 };
 
@@ -302,12 +302,14 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	{ 
 		add_child($2, $1);  
 		add_child($$, $2); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $2, $4); 
+		analisa_uso(top_stack(myStack)->elemento_pilha, $2);
+		analisa_uso(top_stack(myStack)->elemento_pilha, $4);
 	}
 	else 
 	{ 
 		add_child($$, $1); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $1, $4); 
+		analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+		analisa_uso(top_stack(myStack)->elemento_pilha, $4); 
 	} 
 	add_child($$, $4);
 	};
@@ -349,8 +351,17 @@ lista_de_expressoes:
 /*
 	Chamada de Função
 */
-chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' {$$ = create_node_from_token("CHAMA_FUNCAO", $1); free($1.valor.cadeia); add_child($$, $3); };
-chamada_funcao: TK_IDENTIFICADOR  '(' ')' {$$ = create_node_from_token("CHAMA_FUNCAO", $1); free($1.valor.cadeia);}; 
+chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {
+	$$ = $1; //create_node_from_token("CHAMA_FUNCAO", $1); 
+	//free($1.valor.cadeia); 
+	add_child($$, $3);
+	analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+	};
+chamada_funcao: IDENTIFICADOR  '(' ')' {
+	$$ = $1; //create_node_from_token("CHAMA_FUNCAO", $1);
+	//free($1.valor.cadeia);
+	analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+	}; 
 lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = $1;  add_child($$, $3); };
 lista_expressoes_funcao: expressao {$$ = $1; };
 
