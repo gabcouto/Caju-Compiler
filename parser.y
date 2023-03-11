@@ -153,7 +153,6 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos
 	//print_full_stack(); 
 	pop_stack(myStack);
 	Pilha* temp = top_stack(myStack);
-	// precisamos adicionar "Funcao" no analisa e insere antes de descomentar a linha abaixo:
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
 	free($1);
 };

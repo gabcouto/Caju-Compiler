@@ -35,7 +35,7 @@ Tabela* create_simbolo()
 	return minhaTabela;
 }
 
-Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, char *dados, char *outros)
+Content* create_conteudo(int linha, int coluna, enum Natureza natureza, enum Tipo tipo, int tamanho, char *dados, char *outros)
 {
 	Content* myContent;
 	myContent = (Content*) malloc (sizeof(Content));
@@ -47,6 +47,7 @@ Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tama
 	myContent->localizacao = myLocation;
 	myContent->natureza = natureza;
 	myContent->tamanho = tamanho;
+	myContent->tipo = tipo;
 	strcpy(myContent->dados, dados);
 	strcpy(myContent->outros, outros);
 
@@ -105,9 +106,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			/* Necessitamos pesquisar se a variável já foi declarada antes de adicioná-la na tabela.*/
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, arvore->label, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, arvore->label, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
+			print_full_stack();
 		}
 		else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
@@ -143,9 +145,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			strcpy(&outros[EOS], calctam->label);
 			tamanho*=atoi(calctam->label);
 				
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, /*Arranjo,*/ type, tamanho, dados, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Arranjo, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
+			print_full_stack();
 		}
 		else if(strcmp(arvore->label, "<=") == 0)
 		{
@@ -165,9 +168,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			strcpy(dados, arvore->firstChild->label);
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Variavel,*/ type, tamanho, dados, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
+			print_full_stack();
 		}	
 		else if(strcmp(arvore->name, "FuncaoL") == 0)
 		{
@@ -210,9 +214,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			strcpy(&outros[EOS], parametros->label);
 			for(int i=0; parametros->label[i]!='\0'; i++, EOS++);	
 			
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, dados, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Funcao, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
+			print_full_stack();
 		}
 		else if(strcmp(arvore->name, "Funcao") == 0)
 		{
@@ -230,9 +235,10 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 					type = caractere; tamanho = 1;  break;
 			}
 			/* Necessitamos pesquisar se a funcao já foi declarada antes de adicioná-la na tabela.*/
-			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no,/* Funcao,*/ type, tamanho, arvore->label, outros);
+			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Funcao, type, tamanho, arvore->label, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
+			print_full_stack();
 		}
 
 	}
@@ -278,14 +284,12 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 }
 
 
-int analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de função aqui e na analisa
+void analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de função aqui e na analisa
 	Pilha *tempPilha = myStack;
 	Tabela *tempTable;
 	int bool = 0;
-	int mult=0;
 	Node* id = variavel;
-	if (variavel->label[0] == '[') {
-		mult=1;
+	if (variavel->natureza == Arranjo) {
 		id=variavel->firstChild->nextSibling;
 	}
 	do
@@ -303,20 +307,26 @@ int analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de
 					tempTable = tempTable->nextElement;
 				else break;
 			else { //printf("entrei no elsezao da uso\n");
-				if (mult){ //printf("entrei no mult da uso\n");
-					if (tempTable->conteudo->outros==NULL) 
+				if (variavel->natureza == Arranjo){
+					if (tempTable->conteudo->natureza == Variavel)
 						exit(ERR_VARIABLE);
-					else if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
-						exit(ERR_FUNCTION); //problema é q n pega o caso da funcão não ter parametros
+					else if (tempTable->conteudo->natureza == Funcao)
+						exit(ERR_FUNCTION);
+					else return;
 				}
-				else {	//printf("entrei no mult = 0 da uso\n");
-					if(tempTable->conteudo->outros[0]!='\0'){
-						//printf("entrei no outros n nulo: %s\n", tempTable->conteudo->outros );
-						if (tempTable->conteudo->outros[0]<98 || tempTable->conteudo->outros[0]>105)
-							exit(ERR_ARRAY); //problema é q n pega o caso da funcão não ter parametros
-						else exit(ERR_FUNCTION);
-					}
-					else return 0;
+				else if(variavel->natureza == Funcao) {
+					if (tempTable->conteudo->natureza == Variavel)
+						exit(ERR_VARIABLE);
+					else if (tempTable->conteudo->natureza == Arranjo)
+						exit(ERR_ARRAY);
+					else return;
+				}
+				else if(variavel->natureza == variavel){
+					if (tempTable->conteudo->natureza == Funcao)
+						exit(ERR_FUNCTION);
+					else if (tempTable->conteudo->natureza == Arranjo)
+						exit(ERR_ARRAY);
+					else return;
 				}
 			}
 						
@@ -385,6 +395,7 @@ void print_full_stack()
     printf("Nivel %d:\n", nivel);
     while(resultado != NULL)
     {
+    if(resultado->conteudo != NULL)
       printf("\tLinha: %d, Coluna: %d, Natureza: %d, Tipo: %d, Tamanho: %d, Dados: [%s], Outros: [%s], Endereço: [%p]\n", resultado->conteudo->localizacao->linha, resultado->conteudo->localizacao->coluna, resultado->conteudo->natureza, resultado->conteudo->tipo, resultado->conteudo->tamanho, resultado->conteudo->dados, resultado->conteudo->outros, resultado);
       resultado = resultado->nextElement;
     }

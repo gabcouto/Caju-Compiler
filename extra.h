@@ -82,7 +82,7 @@ int tamanho_tipo(enum Tipo tipo);
 
 Tabela* create_simbolo();
 
-Content* create_conteudo(int linha, int coluna, enum Natureza natureza, int tamanho, char *dados, char *outros);
+Content* create_conteudo(int linha, int coluna, enum Natureza natureza, enum Tipo tipo, int tamanho, char *dados, char *outros);
 
 Tabela* find_free_place(Tabela* myTable);
 
@@ -90,7 +90,7 @@ void add_to_table(Tabela* myTable, Content* conteudo);
 
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo);
 
-int analisa_uso(Tabela *myTable, Node *variavel);
+void analisa_uso(Tabela *myTable, Node *variavel);
 
 void verifica_isDeclared(Tabela* myTable, Content* conteudo);
 
