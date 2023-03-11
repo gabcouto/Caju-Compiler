@@ -1,6 +1,6 @@
 # Gabriel Couto & Felippo Stédile: Dupla 
 ETAPA_ATUAL = etapa4
-FILES_TO_TAR = extra.c main.c scanner.l parser.y extra.h Makefile
+FILES_TO_TAR = extra.c verify.c analysis.c main.c scanner.l parser.y extra.h Makefile
 OUT = etapa4
 LINUXCC  = gcc
 LINUXFLEX = flex
@@ -23,9 +23,11 @@ UNAME_S := $(shell uname -s)
 		SPECIFIC_FLAGS = -L /usr/local/opt/flex/lib/
 	endif
 all: clean parser scanner main
-	$(CC) obj/parser.tab.o obj/lex.yy.o obj/main.o obj/extra.o $(SPECIFIC_FLAGS) -lfl -o $(OUT)
+	$(CC) obj/parser.tab.o obj/lex.yy.o obj/main.o obj/analysis.o obj/verify.o obj/extra.o $(SPECIFIC_FLAGS) -lfl -o $(OUT)
 main: main.c
 	$(OBJ_FOLDER)
+	$(CC) verify.c -c -o obj/verify.o
+	$(CC) analysis.c -c -o obj/analysis.o
 	$(CC) extra.c -c -o obj/extra.o
 	cp temp/parser.tab.h .
 	$(CC) main.c -c -o obj/main.o

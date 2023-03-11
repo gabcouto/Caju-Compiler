@@ -78,7 +78,7 @@ declaracao: tipo lista_de_nome_de_variaveis
 	Pilha* temp = top_stack(myStack); 
 	print_tree($2); 
 	print_parentship($2); 
-	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	anl_DECLARACAO_GLOBAL(temp->elemento_pilha, $2, $1); 
 	exclude_node($2); 
 	free($1);
 };
@@ -137,7 +137,7 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos
 	temp = top_stack(myStack);
 
 	// Esta linha abaixo serve para adicionar foo ao escopo imediatamente anterior.
-	analisa_e_insere(temp->elemento_pilha, $$, $1);
+	anl_DEF_FUNCAO(temp->elemento_pilha, $$, $1);
 	free($1);
 	//print_full_stack(); 
 };
@@ -153,7 +153,7 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos
 	//print_full_stack(); 
 	pop_stack(myStack);
 	Pilha* temp = top_stack(myStack);
-	analisa_e_insere(temp->elemento_pilha, $$, $1);
+	anl_DEF_FUNCAO(temp->elemento_pilha, $$, $1);
 	free($1);
 };
 
@@ -163,7 +163,7 @@ lista_parametros: tipo IDENTIFICADOR ',' lista_parametros
 	add_child($$, $1); 
 	add_child($$, $4); 
 	Pilha* temp = top_stack(myStack); 
-	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	anl_PARAMETROS_DEF_FUNCAO(temp->elemento_pilha, $$, $1); 
 	free($2);
 };
 
@@ -171,7 +171,7 @@ lista_parametros: tipo IDENTIFICADOR
 {
 	$$=$1; 
 	Pilha* temp = top_stack(myStack);
-	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	anl_PARAMETROS_DEF_FUNCAO(temp->elemento_pilha, $2, $1); 
 	free($2);
 };
 
@@ -261,7 +261,7 @@ declaracao_local: tipo lista_de_nome_de_variaveis_locais
 	Pilha* temp = top_stack(myStack); 
 	print_tree($2); 
 	print_parentship($2); 
-	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	anl_DECLARACAO_LOCAL(temp->elemento_pilha, $2, $1); 
 	free($1);
 };
 
@@ -301,14 +301,14 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	{ 
 		add_child($2, $1);  
 		add_child($$, $2); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $2);
-		analisa_uso(top_stack(myStack)->elemento_pilha, $4);
+		anl_ATRIBUICAO_LOCAL(top_stack(myStack)->elemento_pilha, $2);
+		anl_EXPRESSAO(top_stack(myStack)->elemento_pilha, $4);
 	}
 	else 
 	{ 
 		add_child($$, $1); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $1);
-		analisa_uso(top_stack(myStack)->elemento_pilha, $4); 
+		anl_ATRIBUICAO_LOCAL(top_stack(myStack)->elemento_pilha, $1);
+		anl_EXPRESSAO(top_stack(myStack)->elemento_pilha, $4); 
 	} 
 	add_child($$, $4);
 	};

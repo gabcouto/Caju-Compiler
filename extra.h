@@ -88,11 +88,46 @@ Tabela* find_free_place(Tabela* myTable);
 
 void add_to_table(Tabela* myTable, Content* conteudo);
 
-void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo);
 
+//função para sumir
 void analisa_uso(Tabela *myTable, Node *variavel);
 
-void verifica_isDeclared(Tabela* myTable, Content* conteudo);
+
+/* Uma função para verificar cada tipo de erro */
+
+void v_ERR_UNDECLARED(Tabela* myTable, Content* conteudo);
+
+void v_ERR_DECLARED(Tabela* myTable, Content* conteudo);
+
+void v_ERR_ARRAY(Tabela* myTable, Content* conteudo);
+
+void v_ERR_FUNCTION(Tabela* myTable, Content* conteudo);
+
+void v_ERR_CHAR_TO_INT(Tabela* myTable, Content* conteudo);
+
+void v_ERR_CHAR_TO_FLOAT(Tabela* myTable, Content* conteudo);
+
+void v_ERR_CHAR_TO_BOOL(Tabela* myTable, Content* conteudo);
+
+void v_ERR_CHAR_VECTOR(Tabela* myTable, Content* conteudo);
+
+void v_ERR_X_TO_CHAR(Tabela* myTable, Content* conteudo);
+
+/* Uma função para verificar cada seção do parser.y */
+
+void anl_DECLARACAO_GLOBAL(Tabela *myTable, Node *arvore, Node *tipo);
+
+void anl_PARAMETROS_DEF_FUNCAO(Tabela *myTable, Node *arvore, Node *tipo);
+
+void anl_DEF_FUNCAO(Tabela *myTable, Node *arvore, Node *tipo);
+
+void anl_DECLARACAO_LOCAL(Tabela *myTable, Node *arvore, Node *tipo);
+
+void anl_ATRIBUICAO_LOCAL(Tabela *myTable, Node *variavel);
+
+void anl_EXPRESSAO(Tabela *myTable, Node *variavel);
+
+
 
 Pilha * create_stack(Tabela* tabela);
 
