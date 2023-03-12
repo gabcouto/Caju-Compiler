@@ -31,8 +31,8 @@ espaco [ \t\r]
 "output" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_PR_OUTPUT; }
 "return" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_PR_RETURN; }
 "for" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_PR_FOR; }
-"false" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_LIT_FALSE; }
-"true" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 0; return TK_LIT_TRUE; }
+"false" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 5; return TK_LIT_FALSE; }
+"true" { yylval.valor_lexico.line_no = line_number; yylval.valor_lexico.tipo = palavra_reservada; yylval.valor_lexico.valor.cadeia = strdup(yytext); yylval.valor_lexico.genero = 5; return TK_LIT_TRUE; }
 {espaco} {};
 [\n] { ++line_number; }
 

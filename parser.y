@@ -249,6 +249,9 @@ comandos_simples: chamada_ctrl_fluxo
 
 comandos_simples: bloco_comandos 
 {
+	printf("Entrei naquela bloco de comandos\n");
+	Tabela* temptable = create_simbolo();
+	push_stack(temptable, myStack);
 	$$=$1; 
 };
 
@@ -300,15 +303,21 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	if ($2!= NULL) 
 	{ 
 		add_child($2, $1);  
-		add_child($$, $2); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $2);
-		analisa_uso(top_stack(myStack)->elemento_pilha, $4);
+		add_child($$, $2);
+		enum Tipo tipoLeft;
+		enum Tipo tipoRight;
+		tipoLeft = analisa_uso(top_stack(myStack)->elemento_pilha, $2);
+		tipoRight = analisa_uso(top_stack(myStack)->elemento_pilha, $4);
+		compareTypes(tipoLeft, tipoRight);
 	}
 	else 
 	{ 
-		add_child($$, $1); 
-		analisa_uso(top_stack(myStack)->elemento_pilha, $1);
-		analisa_uso(top_stack(myStack)->elemento_pilha, $4); 
+		add_child($$, $1);
+		enum Tipo tipoLeft;
+		enum Tipo tipoRight;
+		tipoLeft = analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+		tipoRight = analisa_uso(top_stack(myStack)->elemento_pilha, $4);
+		compareTypes(tipoLeft, tipoRight);
 	} 
 	add_child($$, $4);
 	};
@@ -350,16 +359,16 @@ lista_de_expressoes:
 /*
 	Chamada de Função
 */
-chamada_funcao: IDENTIFICADOR  '(' lista_expressoes_funcao ')' {
-	$$ = $1; //create_node_from_token("CHAMA_FUNCAO", $1); 
-	//free($1.valor.cadeia); 
+chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' {
+	$$ = create_node_from_token("CHAMA_FUNCAO", $1); 
 	add_child($$, $3);
-	analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+	analisa_uso(top_stack(myStack)->elemento_pilha, $$);
+	free($1.valor.cadeia); 
 	};
-chamada_funcao: IDENTIFICADOR  '(' ')' {
-	$$ = $1; //create_node_from_token("CHAMA_FUNCAO", $1);
-	//free($1.valor.cadeia);
-	analisa_uso(top_stack(myStack)->elemento_pilha, $1);
+chamada_funcao: TK_IDENTIFICADOR  '(' ')' {
+	$$ = create_node_from_token("CHAMA_FUNCAO", $1);
+	analisa_uso(top_stack(myStack)->elemento_pilha, $$);
+	free($1.valor.cadeia); 
 	}; 
 lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = $1;  add_child($$, $3); };
 lista_expressoes_funcao: expressao {$$ = $1; };
@@ -374,9 +383,30 @@ chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "retur
 */
 chamada_ctrl_fluxo: ctrl_condicional {$$ = $1; };
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1; };
-ctrl_repeticao: TK_PR_WHILE '(' expressao ')' bloco_comandos {$$ = create_node("TK_PR_WHILE", "while"); add_child($$, $3); free($1.valor.cadeia); add_child($$, $5); };
-ctrl_condicional: TK_PR_IF '(' expressao ')' TK_PR_THEN bloco_comandos cond_else {$$ = create_node("TK_PR_IF", "if"); add_child($$, $3);  add_child($$, $6); free($1.valor.cadeia);free($5.valor.cadeia); if($7 != NULL){add_child($$, $7); } };
-cond_else: TK_PR_ELSE bloco_comandos {$$ = $2; free($1.valor.cadeia);};
+ctrl_repeticao: TK_PR_WHILE PS expressao ')' bloco_comandos {
+	$$ = create_node("TK_PR_WHILE", "while");
+	add_child($$, $3);
+	free($1.valor.cadeia);
+	add_child($$, $5);
+	
+	Pilha* temp = top_stack(myStack);  
+	//print_full_stack(); 
+	pop_stack(myStack);
+	};
+ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN bloco_comandos cond_else {
+	$$ = create_node("TK_PR_IF", "if"); 
+	add_child($$, $3); 
+	add_child($$, $6); 
+	free($1.valor.cadeia);
+	free($5.valor.cadeia); 
+	if($7 != NULL){add_child($$, $7); } 
+	Pilha* temp = top_stack(myStack);  
+	//print_full_stack(); 
+	pop_stack(myStack);
+	};
+cond_else: TK_PR_ELSE bloco_comandos { //botar no else o PS trocar o TK+PR po só ELSE e o ELSE ser o TKpr com o push
+	$$ = $2; 
+	free($1.valor.cadeia);};
 cond_else: {$$=NULL;};
 
 
@@ -433,6 +463,8 @@ tipo: TK_PR_BOOL {$$=create_node("bool", "b"); free($1.valor.cadeia);}; //{$$ = 
 literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); } ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); } ;
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);  }; 
+literal: TK_LIT_TRUE {$$ = create_node_from_token("TK_LIT_TRUE", $1); }; 
+literal: TK_LIT_FALSE {$$ = create_node_from_token("TK_LIT_FALSE", $1); };
 IDENTIFICADOR: TK_IDENTIFICADOR { $$ = create_node_from_token("TK_IDENTIFICADOR", $1); free($1.valor.cadeia); };
 
 

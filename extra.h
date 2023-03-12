@@ -90,7 +90,9 @@ void add_to_table(Tabela* myTable, Content* conteudo);
 
 void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo);
 
-void analisa_uso(Tabela *myTable, Node *variavel);
+enum Tipo compareTypes(enum Tipo tipoLeft, enum Tipo tipoRight);
+
+enum Tipo analisa_uso(Tabela *myTable, Node *variavel);
 
 void verifica_isDeclared(Tabela* myTable, Content* conteudo);
 

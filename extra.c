@@ -128,7 +128,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 				case 'b':
 					type = booleano; tamanho = 1; break;
 				case 'c':
-					type = caractere; tamanho = 1; break;
+					exit(ERR_CHAR_VECTOR);
 			}
 			int EOS=0; //end of string
 			Node* calctam = arvore;
@@ -283,15 +283,46 @@ void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 	}
 }
 
+enum Tipo compareTypes(enum Tipo tipoLeft, enum Tipo tipoRight){
+	if (tipoLeft == caractere)
+		if (tipoRight != caractere) exit(ERR_X_TO_CHAR);
+		else return caractere;
+	else 
+	if (tipoRight == caractere){
+		if (tipoLeft == inteiro) exit(ERR_CHAR_TO_INT);
+		if (tipoLeft == flutuante) exit(ERR_CHAR_TO_FLOAT);
+		if (tipoLeft == booleano) exit(ERR_CHAR_TO_BOOL);
+		}
+	else if (tipoLeft == flutuante || tipoRight == flutuante) return flutuante;
+	else if (tipoLeft == inteiro || tipoRight == inteiro) return inteiro;
+	else return booleano;
+}
 
-void analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de função aqui e na analisa
+enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas de função aqui e na analisa
 	Pilha *tempPilha = myStack;
 	Tabela *tempTable;
 	int bool = 0;
+	int mult = 0;
+	int funct = 0;
 	Node* id = variavel;
-	if (variavel->natureza == Arranjo) {
+	if (variavel->label[0] >= '0' && variavel->label[0] <= '9'){ return variavel->tipo;} //caso a expressao venha com um literal
+	else if (variavel->label[0] >= '*' && variavel->label[0] <= '/'){ //caso a expressao venha com uma operação
+		enum Tipo tipoLeft;
+		enum Tipo tipoRight;
+		tipoLeft = analisa_uso(myTable, variavel->firstChild);
+		tipoRight = analisa_uso(myTable, variavel->firstChild->nextSibling);
+		return compareTypes(tipoLeft, tipoRight);
+	} else if (variavel->tipo == booleano) return booleano;
+	else
+		
+	if (variavel->label[0] == '[') {
+		mult = 1;
 		id=variavel->firstChild->nextSibling;
 	}
+	else if (strcmp(variavel->name, "CHAMA_FUNCAO")==0){
+		funct = 1;
+		
+		}
 	do
 	{	//printf("entrei no do da uso\n");
 		if(bool)
@@ -306,27 +337,27 @@ void analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coisas d
 				if (myTable->nextElement!= NULL)
 					tempTable = tempTable->nextElement;
 				else break;
-			else { //printf("entrei no elsezao da uso\n");
-				if (variavel->natureza == Arranjo){
+			else {
+				if (mult){
 					if (tempTable->conteudo->natureza == Variavel)
 						exit(ERR_VARIABLE);
 					else if (tempTable->conteudo->natureza == Funcao)
 						exit(ERR_FUNCTION);
-					else return;
+					else return tempTable->conteudo->tipo;
 				}
-				else if(variavel->natureza == Funcao) {
+				else if(funct) {
 					if (tempTable->conteudo->natureza == Variavel)
 						exit(ERR_VARIABLE);
 					else if (tempTable->conteudo->natureza == Arranjo)
 						exit(ERR_ARRAY);
-					else return;
+					else return tempTable->conteudo->tipo;
 				}
-				else if(variavel->natureza == variavel){
+				else{
 					if (tempTable->conteudo->natureza == Funcao)
 						exit(ERR_FUNCTION);
 					else if (tempTable->conteudo->natureza == Arranjo)
 						exit(ERR_ARRAY);
-					else return;
+					else return tempTable->conteudo->tipo;
 				}
 			}
 						
@@ -442,20 +473,26 @@ Node * create_node_from_token(char* name, Valor_lexico_t valor_lexico)
 	myNode->line_no = valor_lexico.line_no;
 	myNode->col_no = valor_lexico.col_no;
 	if(valor_lexico.genero == 0)
-		if(strcmp("CHAMA_FUNCAO", name) == 0)
+		/*if(strcmp("CHAMA_FUNCAO", name) == 0)
 		{
 			char fcall[100] = "call ";
 			strcat(fcall, valor_lexico.valor.cadeia);
 			strcpy(myNode->label, fcall);
 		}
-		else
+		else*/
 			strcpy(myNode->label, valor_lexico.valor.cadeia);
-	else if(valor_lexico.genero == 1)
+	else if(valor_lexico.genero == 1){
 		sprintf(myNode->label, "%d", valor_lexico.valor.inteiro);
-	else if(valor_lexico.genero == 2)
+		myNode->tipo = inteiro;}
+	else if(valor_lexico.genero == 2){
 		sprintf(myNode->label, "%f", valor_lexico.valor.flutuante);
-	else if(valor_lexico.genero == 3)
+		myNode->tipo = flutuante;}
+	else if(valor_lexico.genero == 3){
 		sprintf(myNode->label, "%c", valor_lexico.valor.caractere);
+		myNode->tipo = caractere;}
+	else if(valor_lexico.genero == 5){
+		strcpy(myNode->label, valor_lexico.valor.cadeia);
+		myNode->tipo = booleano;}
 
 	
 	myNode->firstChild = NULL;
