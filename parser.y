@@ -47,7 +47,7 @@
 %token <valor_lexico> TK_LIT_CHAR
 %token TK_ERRO
 
-%type<node> IDENTIFICADOR literal tipo PS
+%type<node> IDENTIFICADOR literal tipo PS PSblock
 %type<node> operandos expressao
 %type<node> exp7 exp6 exp5 exp4 exp3 exp2 exp1
 %type<node> chamada_funcao chamada_retorno chamada_ctrl_fluxo
@@ -122,14 +122,14 @@ multidimensional: IDENTIFICADOR
 /*
 	Definição de Função
 */
-cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos 
+cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comandos 
 {
 	$$ = create_node_from_token("FuncaoL", $2); 
 	free($2.valor.cadeia); 
 	add_child($$, $4); 
-	if($6!=NULL) 
+	if($7!=NULL) 
 	{
-		add_child($$, $6); 
+		add_child($$, $7); 
 	}
 	Pilha* temp = top_stack(myStack);  
 	//print_full_stack(); 
@@ -142,13 +142,13 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' bloco_comandos
 	//print_full_stack(); 
 };
 
-cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' bloco_comandos 
+cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos 
 {
 	$$ = create_node_from_token("Funcao", $2); 
 	free($2.valor.cadeia); 
-	if($5!=NULL)
+	if($6!=NULL)
 	{
-		add_child($$, $5); 
+		add_child($$, $6); 
 	}  
 	//print_full_stack(); 
 	pop_stack(myStack);
@@ -175,12 +175,19 @@ lista_parametros: tipo IDENTIFICADOR
 	free($2);
 };
 
-bloco_comandos: '{' lista_comandos_simples '}' 
+bloco_comandos: lista_comandos_simples '}' 
 {
-	$$ = $2; 
+	$$ = $1; 
 };
 
-bloco_comandos: '{' '}' 
+PSblock: '{' 
+{
+	$$=NULL; 
+	Tabela* temptable = create_simbolo();
+	push_stack(temptable, myStack);
+}
+
+bloco_comandos: '}' 
 {
 	$$=NULL; 
 };
@@ -247,12 +254,9 @@ comandos_simples: chamada_ctrl_fluxo
 	$$=$1; 
 };
 
-comandos_simples: bloco_comandos 
+comandos_simples: PSblock bloco_comandos 
 {
-	printf("Entrei naquela bloco de comandos\n");
-	Tabela* temptable = create_simbolo();
-	push_stack(temptable, myStack);
-	$$=$1; 
+	$$=$2; 
 };
 
 /*
@@ -383,29 +387,29 @@ chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "retur
 */
 chamada_ctrl_fluxo: ctrl_condicional {$$ = $1; };
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1; };
-ctrl_repeticao: TK_PR_WHILE PS expressao ')' bloco_comandos {
+ctrl_repeticao: TK_PR_WHILE PS expressao ')' '{' bloco_comandos {
 	$$ = create_node("TK_PR_WHILE", "while");
 	add_child($$, $3);
 	free($1.valor.cadeia);
-	add_child($$, $5);
+	add_child($$, $6);
 	
 	Pilha* temp = top_stack(myStack);  
 	//print_full_stack(); 
 	pop_stack(myStack);
 	};
-ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN bloco_comandos cond_else {
+ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN '{' bloco_comandos cond_else {
 	$$ = create_node("TK_PR_IF", "if"); 
 	add_child($$, $3); 
-	add_child($$, $6); 
+	add_child($$, $7); 
 	free($1.valor.cadeia);
 	free($5.valor.cadeia); 
-	if($7 != NULL){add_child($$, $7); } 
+	if($8 != NULL){add_child($$, $8); } 
 	Pilha* temp = top_stack(myStack);  
 	//print_full_stack(); 
 	pop_stack(myStack);
 	};
-cond_else: TK_PR_ELSE bloco_comandos { //botar no else o PS trocar o TK+PR po só ELSE e o ELSE ser o TKpr com o push
-	$$ = $2; 
+cond_else: TK_PR_ELSE PSblock bloco_comandos { //botar no else o PS trocar o TK+PR po só ELSE e o ELSE ser o TKpr com o push
+	$$ = $3; 
 	free($1.valor.cadeia);};
 cond_else: {$$=NULL;};
 
