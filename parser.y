@@ -76,8 +76,6 @@ declaracao: tipo lista_de_nome_de_variaveis
 {
 	$$=NULL; 
 	Pilha* temp = top_stack(myStack); 
-	print_tree($2); 
-	print_parentship($2); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
 	exclude_node($2); 
 	free($1);
@@ -132,14 +130,12 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comand
 		add_child($$, $7); 
 	}
 	Pilha* temp = top_stack(myStack);  
-	//print_full_stack(); 
 	pop_stack(myStack);
 	temp = top_stack(myStack);
 
 	// Esta linha abaixo serve para adicionar foo ao escopo imediatamente anterior.
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
 	free($1);
-	//print_full_stack(); 
 };
 
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos 
@@ -150,7 +146,6 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos
 	{
 		add_child($$, $6); 
 	}  
-	//print_full_stack(); 
 	pop_stack(myStack);
 	Pilha* temp = top_stack(myStack);
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
@@ -266,8 +261,6 @@ declaracao_local: tipo lista_de_nome_de_variaveis_locais
 {
 	$$ = $2; 
 	Pilha* temp = top_stack(myStack); 
-	print_tree($2); 
-	print_parentship($2); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
 	free($1);
 };
@@ -393,8 +386,7 @@ ctrl_repeticao: TK_PR_WHILE PS expressao ')' '{' bloco_comandos {
 	free($1.valor.cadeia);
 	add_child($$, $6);
 	
-	Pilha* temp = top_stack(myStack);  
-	//print_full_stack(); 
+	Pilha* temp = top_stack(myStack); 
 	pop_stack(myStack);
 	};
 ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN '{' bloco_comandos cond_else {
@@ -404,8 +396,7 @@ ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN '{' bloco_comandos cond_e
 	free($1.valor.cadeia);
 	free($5.valor.cadeia); 
 	if($8 != NULL){add_child($$, $8); } 
-	Pilha* temp = top_stack(myStack);  
-	//print_full_stack(); 
+	Pilha* temp = top_stack(myStack);
 	pop_stack(myStack);
 	};
 cond_else: TK_PR_ELSE PSblock bloco_comandos { //botar no else o PS trocar o TK+PR po só ELSE e o ELSE ser o TKpr com o push

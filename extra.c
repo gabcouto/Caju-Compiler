@@ -109,7 +109,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, arvore->label, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-			print_full_stack();
 		}
 		else if(strcmp(arvore->name, "LISTA_LIT") == 0)
 		{
@@ -148,7 +147,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Arranjo, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-			print_full_stack();
 		}
 		else if(strcmp(arvore->label, "<=") == 0)
 		{
@@ -171,7 +169,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-			print_full_stack();
 		}	
 		else if(strcmp(arvore->name, "FuncaoL") == 0)
 		{
@@ -217,7 +214,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Funcao, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-			print_full_stack();
 		}
 		else if(strcmp(arvore->name, "Funcao") == 0)
 		{
@@ -238,7 +234,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Funcao, type, tamanho, arvore->label, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
-			print_full_stack();
 		}
 
 	}
@@ -324,7 +319,7 @@ enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coi
 		
 		}
 	do
-	{	//printf("entrei no do da uso\n");
+	{	
 		if(bool)
 			tempPilha = tempPilha->top;
 		bool=1;
@@ -332,7 +327,7 @@ enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coi
 		tempTable = tempPilha->elemento_pilha;
 		
 		while(tempTable->conteudo != NULL)
-		{	//printf("entrei no while da uso\n");
+		{	
 			if(strcmp(tempTable->conteudo->dados, id->label) != 0)
 				if (myTable->nextElement!= NULL)
 					tempTable = tempTable->nextElement;
@@ -362,7 +357,6 @@ enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coi
 			}
 						
 		}
-		//printf("sai do while da uso\n");
 	} while (tempPilha->elemento_pilha != myTable);
 	
 	exit(ERR_UNDECLARED);
@@ -437,8 +431,6 @@ void print_full_stack()
 }
 
 void print_node(Node *node){
-
-	//printf("Entrei na print NODO\n");
 
 	if(node != NULL)
 	{
@@ -515,9 +507,6 @@ void add_child(Node *parentNode, Node *childNode)
 		nextNode->nextSibling = childNode;
 		// memory release?
 	}
-
-	//printf("Vou printar com nó pai: %s\n", parentNode->name);
-	//print_tree(parentNode);
 }
 
 

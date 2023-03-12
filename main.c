@@ -25,7 +25,7 @@ int main (int argc, char **argv)
   Tabela* myTable = create_simbolo();
   myStack = create_stack(myTable);
   int ret = yyparse(); 
-  exporta(arvore);
+  //exporta(arvore);
   libera(arvore);
   arvore = NULL;
   yylex_destroy();
