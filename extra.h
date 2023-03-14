@@ -55,6 +55,7 @@ typedef struct node
 	char label[60];
 	int line_no;
 	int col_no;
+	struct l_iloc *codigo;
 	enum Tipo tipo;
 	struct node *firstChild;
 	struct node *nextSibling;
