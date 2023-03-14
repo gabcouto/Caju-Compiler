@@ -27,6 +27,15 @@ int tamanho_tipo(enum Tipo tipo)
 
 }
 
+Iloc* new_instruction(char* label, char* r1, char* r2, char* r3)
+{
+	Iloc* newInstruction = (Iloc*) malloc sizeof(Iloc);
+	newInstruction->label = label; 
+	newInstruction->r1 = r1;
+	newInstruction->r2 = r2;
+	newInstruction->r3 = r3;
+}
+
 Tabela* create_simbolo()
 {
 	Tabela* minhaTabela;
