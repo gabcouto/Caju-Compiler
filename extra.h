@@ -36,6 +36,13 @@ typedef struct valor_lexico_t
 
 } Valor_lexico_t;
 
+typedef struct iloc
+{
+	char label[10];
+	char r1[2], r2[2], r3[2];
+
+} Iloc;
+
 typedef struct node
 {
 	char name[60];
