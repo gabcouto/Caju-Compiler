@@ -16,6 +16,7 @@ extern int yylex_destroy(void);
 
 Pilha* myStack;
 void *arvore = NULL;
+L_iloc *arvore_iloc;
 void exporta (void *arvore);
 void libera (void *arvore);
 
@@ -24,6 +25,9 @@ int main (int argc, char **argv)
   //yydebug = 1;
   Tabela* myTable = create_simbolo();
   myStack = create_stack(myTable);
+
+  arvore_iloc = create_lista_iloc();
+
   int ret = yyparse(); 
   //exporta(arvore);
   libera(arvore);

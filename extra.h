@@ -38,10 +38,16 @@ typedef struct valor_lexico_t
 
 typedef struct iloc
 {
-	char label[10];
-	char r1[2], r2[2], r3[2];
+	char *label;
+	char *r1, *r2, *r3;
 
 } Iloc;
+
+typedef struct l_iloc
+{
+	struct iloc *instruction;
+	struct l_iloc *next_instruction;
+} L_iloc;
 
 typedef struct node
 {
@@ -128,5 +134,7 @@ void print_node(Node *node);
 void exclude_node(Node* node);
 
 Node * ultimaInit(Node * parentNode);
+
+L_iloc* create_lista_iloc();
 
 #endif

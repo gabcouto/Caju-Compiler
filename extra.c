@@ -8,6 +8,7 @@
 
 extern int yylineno;
 extern Pilha *myStack;
+extern L_iloc *arvore_iloc;
 
 int get_line_number() {
 
@@ -29,11 +30,50 @@ int tamanho_tipo(enum Tipo tipo)
 
 Iloc* new_instruction(char* label, char* r1, char* r2, char* r3)
 {
-	Iloc* newInstruction = (Iloc*) malloc sizeof(Iloc);
-	newInstruction->label = label; 
-	newInstruction->r1 = r1;
-	newInstruction->r2 = r2;
-	newInstruction->r3 = r3;
+	Iloc* new_instruction = (Iloc*) malloc (sizeof(Iloc));
+	new_instruction->label = label; 
+	new_instruction->r1 = r1;
+	new_instruction->r2 = r2;
+	new_instruction->r3 = r3;
+}
+
+L_iloc* create_lista_iloc()
+{
+	L_iloc* minha_lista = (L_iloc*) malloc (sizeof(L_iloc));
+	minha_lista->instruction = NULL;
+	minha_lista->next_instruction = NULL;
+}
+
+L_iloc* find_free_place_iloc(L_iloc* minha_lista)
+{
+	if(minha_lista->next_instruction != NULL)
+		find_free_place_iloc(minha_lista->next_instruction);
+	else
+		return minha_lista;
+}
+
+void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
+{
+	L_iloc* espaco_vazio = find_free_place_iloc(lista_iloc);
+	if(espaco_vazio->instruction == NULL)
+		espaco_vazio->instruction = nova_instrucao;
+	else
+	{
+		L_iloc* novo_elemento_de_lista = create_lista_iloc();
+		espaco_vazio->next_instruction = novo_elemento_de_lista;
+		novo_elemento_de_lista->instruction = nova_instrucao;
+	}
+
+}
+
+
+void print_iloc(L_iloc* lista_instrucoes)
+{
+	while(lista_instrucoes->next_instruction != NULL)
+		print_iloc(lista_instrucoes->next_instruction);
+	
+	printf("%s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+
 }
 
 Tabela* create_simbolo()
