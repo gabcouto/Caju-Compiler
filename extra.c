@@ -15,6 +15,12 @@ int get_line_number() {
 	return yylineno;
 }
 
+int gera_rotulo (void)
+{
+	static int contador = 0;
+	return contador++;
+}
+
 int tamanho_tipo(enum Tipo tipo)
 {
 	if(tipo == inteiro)
