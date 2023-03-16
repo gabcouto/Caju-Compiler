@@ -1,11 +1,11 @@
 # Gabriel Couto & Felippo Stédile: Dupla 
-ETAPA_ATUAL = etapa4
+ETAPA_ATUAL = etapa5
 FILES_TO_TAR = extra.c main.c scanner.l parser.y extra.h Makefile
 OUT = etapa4
 LINUXCC  = gcc
 LINUXFLEX = flex
 LINUXBISON = bison
-OSXCC = /usr/local/Cellar/gcc/12.2.0/bin/x86_64-apple-darwin20-gcc-12 -g -fsanitize=address
+OSXCC = /usr/local/Cellar/gcc/12.2.0/bin/*-gcc-12 -g -fsanitize=address
 OSXFLEX = /usr/local/opt/flex/bin/flex
 OSXBISON = /usr/local/opt/bison/bin/bison
 OBJ_FOLDER = mkdir -p obj
