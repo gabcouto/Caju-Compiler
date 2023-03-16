@@ -45,4 +45,5 @@ clean:
 	rm -rf temp
 	rm -f parser
 	rm -f *.tgz
+	rm -f e4.log
 	rm -f $(ETAPA_ATUAL)
