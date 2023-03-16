@@ -7,6 +7,7 @@
 	#include "../extra.h"
 	extern int yylineno;
 	extern void *arvore;
+	extern int contador;
 	extern Pilha *myStack;
 	int yylex(void);
 	void yyerror(const char *);
@@ -284,7 +285,9 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 	free($2.valor.cadeia); 
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
-	strcat($$->codigo, "storeAI temporario => rfp, endereco_deslocamento\n");
+	char *string_temp;
+	sprintf(string_temp, "storeAI temporario%d => rfp, endereco_deslocamento\n", contador);
+	strcat($$->codigo, string_temp);
 };
 
 variavel_local: IDENTIFICADOR 

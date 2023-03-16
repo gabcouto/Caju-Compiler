@@ -9,6 +9,7 @@
 extern int yylineno;
 extern Pilha *myStack;
 extern L_iloc *arvore_iloc;
+int contador = 0;
 
 int get_line_number() {
 
@@ -17,7 +18,6 @@ int get_line_number() {
 
 int gera_rotulo (void)
 {
-	static int contador = 0;
 	return contador++;
 }
 
