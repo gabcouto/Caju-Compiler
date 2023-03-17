@@ -301,6 +301,9 @@ variavel_local: IDENTIFICADOR
 
 atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao 
 {
+
+
+
 	$$ = create_node("ATRIBUICAO", "="); 
 	if ($2!= NULL) 
 	{ 
@@ -320,9 +323,21 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 		tipoLeft = analisa_uso(top_stack(myStack)->elemento_pilha, $1);
 		tipoRight = analisa_uso(top_stack(myStack)->elemento_pilha, $4);
 		compareTypes(tipoLeft, tipoRight);
-	} 
+	}
+	
+	//obter endereço da tabela
+	// em qual tabela/ escopo foi declarado
+	// precisamos saber o temporario onde se encontra o resultado da exp
+	// 	isso encontra-se em um campo de $4
+	// if tabela global
+	//	gera storeAI temporario => rbss, deslocamento
+	//else 
+	//	gera storeAI temporario => rfp, deslocamento
+	// concatenar o code da exp ($4.code) com o storeAI gerado
+	// coloca o resultado da concat em AST $$
+
 	add_child($$, $4);
-	};
+};
 
 lista_de_expressoes: '[' lista_de_expressoes_ expressao ']' 
 {
@@ -362,18 +377,29 @@ lista_de_expressoes:
 	Chamada de Função
 */
 chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' {
+	// para cada expressao em lista de expressao faz um load para um reg
+	// dps concat os loads com jumpI $1.label
 	$$ = create_node_from_token("CHAMA_FUNCAO", $1); 
 	add_child($$, $3);
 	analisa_uso(top_stack(myStack)->elemento_pilha, $$);
 	free($1.valor.cadeia); 
-	};
+};
+
 chamada_funcao: TK_IDENTIFICADOR  '(' ')' {
+	//jumpI $1.label
 	$$ = create_node_from_token("CHAMA_FUNCAO", $1);
 	analisa_uso(top_stack(myStack)->elemento_pilha, $$);
 	free($1.valor.cadeia); 
 	}; 
-lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {$$ = $1;  add_child($$, $3); };
-lista_expressoes_funcao: expressao {$$ = $1; };
+lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {
+	//strconcat($1.code,  ###############
+	$$ = $1;
+	add_child($$, $3);
+};
+lista_expressoes_funcao: expressao {
+	//$$.code = load ##############
+	$$ = $1;
+};
 
 /*
 	Chamada de retorno
@@ -422,34 +448,225 @@ operandos: literal { $$ = $1; } ;
 operandos: multidimensional_ { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
-expressao: expressao TK_OC_OR exp1 {$$ = create_node("OR", "||" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3);  }; 
+expressao: expressao TK_OC_OR exp1 {
+	//gera um temporario para guardar o resultado
+	// gera or $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atrbuimos a concacetnação em $$.code	
+	$$ = create_node("OR", "||" );
+	add_child($$, $1);
+	free($2.valor.cadeia);
+	add_child($$, $3);
+}; 
 expressao: exp1 { $$ = $1; } ;
 
-exp1: exp1 TK_OC_AND exp2 {$$ = create_node("AND", "&&" );  add_child($$, $1); free($2.valor.cadeia); add_child($$, $3);  };
+exp1: exp1 TK_OC_AND exp2 {
+	//gera um temporario para guardar o resultado
+	// gera and $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atrbuimos a concacetnação em $$.code
+	$$ = create_node("AND", "&&" );
+	add_child($$, $1);
+	free($2.valor.cadeia);
+	add_child($$, $3);
+};
 exp1: exp2  { $$ = $1; } ;
 
-exp2: exp2 TK_OC_EQ exp3 {$$ = create_node("EQ", "==" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3); };
-exp2: exp2 TK_OC_NE exp3 {$$ = create_node("NE", "!=" );  add_child($$, $1); free($2.valor.cadeia);  add_child($$, $3); };
+exp2: exp2 TK_OC_EQ exp3 {
+//cmp_EQ
+
+	// gerar temporario
+	// gerar label_true
+	// gerar label_false
+	// gerar label_depois
+	// gerar code disso: {
+	// gerar iloc cmp_EQ $1.temp, $3.temp => temporario
+	// gerar iloc cbr temporario => label_true, label_false 
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	// gerar iloc jumpI label_depois 
+	// gerar iloc com label_false: loadI 0 => temporario
+	// gerar iloc com label label_depois concat nop }
+	// $$.code = o concat das coisas
+	// $$.temp = temporario
+	$$ = create_node("EQ", "==" );
+	add_child($$, $1);
+	free($2.valor.cadeia);
+	add_child($$, $3);
+};
+exp2: exp2 TK_OC_NE exp3 {
+//cmp_NE
+	// gerar temporario
+	// gerar label_true
+	// gerar label_false
+	// gerar label_depois
+	// gerar code disso: {
+	// gerar iloc cmp_NE $1.temp, $3.temp => temporario
+	// gerar iloc cbr temporario => label_true, label_false 
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	// gerar iloc jumpI label_depois 
+	// gerar iloc com label_false: loadI 0 => temporario
+	// gerar iloc com label label_depois concat nop }
+	// $$.code = o concat das coisas
+	// $$.temp = temporario
+	$$ = create_node("NE", "!=" );
+	add_child($$, $1);
+	free($2.valor.cadeia);
+	add_child($$, $3);
+};
 exp2: exp3 { $$ = $1; } ;
 
-exp3: exp3 '<' exp4 {$$ = create_node("LT", "<" );  add_child($$, $1);   add_child($$, $3); };
-exp3: exp3 '>' exp4 {$$ = create_node("GT", ">" );  add_child($$, $1);  add_child($$, $3); };
-exp3: exp3 TK_OC_LE exp4 {$$ = create_node("LE", "<=" );  add_child($$, $1);  free($2.valor.cadeia); add_child($$, $3);  };
+exp3: exp3 '<' exp4 {
+//cmp_LT
+	// gerar temporario
+	// gerar label_true
+	// gerar label_false
+	// gerar label_depois
+	// gerar code disso: {
+	// gerar iloc cmp_LT $1.temp, $3.temp => temporario
+	// gerar iloc cbr temporario => label_true, label_false 
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	// gerar iloc jumpI label_depois 
+	// gerar iloc com label_false: loadI 0 => temporario
+	// gerar iloc com label label_depois concat nop }
+	// $$.code = o concat das coisas
+	// $$.temp = temporario
+	$$ = create_node("LT", "<" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
+
+exp3: exp3 '>' exp4 {
+//cmp_GT
+	// gerar temporario
+	// gerar label_true
+	// gerar label_false
+	// gerar label_depois
+	// gerar code disso: {
+	// gerar iloc cmp_GT $1.temp, $3.temp => temporario
+	// gerar iloc cbr temporario => label_true, label_false 
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	// gerar iloc jumpI label_depois 
+	// gerar iloc com label_false: loadI 0 => temporario
+	// gerar iloc com label label_depois concat nop }
+	// $$.code = o concat das coisas
+	// $$.temp = temporario
+
+	$$ = create_node("GT", ">" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
+exp3: exp3 TK_OC_LE exp4 {
+//cmp_LE
+	// gerar temporario  int temp = gera_rotulo()
+	// gerar label_true
+	// gerar label_false
+	// gerar label_depois
+	// gerar code disso: {		sprintf($$->codigo, "cmp_LE %d, %d => t%d\ncbr t%d => label_true, label_false\nlabel_verdade: loadI 1 => t%d\njumpI label_depois\nlabel_false: loadI 0 => t%d", $1.valor.inteiro, $3.valor.inteiro, temp, temp, temp, temp);?
+	// gerar iloc cmp_LE $1.temp, $3.temp => temporario	
+	// gerar iloc cbr temporario => label_true, label_false 
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	// gerar iloc jumpI label_depois 
+	// gerar iloc com label_false: loadI 0 => temporario
+	// gerar iloc com label label_depois concat nop }
+	// $$.code = o concat das coisas
+	// $$.temp = temporario
+	$$ = create_node("LE", "<=" );
+	add_child($$, $1);
+	free($2.valor.cadeia); 
+	add_child($$, $3);
+};
 exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", ">=" );  add_child($$, $1);  free($2.valor.cadeia); add_child($$, $3);  };
 exp3: exp4 { $$ = $1;  } ;
 
 
-exp4: exp4 '+' exp5 {$$ = create_node("SOMA", "+" );  add_child($$, $1);  add_child($$, $3);  };
-exp4: exp4 '-' exp5 {$$ = create_node("SUB", "-" );  add_child($$, $1);  add_child($$, $3);  };
+exp4: exp4 '+' exp5 {
+	//gera um temporario para guardar o resultado
+	// gera add $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atribuimos a concacetnação em $$.code
+
+	$$ = create_node("SOMA", "+" ); 
+	add_child($$, $1);
+	add_child($$, $3); 
+};
+exp4: exp4 '-' exp5 {
+	//gera um temporario para guardar o resultado
+	// gera sub $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atribuimos a concacetnação em $$.code
+	$$ = create_node("SUB", "-" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
 exp4: exp5 { $$ = $1; } ;
 
-exp5: exp5 '*' exp6 {$$ = create_node("MULT", "*" );  add_child($$, $1);  add_child($$, $3);  } ;
-exp5: exp5 '/' exp6 {$$ = create_node("DIV", "/" );  add_child($$, $1);   add_child($$, $3);  } ;
-exp5: exp5 '%' exp6 {$$ = create_node("RESTO", "%" );  add_child($$, $1);  add_child($$, $3); } ;
+exp5: exp5 '*' exp6 {
+	//gera um temporario para guardar o resultado
+	// gera mult $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atribuimos a concacetnação em $$.code
+	$$ = create_node("MULT", "*" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
+exp5: exp5 '/' exp6 {
+	//gera um temporario para guardar o resultado
+	// gera div $1.temp, $3.temp => temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// concat $1.code, $3.code, a instrução que geramos
+	// atribuimos a concacetnação em $$.code
+	$$ = create_node("DIV", "/" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
+exp5: exp5 '%' exp6 {
+// n precisa
+	$$ = create_node("RESTO", "%" );
+	add_child($$, $1);
+	add_child($$, $3);
+};
 exp5: exp6 { $$ = $1; } ;
 
-exp6: '-' exp7 { $$ = create_node("SUB_UNARIO", "-"); add_child($$, $2); } ;
-exp6: '!' exp7 { $$ = create_node("NOT", "!"); add_child($$, $2); } ;
+exp6: '-' exp7 {
+// n precisa mas ta aqui:
+	//gera um temporario para guardar o resultado
+	// gera subI 0, $1.temp=> temporario
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// atribuimos o code em $$.code
+	$$ = create_node("SUB_UNARIO", "-");
+	add_child($$, $2);
+};
+exp6: '!' exp7 {
+// n precisa mas ta aqui:
+	//gera um temporario para guardar o resultado
+	// gera subI 1, $1.temp=> temporario         //Considerando que true = 1 e false = 0
+	// salvar o nome desse temporario
+	// salvar o nome desse temporario gerado em $$.temp
+	// gerar code
+	// atribuimos o code em $$.code
+	$$ = create_node("NOT", "!");
+	add_child($$, $2);
+};
+
 exp6: exp7 { $$ = $1; } ;
 
 exp7: '(' expressao ')' { $$ = $2;  };
@@ -460,12 +677,24 @@ tipo: TK_PR_INT {$$=create_node("int", "i"); free($1.valor.cadeia);}; //{$$ = cr
 tipo: TK_PR_FLOAT {$$=create_node("float", "f"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);} ;
 tipo: TK_PR_CHAR {$$=create_node("char", "c"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);} ;
 tipo: TK_PR_BOOL {$$=create_node("bool", "b"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);} ;
-literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); sprintf($$->codigo, "LoadI %d => temporario%d\n", $1.valor.inteiro, gera_rotulo());} ;
-literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1); } ;
-literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);  }; 
-literal: TK_LIT_TRUE {$$ = create_node_from_token("TK_LIT_TRUE", $1); }; 
-literal: TK_LIT_FALSE {$$ = create_node_from_token("TK_LIT_FALSE", $1); };
-IDENTIFICADOR: TK_IDENTIFICADOR { $$ = create_node_from_token("TK_IDENTIFICADOR", $1); free($1.valor.cadeia); };
+literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); sprintf($$->codigo, "loadI %d => temporario%d\n", $1.valor.inteiro, gera_rotulo());} ;
+literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1);};
+literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);}; 
+literal: TK_LIT_TRUE {$$ = create_node_from_token("TK_LIT_TRUE", $1);}; 
+literal: TK_LIT_FALSE {$$ = create_node_from_token("TK_LIT_FALSE", $1);};
+IDENTIFICADOR: TK_IDENTIFICADOR {
+//n sei se é aqui,no caso do sor ele colocou isso no exp7 mais ou menos
+	//obter endereço da tanela de simbolos
+	//   em qual tabela/escopo foi declarado
+	// gera temp
+	// if tabela global
+	//	gera loadAI rbss, deslocamento => temporario
+	// else 
+	//	gera loadAI rfp, deslocamento => temporario
+	//coloca instrução na ast em $$ (acho que quer dizer o $$.code = code gerado
+	$$ = create_node_from_token("TK_IDENTIFICADOR", $1); 
+	free($1.valor.cadeia);
+};
 
 
 %%
