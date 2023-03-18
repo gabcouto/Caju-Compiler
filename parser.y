@@ -124,6 +124,8 @@ multidimensional: IDENTIFICADOR
 */
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comandos 
 {
+	
+	
 	$$ = create_node_from_token("FuncaoL", $2); 
 	free($2.valor.cadeia); 
 	add_child($$, $4); 
@@ -142,6 +144,8 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comand
 
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos 
 {
+	
+	
 	$$ = create_node_from_token("Funcao", $2); 
 	free($2.valor.cadeia); 
 	if($6!=NULL)
@@ -452,13 +456,28 @@ operandos: multidimensional_ { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
 expressao: expressao TK_OC_OR exp1 {
-	//gera um temporario para guardar o resultado
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp3;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp3 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp3, "temporario%d", $3->rotulo);
 	// gera or $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
-	// atrbuimos a concacetnação em $$.code	
+	// atribuimos a concacetnação em $$.code
+
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "or", string_temp1, string_temp3, string_temp));
 	$$ = create_node("OR", "||" );
 	add_child($$, $1);
 	free($2.valor.cadeia);
@@ -467,13 +486,29 @@ expressao: expressao TK_OC_OR exp1 {
 expressao: exp1 { $$ = $1; } ;
 
 exp1: exp1 TK_OC_AND exp2 {
-	//gera um temporario para guardar o resultado
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp3;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp3 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp3, "temporario%d", $3->rotulo);
 	// gera and $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
-	// atrbuimos a concacetnação em $$.code
+	// atribuimos a concacetnação em $$.code
+
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "and", string_temp1, string_temp3, string_temp));
+	
 	$$ = create_node("AND", "&&" );
 	add_child($$, $1);
 	free($2.valor.cadeia);
@@ -484,19 +519,49 @@ exp1: exp2  { $$ = $1; } ;
 exp2: exp2 TK_OC_EQ exp3 {
 //cmp_EQ
 
-	// gerar temporario
-	// gerar label_true
-	// gerar label_false
-	// gerar label_depois
-	// gerar code disso: {
-	// gerar iloc cmp_EQ $1.temp, $3.temp => temporario
-	// gerar iloc cbr temporario => label_true, label_false 
-	// gerar iloc com label_verdade: loadI 1 => temporario
-	// gerar iloc jumpI label_depois 
-	// gerar iloc com label_false: loadI 0 => temporario
-	// gerar iloc com label label_depois concat nop }
-	// $$.code = o concat das coisas
+	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp3;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp3 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	// gerar label_true
+	char *label_true;
+	label_true = (char*) malloc(sizeof(char));
+	sprintf(label_true, "labelT%d", gera_label());
+	// gerar label_false
+	char *label_false;
+	label_false = (char*) malloc(sizeof(char));
+	sprintf(label_false, "labelF%d", gera_label());
+	// gerar label_depois
+	char *label_dps;
+	label_dps = (char*) malloc(sizeof(char));
+	sprintf(label_dps, "labelDps%d", gera_label());
+	// $$.code = o concat das coisas
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	// gerar code disso: {
+	// gerar iloc cmp_EQ $1.temp, $3.temp => temporario	
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "cmp_EQ", string_temp1, string_temp3, string_temp));
+	// gerar iloc cbr temporario => label_true label_false 
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	// gerar iloc jumpI label_depois
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	// gerar iloc com label_false: loadI 0 => temporario
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	// gerar iloc com label label_depois concat nop }
+	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
 	$$ = create_node("EQ", "==" );
 	add_child($$, $1);
 	free($2.valor.cadeia);
@@ -504,19 +569,50 @@ exp2: exp2 TK_OC_EQ exp3 {
 };
 exp2: exp2 TK_OC_NE exp3 {
 //cmp_NE
-	// gerar temporario
-	// gerar label_true
-	// gerar label_false
-	// gerar label_depois
-	// gerar code disso: {
-	// gerar iloc cmp_NE $1.temp, $3.temp => temporario
-	// gerar iloc cbr temporario => label_true, label_false 
-	// gerar iloc com label_verdade: loadI 1 => temporario
-	// gerar iloc jumpI label_depois 
-	// gerar iloc com label_false: loadI 0 => temporario
-	// gerar iloc com label label_depois concat nop }
-	// $$.code = o concat das coisas
+	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp3;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp3 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	// gerar label_true
+	char *label_true;
+	label_true = (char*) malloc(sizeof(char));
+	sprintf(label_true, "labelT%d", gera_label());
+	// gerar label_false
+	char *label_false;
+	label_false = (char*) malloc(sizeof(char));
+	sprintf(label_false, "labelF%d", gera_label());
+	// gerar label_depois
+	char *label_dps;
+	label_dps = (char*) malloc(sizeof(char));
+	sprintf(label_dps, "labelDps%d", gera_label());
+	// $$.code = o concat das coisas
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	// gerar code disso: {
+	// gerar iloc cmp_NE $1.temp, $3.temp => temporario	
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "cmp_NE", string_temp1, string_temp3, string_temp));
+	// gerar iloc cbr temporario => label_true label_false 
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
+	// gerar iloc com label_verdade: loadI 1 => temporario
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	// gerar iloc jumpI label_depois
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	// gerar iloc com label_false: loadI 0 => temporario
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	// gerar iloc com label label_depois concat nop }
+	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
+	
 	$$ = create_node("NE", "!=" );
 	add_child($$, $1);
 	free($2.valor.cadeia);
