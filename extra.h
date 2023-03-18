@@ -59,6 +59,7 @@ typedef struct node
 	enum Tipo tipo;
 	struct node *firstChild;
 	struct node *nextSibling;
+	int rotulo;
 } Node;
 
 typedef struct location
@@ -147,6 +148,8 @@ Iloc* new_instruction(char* label, char* r1, char* r2, char* r3);
 void print_iloc(L_iloc* lista_instrucoes);
 
 int gera_rotulo();
+
+int gera_label();
 
 int calcula_deslocamento(Tabela* myTable);
 

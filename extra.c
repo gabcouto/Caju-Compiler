@@ -11,6 +11,7 @@ extern Pilha *myStack;
 extern L_iloc *arvore_iloc;
 int contador = 0;
 int desloc = 0;
+int labelnum = 0;
 
 int get_line_number() {
 
@@ -20,6 +21,10 @@ int get_line_number() {
 int gera_rotulo (void)
 {
 	return ++contador;
+}
+int gera_label (void)
+{
+	return ++labelnum;
 }
 
 int tamanho_tipo(enum Tipo tipo)
@@ -53,10 +58,15 @@ L_iloc* create_lista_iloc()
 
 L_iloc* find_free_place_iloc(L_iloc* minha_lista)
 {
-	if(minha_lista->next_instruction != NULL)
+	/*if(minha_lista->next_instruction != NULL)
 		find_free_place_iloc(minha_lista->next_instruction);
 	else
 		return minha_lista;
+	*/
+	while(minha_lista->next_instruction != NULL)
+		minha_lista=minha_lista->next_instruction;
+	
+	return minha_lista;
 }
 
 void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
@@ -313,33 +323,6 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 {
-	/* Temos de iterar desde a tabela mais profunda (global) da pilha até a tabela atual para ver se o símbolo já foi declarado: */
-
-	// O elemento mais profundo da pilha é myStack. Vamos de myStack->elementoPilha até myTable:
-	/*Pilha *tempPilha = myStack;
-	Tabela *tempTable;
-	int bool = 0;
-	do
-	{	
-		if(bool)
-			tempPilha = tempPilha->top;
-		bool=1;
-
-		tempTable = tempPilha->elemento_pilha;
-		
-		while(tempTable->conteudo != NULL)
-		{
-			if(strcmp(tempTable->conteudo->dados, conteudo->dados) == 0)
-				//if(tempTable->conteudo->tipo == funcao || tempPilha->elemento_pilha == myTable)
-					exit(ERR_DECLARED);
-
-			if (tempTable->nextElement!= NULL) tempTable = tempTable->nextElement;
-			else break;
-		}
-	} while (tempPilha->elemento_pilha != myTable);
-*/	
-	//solução que compreende mascaras, mas acho q é pra ser como a anterior caso haja uma função com o mesmo identificador
-	// ou seja, qnd acertar o tipo e a natureza, voltar ao método anterior 
 	while(myTable->conteudo != NULL)
 	{
 		if(strcmp(myTable->conteudo->dados, conteudo->dados) == 0)

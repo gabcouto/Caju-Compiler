@@ -566,6 +566,19 @@ exp3: exp3 '>' exp4 {
 };
 exp3: exp3 TK_OC_LE exp4 {
 //cmp_LE
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	char *label_true; 
+	char *label_false;
+	char *label_dps;
+	label_true = (char*) malloc(sizeof(char));
+	label_false = (char*) malloc(sizeof(char));
+	label_dps = (char*) malloc(sizeof(char));
+	sprintf(label_true, "labelT%d", gera_label());
+	sprintf(label_false, "labelF%d", gera_label());
+	sprintf(label_dps, "labelDps%d", gera_label());
 	// gerar temporario  int temp = gera_rotulo()
 	// gerar label_true
 	// gerar label_false
@@ -588,8 +601,18 @@ exp3: exp3 TK_OC_GE exp4 {$$ = create_node("GE", ">=" );  add_child($$, $1);  fr
 exp3: exp4 { $$ = $1;  } ;
 
 
-exp4: exp4 '+' exp5 {
-	//gera um temporario para guardar o resultado
+exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf lá
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp2;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp2 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp2, "temporario%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -597,11 +620,26 @@ exp4: exp4 '+' exp5 {
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
 
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	add_to_l_iloc($$->codigo, new_instruction("add", string_temp1, string_temp2, string_temp));
+
 	$$ = create_node("SOMA", "+" ); 
 	add_child($$, $1);
 	add_child($$, $3); 
 };
-exp4: exp4 '-' exp5 {
+exp4: exp4 '-' exp5 { //e se a exp é um literal?
+	$$->rotulo = gera_rotulo();
+	$$->codigo = create_lista_iloc();
+	char *string_temp; 
+	char *string_temp1;
+	char *string_temp2;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
+	string_temp2 = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp1, "temporario%d", $1->rotulo);
+	sprintf(string_temp2, "temporario%d", $3->rotulo);
 	//gera um temporario para guardar o resultado
 	// gera sub $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
@@ -609,6 +647,10 @@ exp4: exp4 '-' exp5 {
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
+	$$->codigo->next_instruction = $1->codigo;
+	$1->codigo->next_instruction = $3->codigo;
+	add_to_l_iloc($$->codigo, new_instruction("sub", string_temp1, string_temp2, string_temp));
+	
 	$$ = create_node("SUB", "-" );
 	add_child($$, $1);
 	add_child($$, $3);
@@ -687,8 +729,10 @@ literal: TK_LIT_INT {
 	char *string_temp1;
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", gera_rotulo());
+	$$->rotulo = gera_rotulo();
+	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "%d", $1.valor.inteiro);
+	//$$->temp = $1.valor.inteiro; //acho q isso já ta na create_node no label de $$
 	add_to_l_iloc($$->codigo, new_instruction("loadI", string_temp1, NULL, string_temp));
 	} ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1);};
