@@ -286,8 +286,10 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
 	char *string_temp;
-	sprintf(string_temp, "storeAI temporario%d => rfp, endereco_deslocamento\n", contador);
-	strcat($$->codigo, string_temp);
+	sprintf(string_temp, "temporario%d", contador);
+	add_to_l_iloc($3->codigo, new_instruction("storeAI", string_temp, "rfp", "endereco_deslocamento"));
+
+	print_iloc($$->codigo);
 };
 
 variavel_local: IDENTIFICADOR 
@@ -677,7 +679,14 @@ tipo: TK_PR_INT {$$=create_node("int", "i"); free($1.valor.cadeia);}; //{$$ = cr
 tipo: TK_PR_FLOAT {$$=create_node("float", "f"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_FLOAT", $1);} ;
 tipo: TK_PR_CHAR {$$=create_node("char", "c"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_CHAR", $1);} ;
 tipo: TK_PR_BOOL {$$=create_node("bool", "b"); free($1.valor.cadeia);}; //{$$ = create_node_from_token("TK_PR_BOOL", $1);} ;
-literal: TK_LIT_INT {$$ = create_node_from_token("TK_LIT_INT", $1); sprintf($$->codigo, "loadI %d => temporario%d\n", $1.valor.inteiro, gera_rotulo());} ;
+literal: TK_LIT_INT {
+	$$ = create_node_from_token("TK_LIT_INT", $1);
+	$$->codigo = create_lista_iloc();
+	char *string_temp, *string_temp1;
+	sprintf(string_temp, "temporario%d", gera_rotulo());
+	sprintf(string_temp1, "%d", $1.valor.inteiro);
+	add_to_l_iloc($$->codigo, new_instruction("loadI", string_temp1, NULL, string_temp));
+	} ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1);};
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);}; 
 literal: TK_LIT_TRUE {$$ = create_node_from_token("TK_LIT_TRUE", $1);}; 

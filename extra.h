@@ -55,8 +55,7 @@ typedef struct node
 	char label[60];
 	int line_no;
 	int col_no;
-	//struct l_iloc *codigo;
-	char *codigo;
+	struct l_iloc *codigo;
 	enum Tipo tipo;
 	struct node *firstChild;
 	struct node *nextSibling;
@@ -138,6 +137,14 @@ void exclude_node(Node* node);
 Node * ultimaInit(Node * parentNode);
 
 L_iloc* create_lista_iloc();
+
+void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao);
+
+L_iloc* find_free_place_iloc(L_iloc* minha_lista);
+
+Iloc* new_instruction(char* label, char* r1, char* r2, char* r3);
+
+void print_iloc(L_iloc* lista_instrucoes);
 
 int gera_rotulo();
 
