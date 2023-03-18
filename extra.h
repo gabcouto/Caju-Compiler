@@ -39,6 +39,7 @@ typedef struct valor_lexico_t
 typedef struct iloc
 {
 	char *label;
+	char *operation;
 	char *r1, *r2, *r3;
 
 } Iloc;
@@ -143,7 +144,7 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao);
 
 L_iloc* find_free_place_iloc(L_iloc* minha_lista);
 
-Iloc* new_instruction(char* label, char* r1, char* r2, char* r3);
+Iloc* new_instruction(char* label, char* op, char* r1, char* r2, char* r3);
 
 void print_iloc(L_iloc* lista_instrucoes);
 

@@ -40,12 +40,16 @@ int tamanho_tipo(enum Tipo tipo)
 
 }
 
-Iloc* new_instruction(char* label, char* r1, char* r2, char* r3)
+Iloc* new_instruction(char* label, char* op, char* r1, char* r2, char* r3)
 {
 	Iloc* new_instruction = (Iloc*) malloc (sizeof(Iloc));
-	new_instruction->label = label; 
+	//if label != null, concat label com ":"
+	new_instruction->label = label;
+	new_instruction->operation = op;
 	new_instruction->r1 = r1;
+	//if r2!=null, concat ", " com r2
 	new_instruction->r2 = r2;
+	//descobrir onde fica o "=>" pra colocar tbm
 	new_instruction->r3 = r3;
 }
 
@@ -75,7 +79,7 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
 	if(espaco_vazio->instruction == NULL)
 		espaco_vazio->instruction = nova_instrucao;
 	else
-	{
+	{//acho q nunca vai entrar aqui
 		L_iloc* novo_elemento_de_lista = create_lista_iloc();
 		espaco_vazio->next_instruction = novo_elemento_de_lista;
 		novo_elemento_de_lista->instruction = nova_instrucao;
@@ -244,7 +248,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			sprintf(string_temp, "temporario%d", contador);
 			sprintf(desloc_temp, "%d", deslocamento);
 
-			add_to_l_iloc(arvore->codigo, new_instruction("storeAI", string_temp, "rfp", desloc_temp));
+			add_to_l_iloc(arvore->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
 
 			print_iloc(arvore->codigo);
 
