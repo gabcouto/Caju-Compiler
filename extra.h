@@ -148,4 +148,6 @@ void print_iloc(L_iloc* lista_instrucoes);
 
 int gera_rotulo();
 
+int calcula_deslocamento(Tabela* myTable);
+
 #endif

@@ -17,6 +17,7 @@ extern int yylex_destroy(void);
 Pilha* myStack;
 void *arvore = NULL;
 L_iloc *arvore_iloc;
+Tabela *rbss=NULL, *rfp=NULL;
 void exporta (void *arvore);
 void libera (void *arvore);
 

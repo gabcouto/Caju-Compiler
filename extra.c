@@ -10,6 +10,7 @@ extern int yylineno;
 extern Pilha *myStack;
 extern L_iloc *arvore_iloc;
 int contador = 0;
+int desloc = 0;
 
 int get_line_number() {
 
@@ -18,7 +19,7 @@ int get_line_number() {
 
 int gera_rotulo (void)
 {
-	return contador++;
+	return ++contador;
 }
 
 int tamanho_tipo(enum Tipo tipo)
@@ -75,11 +76,12 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
 
 void print_iloc(L_iloc* lista_instrucoes)
 {
+	printf("%s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+
 	if(lista_instrucoes->next_instruction != NULL)
 		print_iloc(lista_instrucoes->next_instruction);
 	
-	printf("%s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
-
+	
 }
 
 Tabela* create_simbolo()
@@ -223,6 +225,20 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			strcpy(dados, arvore->firstChild->label);
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			desloc = 0;
+			int deslocamento = calcula_deslocamento(myTable);
+
+			char *string_temp, *desloc_temp;
+			string_temp = (char*) malloc(sizeof(char));
+			desloc_temp = (char*) malloc(sizeof(char));
+			sprintf(string_temp, "temporario%d", contador);
+			sprintf(desloc_temp, "%d", deslocamento);
+
+			add_to_l_iloc(arvore->codigo, new_instruction("storeAI", string_temp, "rfp", desloc_temp));
+
+			print_iloc(arvore->codigo);
+
+
 			add_to_table(myTable, conteudo_de_simbolo);
 		}	
 		else if(strcmp(arvore->name, "FuncaoL") == 0)
@@ -293,6 +309,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 	}
 }	
+
 
 void verifica_isDeclared(Tabela* myTable, Content* conteudo)
 {
@@ -418,7 +435,15 @@ enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coi
 	
 }
 
-
+int calcula_deslocamento(Tabela* myTable)
+{
+	if(myTable->conteudo != NULL)
+		desloc += myTable->conteudo->tamanho;
+	if(myTable->nextElement != NULL)
+		calcula_deslocamento(myTable->nextElement);
+	else
+		return desloc;
+}
 
 Pilha * create_stack(Tabela* tabela)
 {

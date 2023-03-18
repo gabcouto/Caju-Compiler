@@ -9,6 +9,7 @@
 	extern void *arvore;
 	extern int contador;
 	extern Pilha *myStack;
+	extern Tabela *rfp, *rbss;
 	int yylex(void);
 	void yyerror(const char *);
 %}
@@ -263,6 +264,7 @@ declaracao_local: tipo lista_de_nome_de_variaveis_locais
 	$$ = $2; 
 	Pilha* temp = top_stack(myStack); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+
 	free($1);
 };
 
@@ -285,12 +287,7 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 	free($2.valor.cadeia); 
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
-	char *string_temp;
-	string_temp = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", contador);
-	add_to_l_iloc($3->codigo, new_instruction("storeAI", string_temp, "rfp", "endereco_deslocamento"));
-
-	print_iloc($$->codigo);
+	
 };
 
 variavel_local: IDENTIFICADOR 
@@ -328,6 +325,9 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 		compareTypes(tipoLeft, tipoRight);
 	}
 	
+	
+
+
 	//obter endereço da tabela
 	// em qual tabela/ escopo foi declarado
 	// precisamos saber o temporario onde se encontra o resultado da exp
