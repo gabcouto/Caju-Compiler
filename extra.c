@@ -75,7 +75,7 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
 
 void print_iloc(L_iloc* lista_instrucoes)
 {
-	while(lista_instrucoes->next_instruction != NULL)
+	if(lista_instrucoes->next_instruction != NULL)
 		print_iloc(lista_instrucoes->next_instruction);
 	
 	printf("%s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);

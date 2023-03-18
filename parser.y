@@ -286,6 +286,7 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
 	char *string_temp;
+	string_temp = (char*) malloc(sizeof(char));
 	sprintf(string_temp, "temporario%d", contador);
 	add_to_l_iloc($3->codigo, new_instruction("storeAI", string_temp, "rfp", "endereco_deslocamento"));
 
@@ -682,7 +683,10 @@ tipo: TK_PR_BOOL {$$=create_node("bool", "b"); free($1.valor.cadeia);}; //{$$ = 
 literal: TK_LIT_INT {
 	$$ = create_node_from_token("TK_LIT_INT", $1);
 	$$->codigo = create_lista_iloc();
-	char *string_temp, *string_temp1;
+	char *string_temp; 
+	char *string_temp1;
+	string_temp = (char*) malloc(sizeof(char));
+	string_temp1 = (char*) malloc(sizeof(char));
 	sprintf(string_temp, "temporario%d", gera_rotulo());
 	sprintf(string_temp1, "%d", $1.valor.inteiro);
 	add_to_l_iloc($$->codigo, new_instruction("loadI", string_temp1, NULL, string_temp));
