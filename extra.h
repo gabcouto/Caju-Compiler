@@ -154,4 +154,6 @@ int gera_label();
 
 int calcula_deslocamento(Tabela* myTable);
 
+int encontra_endereco( Pilha * stack, char* identificador, int deslocamento);
+
 #endif

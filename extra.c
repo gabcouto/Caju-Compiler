@@ -40,6 +40,26 @@ int tamanho_tipo(enum Tipo tipo)
 
 }
 
+int encontra_endereco( Pilha * stack, char* identificador, int deslocamento){ //recebe myStack 
+	
+	int deslocAtual = -1;
+	int deslocAcima = -1;
+	
+	while(stack->elemento_pilha->nextElement != NULL){ // soma o tamanho de tudo em um nível da pilha
+		if (strcmp(stack->elemento_pilha->conteudo->dados, identificador)==0)
+			deslocAtual=deslocamento;
+		deslocamento += stack->elemento_pilha->conteudo->tamanho;
+	}
+	if (stack->top != NULL){	//se tem nivel acima, recursão
+		deslocAcima = encontra_endereço(stack->top, identificador, deslocamento);
+	}
+	
+	if (deslocAcima!=-1) return deslocAcima;
+	
+	return deslocAtual;
+
+}
+
 Iloc* new_instruction(char* label, char* op, char* r1, char* r2, char* r3)
 {
 	Iloc* new_instruction = (Iloc*) malloc (sizeof(Iloc));
@@ -239,7 +259,8 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			strcpy(dados, arvore->firstChild->label);
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Variavel, type, tamanho, dados, outros);
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
-			desloc = 0;
+			desloc = 0;//n entedi pq fazer desloc global e iniciar ele em zero antes de entrar na função
+//acho q seria mais clean code fazer o desloc dentro da função e ela n ser recursiva
 			int deslocamento = calcula_deslocamento(myTable);
 
 			char *string_temp, *desloc_temp;
