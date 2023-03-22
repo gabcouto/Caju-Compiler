@@ -331,7 +331,7 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	
 	
 	
-	char* string_temp
+	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
 	//tem q pegar o lugar que exp deixou seu resultado
 	// if exp == literal { sprintf(string_temp, "%d", exp->label) ou se for char sla
@@ -340,13 +340,14 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	// int deslocExp = encontra_endereço(myStack, $4->label, 0); //tem q garantir q o $4->label retorna o identificador msm
 	// sprintf(string_temp, "%d", deslocExp);
 	
-	int deslocamento = encontra_endereço(myStack, $1->label, 0);
+	int deslocamento = encontra_endereco(myStack, $1->label, 0);
 	char *desloc_temp;
 	desloc_temp = (char*) malloc(sizeof(char));
 	sprintf(desloc_temp, "%d", deslocamento);
 	$$->codigo = $4->codigo;
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
 
+	print_iloc($$->codigo);
 
 	//obter endereço da tabela
 	// em qual tabela/ escopo foi declarado

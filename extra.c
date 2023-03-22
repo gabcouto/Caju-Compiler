@@ -44,16 +44,23 @@ int encontra_endereco( Pilha * stack, char* identificador, int deslocamento){ //
 	
 	int deslocAtual = -1;
 	int deslocAcima = -1;
-	
-	while(stack->elemento_pilha->nextElement != NULL){ // soma o tamanho de tudo em um nível da pilha
-		if (strcmp(stack->elemento_pilha->conteudo->dados, identificador)==0)
+	printf("cheguei na encontra end\n");
+	Tabela * elemento = stack->elemento_pilha;
+
+	while(elemento->conteudo != NULL){ // soma o tamanho de tudo em um nível da pilha
+		if (strcmp(elemento->conteudo->dados, identificador)==0)
 			deslocAtual=deslocamento;
-		deslocamento += stack->elemento_pilha->conteudo->tamanho;
+
+		printf("%d\n", elemento->conteudo->tamanho);
+		deslocamento += elemento->conteudo->tamanho;
+		if (elemento->nextElement!= NULL) elemento = elemento->nextElement;
+		else break;
 	}
+	printf("sai do while com deslocamento %d \n", deslocamento);
 	if (stack->top != NULL){	//se tem nivel acima, recursão
-		deslocAcima = encontra_endereço(stack->top, identificador, deslocamento);
+		deslocAcima = encontra_endereco(stack->top, identificador, deslocamento);
 	}
-	
+	printf("voltei da recursão ou nem entrei nela com deslocAcima: %d e desloc atual: %d\n", deslocAcima, deslocAtual);
 	if (deslocAcima!=-1) return deslocAcima;
 	
 	return deslocAtual;
@@ -110,11 +117,10 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
 
 void print_iloc(L_iloc* lista_instrucoes)
 {
-	printf("%s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+	printf("%s %s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
 
 	if(lista_instrucoes->next_instruction != NULL)
 		print_iloc(lista_instrucoes->next_instruction);
-	
 	
 }
 
@@ -470,6 +476,9 @@ void push_stack(Tabela* tabela, Pilha* pilha)
 	newStackElement = (Pilha*) malloc (sizeof(Pilha));
 
 	Pilha *topo = top_stack(pilha);
+
+	tabela->conteudo=NULL;
+	tabela->nextElement=NULL;
 
 	newStackElement->elemento_pilha = tabela;
 	newStackElement->top = NULL;
