@@ -1,0 +1,3511 @@
+GrupoP
+GrupoP|ijk00|stack|120764
+GrupoP|ijk00|data|60382
+GrupoP|ijk00|input|loadI 34 => rbss
+GrupoP|ijk00|input|loadI 38 => rsp
+GrupoP|ijk00|input|loadI 38 => rfp
+GrupoP|ijk00|input|storeAI rfp => rsp, 8
+GrupoP|ijk00|input|addI rpc, 3 => r12
+GrupoP|ijk00|input|storeAI r12 => rsp, 0
+GrupoP|ijk00|input|jumpI  => L0
+GrupoP|ijk00|input|loadAI rsp, 4 => r11
+GrupoP|ijk00|input|halt 
+GrupoP|ijk00|input|L0: nop 
+GrupoP|ijk00|input|i2i rsp => rfp
+GrupoP|ijk00|input|addI rsp, 20 => rsp
+GrupoP|ijk00|input|loadI 923 => r0
+GrupoP|ijk00|input|storeAI r0 => rbss, 0
+GrupoP|ijk00|input|loadI 456 => r1
+GrupoP|ijk00|input|storeAI r1 => rfp, 16
+GrupoP|ijk00|input|loadAI rbss, 0 => r2
+GrupoP|ijk00|input|loadAI rfp, 16 => r3
+GrupoP|ijk00|input|add r2, r3 => r4
+GrupoP|ijk00|input|storeAI r4 => rfp, 12
+GrupoP|ijk00|input|loadI 0 => r5
+GrupoP|ijk00|input|loadAI rfp, 0 => r6
+GrupoP|ijk00|input|storeAI r5 => rfp, 4
+GrupoP|ijk00|input|loadAI rfp, 8 => r7
+GrupoP|ijk00|input|i2i rfp => rsp
+GrupoP|ijk00|input|i2i r7 => rfp
+GrupoP|ijk00|input|jump  -> r6
+GrupoP|ijk00|input|loadI 0 => r8
+GrupoP|ijk00|input|loadAI rfp, 0 => r9
+GrupoP|ijk00|input|storeAI r8 => rfp, 4
+GrupoP|ijk00|input|loadAI rfp, 8 => r10
+GrupoP|ijk00|input|i2i rfp => rsp
+GrupoP|ijk00|input|i2i r10 => rfp
+GrupoP|ijk00|input|jump  -> r9
+GrupoP|ijk00|output|Change of rbss ignored (strict mode)
+GrupoP|ijk00|output|Change of rsp ignored (strict mode)
+GrupoP|ijk00|output|Change of rfp ignored (strict mode)
+GrupoP|ijk00|output|count	instruction
+GrupoP|ijk00|output|    6	loadI
+GrupoP|ijk00|output|    6	storeAI
+GrupoP|ijk00|output|    5	loadAI
+GrupoP|ijk00|output|    3	i2i
+GrupoP|ijk00|output|    2	addI
+GrupoP|ijk00|output|    1	jumpI
+GrupoP|ijk00|output|    1	nop
+GrupoP|ijk00|output|    1	add
+GrupoP|ijk00|output|    1	jump
+GrupoP|ijk00|output|    1	halt
+GrupoP|ijk00|output|
+GrupoP|ijk00|output|instructions executed:   27
+GrupoP|ijk00|output|register         read:   25 write:   41
+GrupoP|ijk00|output|memory           read:    5 write:    6
+GrupoP|ijk00|output|
+GrupoP|ijk00|output|  register    value
+GrupoP|ijk00|output|        r0      923
+GrupoP|ijk00|output|        r1      456
+GrupoP|ijk00|output|       r11        0
+GrupoP|ijk00|output|       r12        7
+GrupoP|ijk00|output|        r2      923
+GrupoP|ijk00|output|        r3      456
+GrupoP|ijk00|output|        r4     1379
+GrupoP|ijk00|output|        r5        0
+GrupoP|ijk00|output|        r6        7
+GrupoP|ijk00|output|        r7   120764
+GrupoP|ijk00|output|      rbss    60382
+GrupoP|ijk00|output|       rfp   120764
+GrupoP|ijk00|output|       rpc        8
+GrupoP|ijk00|output|       rsp   120764
+GrupoP|ijk00|output|
+GrupoP|ijk00|output|    memory    value
+GrupoP|ijk00|output|00060382      923
+GrupoP|ijk00|output|00120764        7
+GrupoP|ijk00|output|00120768        0
+GrupoP|ijk00|output|00120772   120764
+GrupoP|ijk00|output|00120776     1379
+GrupoP|ijk00|output|00120780      456
+GrupoP|ijk00|memory|00060382|923
+GrupoP|ijk00|memory|00120764|7
+GrupoP|ijk00|memory|00120768|0
+GrupoP|ijk00|memory|00120772|120764
+GrupoP|ijk00|memory|00120776|1379
+GrupoP|ijk00|memory|00120780|456
+GrupoP|ijk01|stack|122508
+GrupoP|ijk01|data|61254
+GrupoP|ijk01|input|loadI 34 => rbss
+GrupoP|ijk01|input|loadI 38 => rsp
+GrupoP|ijk01|input|loadI 38 => rfp
+GrupoP|ijk01|input|storeAI rfp => rsp, 8
+GrupoP|ijk01|input|addI rpc, 3 => r12
+GrupoP|ijk01|input|storeAI r12 => rsp, 0
+GrupoP|ijk01|input|jumpI  => L0
+GrupoP|ijk01|input|loadAI rsp, 4 => r11
+GrupoP|ijk01|input|halt 
+GrupoP|ijk01|input|L0: nop 
+GrupoP|ijk01|input|i2i rsp => rfp
+GrupoP|ijk01|input|addI rsp, 28 => rsp
+GrupoP|ijk01|input|loadI 923 => r0
+GrupoP|ijk01|input|storeAI r0 => rbss, 0
+GrupoP|ijk01|input|loadI 456 => r1
+GrupoP|ijk01|input|storeAI r1 => rfp, 20
+GrupoP|ijk01|input|loadAI rbss, 0 => r2
+GrupoP|ijk01|input|loadAI rfp, 20 => r3
+GrupoP|ijk01|input|add r2, r3 => r4
+GrupoP|ijk01|input|storeAI r4 => rfp, 24
+GrupoP|ijk01|input|loadI 0 => r5
+GrupoP|ijk01|input|loadAI rfp, 0 => r6
+GrupoP|ijk01|input|storeAI r5 => rfp, 4
+GrupoP|ijk01|input|loadAI rfp, 8 => r7
+GrupoP|ijk01|input|i2i rfp => rsp
+GrupoP|ijk01|input|i2i r7 => rfp
+GrupoP|ijk01|input|jump  -> r6
+GrupoP|ijk01|input|loadI 0 => r8
+GrupoP|ijk01|input|loadAI rfp, 0 => r9
+GrupoP|ijk01|input|storeAI r8 => rfp, 4
+GrupoP|ijk01|input|loadAI rfp, 8 => r10
+GrupoP|ijk01|input|i2i rfp => rsp
+GrupoP|ijk01|input|i2i r10 => rfp
+GrupoP|ijk01|input|jump  -> r9
+GrupoP|ijk01|output|Change of rbss ignored (strict mode)
+GrupoP|ijk01|output|Change of rsp ignored (strict mode)
+GrupoP|ijk01|output|Change of rfp ignored (strict mode)
+GrupoP|ijk01|output|count	instruction
+GrupoP|ijk01|output|    6	loadI
+GrupoP|ijk01|output|    6	storeAI
+GrupoP|ijk01|output|    5	loadAI
+GrupoP|ijk01|output|    3	i2i
+GrupoP|ijk01|output|    2	addI
+GrupoP|ijk01|output|    1	jumpI
+GrupoP|ijk01|output|    1	nop
+GrupoP|ijk01|output|    1	add
+GrupoP|ijk01|output|    1	jump
+GrupoP|ijk01|output|    1	halt
+GrupoP|ijk01|output|
+GrupoP|ijk01|output|instructions executed:   27
+GrupoP|ijk01|output|register         read:   25 write:   41
+GrupoP|ijk01|output|memory           read:    5 write:    6
+GrupoP|ijk01|output|
+GrupoP|ijk01|output|  register    value
+GrupoP|ijk01|output|        r0      923
+GrupoP|ijk01|output|        r1      456
+GrupoP|ijk01|output|       r11        0
+GrupoP|ijk01|output|       r12        7
+GrupoP|ijk01|output|        r2      923
+GrupoP|ijk01|output|        r3      456
+GrupoP|ijk01|output|        r4     1379
+GrupoP|ijk01|output|        r5        0
+GrupoP|ijk01|output|        r6        7
+GrupoP|ijk01|output|        r7   122508
+GrupoP|ijk01|output|      rbss    61254
+GrupoP|ijk01|output|       rfp   122508
+GrupoP|ijk01|output|       rpc        8
+GrupoP|ijk01|output|       rsp   122508
+GrupoP|ijk01|output|
+GrupoP|ijk01|output|    memory    value
+GrupoP|ijk01|output|00061254      923
+GrupoP|ijk01|output|00122508        7
+GrupoP|ijk01|output|00122512        0
+GrupoP|ijk01|output|00122516   122508
+GrupoP|ijk01|output|00122528      456
+GrupoP|ijk01|output|00122532     1379
+GrupoP|ijk01|memory|00061254|923
+GrupoP|ijk01|memory|00122508|7
+GrupoP|ijk01|memory|00122512|0
+GrupoP|ijk01|memory|00122516|122508
+GrupoP|ijk01|memory|00122528|456
+GrupoP|ijk01|memory|00122532|1379
+GrupoP|ijk1A|stack|129995
+GrupoP|ijk1A|data|64997
+GrupoP|ijk1A|input|loadI 56 => rbss
+GrupoP|ijk1A|input|loadI 60 => rsp
+GrupoP|ijk1A|input|loadI 60 => rfp
+GrupoP|ijk1A|input|storeAI rfp => rsp, 8
+GrupoP|ijk1A|input|addI rpc, 3 => r22
+GrupoP|ijk1A|input|storeAI r22 => rsp, 0
+GrupoP|ijk1A|input|jumpI  => L0
+GrupoP|ijk1A|input|loadAI rsp, 4 => r21
+GrupoP|ijk1A|input|halt 
+GrupoP|ijk1A|input|L0: nop 
+GrupoP|ijk1A|input|i2i rsp => rfp
+GrupoP|ijk1A|input|addI rsp, 24 => rsp
+GrupoP|ijk1A|input|loadI 234 => r0
+GrupoP|ijk1A|input|storeAI r0 => rbss, 0
+GrupoP|ijk1A|input|loadI 456 => r1
+GrupoP|ijk1A|input|storeAI r1 => rfp, 16
+GrupoP|ijk1A|input|loadI 98 => r2
+GrupoP|ijk1A|input|storeAI r2 => rfp, 20
+GrupoP|ijk1A|input|loadI 4 => r3
+GrupoP|ijk1A|input|rsubI r3, 0 => r4
+GrupoP|ijk1A|input|storeAI r4 => rfp, 12
+GrupoP|ijk1A|input|loadAI rfp, 12 => r5
+GrupoP|ijk1A|input|loadI 0 => r6
+GrupoP|ijk1A|input|cmp_GT r5, r6 -> r8
+GrupoP|ijk1A|input|cbr r8 -> L1, L2
+GrupoP|ijk1A|input|L1: loadI 1 => r7
+GrupoP|ijk1A|input|jumpI  -> L3
+GrupoP|ijk1A|input|L2: loadI 0 => r7
+GrupoP|ijk1A|input|L3: nop 
+GrupoP|ijk1A|input|loadI 0 => r13
+GrupoP|ijk1A|input|cmp_NE r7, r13 -> r14
+GrupoP|ijk1A|input|cbr r14 -> L4, L5
+GrupoP|ijk1A|input|L4: nop 
+GrupoP|ijk1A|input|loadI 123 => r9
+GrupoP|ijk1A|input|storeAI r9 => rfp, 20
+GrupoP|ijk1A|input|loadAI rbss, 0 => r10
+GrupoP|ijk1A|input|loadAI rfp, 20 => r11
+GrupoP|ijk1A|input|add r10, r11 => r12
+GrupoP|ijk1A|input|storeAI r12 => rfp, 16
+GrupoP|ijk1A|input|jumpI  -> L6
+GrupoP|ijk1A|input|L5: nop 
+GrupoP|ijk1A|input|L6: nop 
+GrupoP|ijk1A|input|loadI 0 => r15
+GrupoP|ijk1A|input|loadAI rfp, 0 => r16
+GrupoP|ijk1A|input|storeAI r15 => rfp, 4
+GrupoP|ijk1A|input|loadAI rfp, 8 => r17
+GrupoP|ijk1A|input|i2i rfp => rsp
+GrupoP|ijk1A|input|i2i r17 => rfp
+GrupoP|ijk1A|input|jump  -> r16
+GrupoP|ijk1A|input|loadI 0 => r18
+GrupoP|ijk1A|input|loadAI rfp, 0 => r19
+GrupoP|ijk1A|input|storeAI r18 => rfp, 4
+GrupoP|ijk1A|input|loadAI rfp, 8 => r20
+GrupoP|ijk1A|input|i2i rfp => rsp
+GrupoP|ijk1A|input|i2i r20 => rfp
+GrupoP|ijk1A|input|jump  -> r19
+GrupoP|ijk1A|output|Change of rbss ignored (strict mode)
+GrupoP|ijk1A|output|Change of rsp ignored (strict mode)
+GrupoP|ijk1A|output|Change of rfp ignored (strict mode)
+GrupoP|ijk1A|output|count	instruction
+GrupoP|ijk1A|output|   11	loadI
+GrupoP|ijk1A|output|    7	storeAI
+GrupoP|ijk1A|output|    4	nop
+GrupoP|ijk1A|output|    4	loadAI
+GrupoP|ijk1A|output|    3	i2i
+GrupoP|ijk1A|output|    2	addI
+GrupoP|ijk1A|output|    2	cbr
+GrupoP|ijk1A|output|    1	jumpI
+GrupoP|ijk1A|output|    1	rsubI
+GrupoP|ijk1A|output|    1	cmp_GT
+GrupoP|ijk1A|output|    1	cmp_NE
+GrupoP|ijk1A|output|    1	jump
+GrupoP|ijk1A|output|    1	halt
+GrupoP|ijk1A|output|
+GrupoP|ijk1A|output|instructions executed:   39
+GrupoP|ijk1A|output|register         read:   31 write:   59
+GrupoP|ijk1A|output|memory           read:    4 write:    7
+GrupoP|ijk1A|output|
+GrupoP|ijk1A|output|  register    value
+GrupoP|ijk1A|output|        r0      234
+GrupoP|ijk1A|output|        r1      456
+GrupoP|ijk1A|output|       r13        0
+GrupoP|ijk1A|output|       r14        0
+GrupoP|ijk1A|output|       r15        0
+GrupoP|ijk1A|output|       r16        7
+GrupoP|ijk1A|output|       r17   129995
+GrupoP|ijk1A|output|        r2       98
+GrupoP|ijk1A|output|       r21        0
+GrupoP|ijk1A|output|       r22        7
+GrupoP|ijk1A|output|        r3        4
+GrupoP|ijk1A|output|        r4       -4
+GrupoP|ijk1A|output|        r5       -4
+GrupoP|ijk1A|output|        r6        0
+GrupoP|ijk1A|output|        r7        0
+GrupoP|ijk1A|output|        r8        0
+GrupoP|ijk1A|output|      rbss    64997
+GrupoP|ijk1A|output|       rfp   129995
+GrupoP|ijk1A|output|       rpc        8
+GrupoP|ijk1A|output|       rsp   129995
+GrupoP|ijk1A|output|
+GrupoP|ijk1A|output|    memory    value
+GrupoP|ijk1A|output|00064997      234
+GrupoP|ijk1A|output|00129995        7
+GrupoP|ijk1A|output|00129999        0
+GrupoP|ijk1A|output|00130003   129995
+GrupoP|ijk1A|output|00130007       -4
+GrupoP|ijk1A|output|00130011      456
+GrupoP|ijk1A|output|00130015       98
+GrupoP|ijk1A|memory|00064997|234
+GrupoP|ijk1A|memory|00129995|7
+GrupoP|ijk1A|memory|00129999|0
+GrupoP|ijk1A|memory|00130003|129995
+GrupoP|ijk1A|memory|00130007|-4
+GrupoP|ijk1A|memory|00130011|456
+GrupoP|ijk1A|memory|00130015|98
+GrupoP|ijk1B|stack|108912
+GrupoP|ijk1B|data|54456
+GrupoP|ijk1B|input|loadI 50 => rbss
+GrupoP|ijk1B|input|loadI 62 => rsp
+GrupoP|ijk1B|input|loadI 62 => rfp
+GrupoP|ijk1B|input|storeAI rfp => rsp, 8
+GrupoP|ijk1B|input|addI rpc, 3 => r18
+GrupoP|ijk1B|input|storeAI r18 => rsp, 0
+GrupoP|ijk1B|input|jumpI  => L0
+GrupoP|ijk1B|input|loadAI rsp, 4 => r17
+GrupoP|ijk1B|input|halt 
+GrupoP|ijk1B|input|L0: nop 
+GrupoP|ijk1B|input|i2i rsp => rfp
+GrupoP|ijk1B|input|addI rsp, 20 => rsp
+GrupoP|ijk1B|input|loadI 3 => r0
+GrupoP|ijk1B|input|rsubI r0, 0 => r1
+GrupoP|ijk1B|input|storeAI r1 => rfp, 12
+GrupoP|ijk1B|input|loadI 234 => r2
+GrupoP|ijk1B|input|storeAI r2 => rfp, 16
+GrupoP|ijk1B|input|loadAI rfp, 12 => r3
+GrupoP|ijk1B|input|loadI 0 => r4
+GrupoP|ijk1B|input|cmp_GT r3, r4 -> r6
+GrupoP|ijk1B|input|cbr r6 -> L1, L2
+GrupoP|ijk1B|input|L1: loadI 1 => r5
+GrupoP|ijk1B|input|jumpI  -> L3
+GrupoP|ijk1B|input|L2: loadI 0 => r5
+GrupoP|ijk1B|input|L3: nop 
+GrupoP|ijk1B|input|loadI 0 => r9
+GrupoP|ijk1B|input|cmp_NE r5, r9 -> r10
+GrupoP|ijk1B|input|cbr r10 -> L4, L5
+GrupoP|ijk1B|input|L4: nop 
+GrupoP|ijk1B|input|loadI 393 => r7
+GrupoP|ijk1B|input|storeAI r7 => rfp, 16
+GrupoP|ijk1B|input|jumpI  -> L6
+GrupoP|ijk1B|input|L5: nop 
+GrupoP|ijk1B|input|loadI 432 => r8
+GrupoP|ijk1B|input|storeAI r8 => rfp, 16
+GrupoP|ijk1B|input|L6: nop 
+GrupoP|ijk1B|input|loadI 0 => r11
+GrupoP|ijk1B|input|loadAI rfp, 0 => r12
+GrupoP|ijk1B|input|storeAI r11 => rfp, 4
+GrupoP|ijk1B|input|loadAI rfp, 8 => r13
+GrupoP|ijk1B|input|i2i rfp => rsp
+GrupoP|ijk1B|input|i2i r13 => rfp
+GrupoP|ijk1B|input|jump  -> r12
+GrupoP|ijk1B|input|loadI 0 => r14
+GrupoP|ijk1B|input|loadAI rfp, 0 => r15
+GrupoP|ijk1B|input|storeAI r14 => rfp, 4
+GrupoP|ijk1B|input|loadAI rfp, 8 => r16
+GrupoP|ijk1B|input|i2i rfp => rsp
+GrupoP|ijk1B|input|i2i r16 => rfp
+GrupoP|ijk1B|input|jump  -> r15
+GrupoP|ijk1B|output|Change of rbss ignored (strict mode)
+GrupoP|ijk1B|output|Change of rsp ignored (strict mode)
+GrupoP|ijk1B|output|Change of rfp ignored (strict mode)
+GrupoP|ijk1B|output|count	instruction
+GrupoP|ijk1B|output|   10	loadI
+GrupoP|ijk1B|output|    6	storeAI
+GrupoP|ijk1B|output|    4	nop
+GrupoP|ijk1B|output|    4	loadAI
+GrupoP|ijk1B|output|    3	i2i
+GrupoP|ijk1B|output|    2	addI
+GrupoP|ijk1B|output|    2	cbr
+GrupoP|ijk1B|output|    1	jumpI
+GrupoP|ijk1B|output|    1	rsubI
+GrupoP|ijk1B|output|    1	cmp_GT
+GrupoP|ijk1B|output|    1	cmp_NE
+GrupoP|ijk1B|output|    1	jump
+GrupoP|ijk1B|output|    1	halt
+GrupoP|ijk1B|output|
+GrupoP|ijk1B|output|instructions executed:   37
+GrupoP|ijk1B|output|register         read:   29 write:   56
+GrupoP|ijk1B|output|memory           read:    4 write:    6
+GrupoP|ijk1B|output|
+GrupoP|ijk1B|output|  register    value
+GrupoP|ijk1B|output|        r0        3
+GrupoP|ijk1B|output|        r1       -3
+GrupoP|ijk1B|output|       r10        0
+GrupoP|ijk1B|output|       r11        0
+GrupoP|ijk1B|output|       r12        7
+GrupoP|ijk1B|output|       r13   108912
+GrupoP|ijk1B|output|       r17        0
+GrupoP|ijk1B|output|       r18        7
+GrupoP|ijk1B|output|        r2      234
+GrupoP|ijk1B|output|        r3       -3
+GrupoP|ijk1B|output|        r4        0
+GrupoP|ijk1B|output|        r5        0
+GrupoP|ijk1B|output|        r6        0
+GrupoP|ijk1B|output|        r8      432
+GrupoP|ijk1B|output|        r9        0
+GrupoP|ijk1B|output|      rbss    54456
+GrupoP|ijk1B|output|       rfp   108912
+GrupoP|ijk1B|output|       rpc        8
+GrupoP|ijk1B|output|       rsp   108912
+GrupoP|ijk1B|output|
+GrupoP|ijk1B|output|    memory    value
+GrupoP|ijk1B|output|00108912        7
+GrupoP|ijk1B|output|00108916        0
+GrupoP|ijk1B|output|00108920   108912
+GrupoP|ijk1B|output|00108924       -3
+GrupoP|ijk1B|output|00108928      432
+GrupoP|ijk1B|memory|00108912|7
+GrupoP|ijk1B|memory|00108916|0
+GrupoP|ijk1B|memory|00108920|108912
+GrupoP|ijk1B|memory|00108924|-3
+GrupoP|ijk1B|memory|00108928|432
+GrupoP|ijk02|stack|110126
+GrupoP|ijk02|data|55063
+GrupoP|ijk02|input|loadI 34 => rbss
+GrupoP|ijk02|input|loadI 46 => rsp
+GrupoP|ijk02|input|loadI 46 => rfp
+GrupoP|ijk02|input|storeAI rfp => rsp, 8
+GrupoP|ijk02|input|addI rpc, 3 => r12
+GrupoP|ijk02|input|storeAI r12 => rsp, 0
+GrupoP|ijk02|input|jumpI  => L0
+GrupoP|ijk02|input|loadAI rsp, 4 => r11
+GrupoP|ijk02|input|halt 
+GrupoP|ijk02|input|L0: nop 
+GrupoP|ijk02|input|i2i rsp => rfp
+GrupoP|ijk02|input|addI rsp, 12 => rsp
+GrupoP|ijk02|input|loadI 456 => r0
+GrupoP|ijk02|input|storeAI r0 => rbss, 4
+GrupoP|ijk02|input|loadI 923 => r1
+GrupoP|ijk02|input|storeAI r1 => rbss, 8
+GrupoP|ijk02|input|loadAI rbss, 8 => r2
+GrupoP|ijk02|input|loadAI rbss, 4 => r3
+GrupoP|ijk02|input|add r2, r3 => r4
+GrupoP|ijk02|input|storeAI r4 => rbss, 0
+GrupoP|ijk02|input|loadI 0 => r5
+GrupoP|ijk02|input|loadAI rfp, 0 => r6
+GrupoP|ijk02|input|storeAI r5 => rfp, 4
+GrupoP|ijk02|input|loadAI rfp, 8 => r7
+GrupoP|ijk02|input|i2i rfp => rsp
+GrupoP|ijk02|input|i2i r7 => rfp
+GrupoP|ijk02|input|jump  -> r6
+GrupoP|ijk02|input|loadI 0 => r8
+GrupoP|ijk02|input|loadAI rfp, 0 => r9
+GrupoP|ijk02|input|storeAI r8 => rfp, 4
+GrupoP|ijk02|input|loadAI rfp, 8 => r10
+GrupoP|ijk02|input|i2i rfp => rsp
+GrupoP|ijk02|input|i2i r10 => rfp
+GrupoP|ijk02|input|jump  -> r9
+GrupoP|ijk02|output|Change of rbss ignored (strict mode)
+GrupoP|ijk02|output|Change of rsp ignored (strict mode)
+GrupoP|ijk02|output|Change of rfp ignored (strict mode)
+GrupoP|ijk02|output|count	instruction
+GrupoP|ijk02|output|    6	loadI
+GrupoP|ijk02|output|    6	storeAI
+GrupoP|ijk02|output|    5	loadAI
+GrupoP|ijk02|output|    3	i2i
+GrupoP|ijk02|output|    2	addI
+GrupoP|ijk02|output|    1	jumpI
+GrupoP|ijk02|output|    1	nop
+GrupoP|ijk02|output|    1	add
+GrupoP|ijk02|output|    1	jump
+GrupoP|ijk02|output|    1	halt
+GrupoP|ijk02|output|
+GrupoP|ijk02|output|instructions executed:   27
+GrupoP|ijk02|output|register         read:   25 write:   41
+GrupoP|ijk02|output|memory           read:    5 write:    6
+GrupoP|ijk02|output|
+GrupoP|ijk02|output|  register    value
+GrupoP|ijk02|output|        r0      456
+GrupoP|ijk02|output|        r1      923
+GrupoP|ijk02|output|       r11        0
+GrupoP|ijk02|output|       r12        7
+GrupoP|ijk02|output|        r2      923
+GrupoP|ijk02|output|        r3      456
+GrupoP|ijk02|output|        r4     1379
+GrupoP|ijk02|output|        r5        0
+GrupoP|ijk02|output|        r6        7
+GrupoP|ijk02|output|        r7   110126
+GrupoP|ijk02|output|      rbss    55063
+GrupoP|ijk02|output|       rfp   110126
+GrupoP|ijk02|output|       rpc        8
+GrupoP|ijk02|output|       rsp   110126
+GrupoP|ijk02|output|
+GrupoP|ijk02|output|    memory    value
+GrupoP|ijk02|output|00055063     1379
+GrupoP|ijk02|output|00055067      456
+GrupoP|ijk02|output|00055071      923
+GrupoP|ijk02|output|00110126        7
+GrupoP|ijk02|output|00110130        0
+GrupoP|ijk02|output|00110134   110126
+GrupoP|ijk02|memory|00055063|1379
+GrupoP|ijk02|memory|00055067|456
+GrupoP|ijk02|memory|00055071|923
+GrupoP|ijk02|memory|00110126|7
+GrupoP|ijk02|memory|00110130|0
+GrupoP|ijk02|memory|00110134|110126
+GrupoP|ijk03|stack|112950
+GrupoP|ijk03|data|56475
+GrupoP|ijk03|input|loadI 34 => rbss
+GrupoP|ijk03|input|loadI 50 => rsp
+GrupoP|ijk03|input|loadI 50 => rfp
+GrupoP|ijk03|input|storeAI rfp => rsp, 8
+GrupoP|ijk03|input|addI rpc, 3 => r12
+GrupoP|ijk03|input|storeAI r12 => rsp, 0
+GrupoP|ijk03|input|jumpI  => L0
+GrupoP|ijk03|input|loadAI rsp, 4 => r11
+GrupoP|ijk03|input|halt 
+GrupoP|ijk03|input|L0: nop 
+GrupoP|ijk03|input|i2i rsp => rfp
+GrupoP|ijk03|input|addI rsp, 12 => rsp
+GrupoP|ijk03|input|loadI 456 => r0
+GrupoP|ijk03|input|storeAI r0 => rbss, 4
+GrupoP|ijk03|input|loadI 923 => r1
+GrupoP|ijk03|input|storeAI r1 => rbss, 12
+GrupoP|ijk03|input|loadAI rbss, 12 => r2
+GrupoP|ijk03|input|loadAI rbss, 4 => r3
+GrupoP|ijk03|input|add r2, r3 => r4
+GrupoP|ijk03|input|storeAI r4 => rbss, 8
+GrupoP|ijk03|input|loadI 0 => r5
+GrupoP|ijk03|input|loadAI rfp, 0 => r6
+GrupoP|ijk03|input|storeAI r5 => rfp, 4
+GrupoP|ijk03|input|loadAI rfp, 8 => r7
+GrupoP|ijk03|input|i2i rfp => rsp
+GrupoP|ijk03|input|i2i r7 => rfp
+GrupoP|ijk03|input|jump  -> r6
+GrupoP|ijk03|input|loadI 0 => r8
+GrupoP|ijk03|input|loadAI rfp, 0 => r9
+GrupoP|ijk03|input|storeAI r8 => rfp, 4
+GrupoP|ijk03|input|loadAI rfp, 8 => r10
+GrupoP|ijk03|input|i2i rfp => rsp
+GrupoP|ijk03|input|i2i r10 => rfp
+GrupoP|ijk03|input|jump  -> r9
+GrupoP|ijk03|output|Change of rbss ignored (strict mode)
+GrupoP|ijk03|output|Change of rsp ignored (strict mode)
+GrupoP|ijk03|output|Change of rfp ignored (strict mode)
+GrupoP|ijk03|output|count	instruction
+GrupoP|ijk03|output|    6	loadI
+GrupoP|ijk03|output|    6	storeAI
+GrupoP|ijk03|output|    5	loadAI
+GrupoP|ijk03|output|    3	i2i
+GrupoP|ijk03|output|    2	addI
+GrupoP|ijk03|output|    1	jumpI
+GrupoP|ijk03|output|    1	nop
+GrupoP|ijk03|output|    1	add
+GrupoP|ijk03|output|    1	jump
+GrupoP|ijk03|output|    1	halt
+GrupoP|ijk03|output|
+GrupoP|ijk03|output|instructions executed:   27
+GrupoP|ijk03|output|register         read:   25 write:   41
+GrupoP|ijk03|output|memory           read:    5 write:    6
+GrupoP|ijk03|output|
+GrupoP|ijk03|output|  register    value
+GrupoP|ijk03|output|        r0      456
+GrupoP|ijk03|output|        r1      923
+GrupoP|ijk03|output|       r11        0
+GrupoP|ijk03|output|       r12        7
+GrupoP|ijk03|output|        r2      923
+GrupoP|ijk03|output|        r3      456
+GrupoP|ijk03|output|        r4     1379
+GrupoP|ijk03|output|        r5        0
+GrupoP|ijk03|output|        r6        7
+GrupoP|ijk03|output|        r7   112950
+GrupoP|ijk03|output|      rbss    56475
+GrupoP|ijk03|output|       rfp   112950
+GrupoP|ijk03|output|       rpc        8
+GrupoP|ijk03|output|       rsp   112950
+GrupoP|ijk03|output|
+GrupoP|ijk03|output|    memory    value
+GrupoP|ijk03|output|00056479      456
+GrupoP|ijk03|output|00056483     1379
+GrupoP|ijk03|output|00056487      923
+GrupoP|ijk03|output|00112950        7
+GrupoP|ijk03|output|00112954        0
+GrupoP|ijk03|output|00112958   112950
+GrupoP|ijk03|memory|00056479|456
+GrupoP|ijk03|memory|00056483|1379
+GrupoP|ijk03|memory|00056487|923
+GrupoP|ijk03|memory|00112950|7
+GrupoP|ijk03|memory|00112954|0
+GrupoP|ijk03|memory|00112958|112950
+GrupoP|ijk04|stack|117767
+GrupoP|ijk04|data|58883
+GrupoP|ijk04|input|loadI 42 => rbss
+GrupoP|ijk04|input|loadI 54 => rsp
+GrupoP|ijk04|input|loadI 54 => rfp
+GrupoP|ijk04|input|storeAI rfp => rsp, 8
+GrupoP|ijk04|input|addI rpc, 3 => r18
+GrupoP|ijk04|input|storeAI r18 => rsp, 0
+GrupoP|ijk04|input|jumpI  => L0
+GrupoP|ijk04|input|loadAI rsp, 4 => r17
+GrupoP|ijk04|input|halt 
+GrupoP|ijk04|input|L0: nop 
+GrupoP|ijk04|input|i2i rsp => rfp
+GrupoP|ijk04|input|addI rsp, 24 => rsp
+GrupoP|ijk04|input|loadI 14 => r0
+GrupoP|ijk04|input|storeAI r0 => rfp, 16
+GrupoP|ijk04|input|loadI 16 => r1
+GrupoP|ijk04|input|storeAI r1 => rfp, 20
+GrupoP|ijk04|input|loadAI rfp, 16 => r2
+GrupoP|ijk04|input|loadAI rfp, 20 => r3
+GrupoP|ijk04|input|add r2, r3 => r4
+GrupoP|ijk04|input|storeAI r4 => rfp, 12
+GrupoP|ijk04|input|loadAI rfp, 12 => r5
+GrupoP|ijk04|input|loadAI rfp, 20 => r6
+GrupoP|ijk04|input|add r5, r6 => r7
+GrupoP|ijk04|input|storeAI r7 => rfp, 16
+GrupoP|ijk04|input|loadAI rfp, 12 => r8
+GrupoP|ijk04|input|loadAI rfp, 16 => r9
+GrupoP|ijk04|input|add r8, r9 => r10
+GrupoP|ijk04|input|storeAI r10 => rfp, 20
+GrupoP|ijk04|input|loadI 0 => r11
+GrupoP|ijk04|input|loadAI rfp, 0 => r12
+GrupoP|ijk04|input|storeAI r11 => rfp, 4
+GrupoP|ijk04|input|loadAI rfp, 8 => r13
+GrupoP|ijk04|input|i2i rfp => rsp
+GrupoP|ijk04|input|i2i r13 => rfp
+GrupoP|ijk04|input|jump  -> r12
+GrupoP|ijk04|input|loadI 0 => r14
+GrupoP|ijk04|input|loadAI rfp, 0 => r15
+GrupoP|ijk04|input|storeAI r14 => rfp, 4
+GrupoP|ijk04|input|loadAI rfp, 8 => r16
+GrupoP|ijk04|input|i2i rfp => rsp
+GrupoP|ijk04|input|i2i r16 => rfp
+GrupoP|ijk04|input|jump  -> r15
+GrupoP|ijk04|output|Change of rbss ignored (strict mode)
+GrupoP|ijk04|output|Change of rsp ignored (strict mode)
+GrupoP|ijk04|output|Change of rfp ignored (strict mode)
+GrupoP|ijk04|output|count	instruction
+GrupoP|ijk04|output|    9	loadAI
+GrupoP|ijk04|output|    8	storeAI
+GrupoP|ijk04|output|    6	loadI
+GrupoP|ijk04|output|    3	i2i
+GrupoP|ijk04|output|    3	add
+GrupoP|ijk04|output|    2	addI
+GrupoP|ijk04|output|    1	jumpI
+GrupoP|ijk04|output|    1	nop
+GrupoP|ijk04|output|    1	jump
+GrupoP|ijk04|output|    1	halt
+GrupoP|ijk04|output|
+GrupoP|ijk04|output|instructions executed:   35
+GrupoP|ijk04|output|register         read:   37 write:   55
+GrupoP|ijk04|output|memory           read:    9 write:    8
+GrupoP|ijk04|output|
+GrupoP|ijk04|output|  register    value
+GrupoP|ijk04|output|        r0       14
+GrupoP|ijk04|output|        r1       16
+GrupoP|ijk04|output|       r10       76
+GrupoP|ijk04|output|       r11        0
+GrupoP|ijk04|output|       r12        7
+GrupoP|ijk04|output|       r13   117767
+GrupoP|ijk04|output|       r17        0
+GrupoP|ijk04|output|       r18        7
+GrupoP|ijk04|output|        r2       14
+GrupoP|ijk04|output|        r3       16
+GrupoP|ijk04|output|        r4       30
+GrupoP|ijk04|output|        r5       30
+GrupoP|ijk04|output|        r6       16
+GrupoP|ijk04|output|        r7       46
+GrupoP|ijk04|output|        r8       30
+GrupoP|ijk04|output|        r9       46
+GrupoP|ijk04|output|      rbss    58883
+GrupoP|ijk04|output|       rfp   117767
+GrupoP|ijk04|output|       rpc        8
+GrupoP|ijk04|output|       rsp   117767
+GrupoP|ijk04|output|
+GrupoP|ijk04|output|    memory    value
+GrupoP|ijk04|output|00117767        7
+GrupoP|ijk04|output|00117771        0
+GrupoP|ijk04|output|00117775   117767
+GrupoP|ijk04|output|00117779       30
+GrupoP|ijk04|output|00117783       46
+GrupoP|ijk04|output|00117787       76
+GrupoP|ijk04|memory|00117767|7
+GrupoP|ijk04|memory|00117771|0
+GrupoP|ijk04|memory|00117775|117767
+GrupoP|ijk04|memory|00117779|30
+GrupoP|ijk04|memory|00117783|46
+GrupoP|ijk04|memory|00117787|76
+GrupoP|ijk05|stack|130198
+GrupoP|ijk05|data|65099
+GrupoP|ijk05|input|loadI 42 => rbss
+GrupoP|ijk05|input|loadI 54 => rsp
+GrupoP|ijk05|input|loadI 54 => rfp
+GrupoP|ijk05|input|storeAI rfp => rsp, 8
+GrupoP|ijk05|input|addI rpc, 3 => r18
+GrupoP|ijk05|input|storeAI r18 => rsp, 0
+GrupoP|ijk05|input|jumpI  => L0
+GrupoP|ijk05|input|loadAI rsp, 4 => r17
+GrupoP|ijk05|input|halt 
+GrupoP|ijk05|input|L0: nop 
+GrupoP|ijk05|input|i2i rsp => rfp
+GrupoP|ijk05|input|addI rsp, 24 => rsp
+GrupoP|ijk05|input|loadI 14 => r0
+GrupoP|ijk05|input|storeAI r0 => rfp, 16
+GrupoP|ijk05|input|loadI 16 => r1
+GrupoP|ijk05|input|storeAI r1 => rfp, 20
+GrupoP|ijk05|input|loadAI rfp, 16 => r2
+GrupoP|ijk05|input|loadAI rfp, 20 => r3
+GrupoP|ijk05|input|sub r2, r3 => r4
+GrupoP|ijk05|input|storeAI r4 => rfp, 12
+GrupoP|ijk05|input|loadAI rfp, 12 => r5
+GrupoP|ijk05|input|loadAI rfp, 20 => r6
+GrupoP|ijk05|input|sub r5, r6 => r7
+GrupoP|ijk05|input|storeAI r7 => rfp, 16
+GrupoP|ijk05|input|loadAI rfp, 12 => r8
+GrupoP|ijk05|input|loadAI rfp, 16 => r9
+GrupoP|ijk05|input|sub r8, r9 => r10
+GrupoP|ijk05|input|storeAI r10 => rfp, 20
+GrupoP|ijk05|input|loadI 0 => r11
+GrupoP|ijk05|input|loadAI rfp, 0 => r12
+GrupoP|ijk05|input|storeAI r11 => rfp, 4
+GrupoP|ijk05|input|loadAI rfp, 8 => r13
+GrupoP|ijk05|input|i2i rfp => rsp
+GrupoP|ijk05|input|i2i r13 => rfp
+GrupoP|ijk05|input|jump  -> r12
+GrupoP|ijk05|input|loadI 0 => r14
+GrupoP|ijk05|input|loadAI rfp, 0 => r15
+GrupoP|ijk05|input|storeAI r14 => rfp, 4
+GrupoP|ijk05|input|loadAI rfp, 8 => r16
+GrupoP|ijk05|input|i2i rfp => rsp
+GrupoP|ijk05|input|i2i r16 => rfp
+GrupoP|ijk05|input|jump  -> r15
+GrupoP|ijk05|output|Change of rbss ignored (strict mode)
+GrupoP|ijk05|output|Change of rsp ignored (strict mode)
+GrupoP|ijk05|output|Change of rfp ignored (strict mode)
+GrupoP|ijk05|output|count	instruction
+GrupoP|ijk05|output|    9	loadAI
+GrupoP|ijk05|output|    8	storeAI
+GrupoP|ijk05|output|    6	loadI
+GrupoP|ijk05|output|    3	i2i
+GrupoP|ijk05|output|    3	sub
+GrupoP|ijk05|output|    2	addI
+GrupoP|ijk05|output|    1	jumpI
+GrupoP|ijk05|output|    1	nop
+GrupoP|ijk05|output|    1	jump
+GrupoP|ijk05|output|    1	halt
+GrupoP|ijk05|output|
+GrupoP|ijk05|output|instructions executed:   35
+GrupoP|ijk05|output|register         read:   37 write:   55
+GrupoP|ijk05|output|memory           read:    9 write:    8
+GrupoP|ijk05|output|
+GrupoP|ijk05|output|  register    value
+GrupoP|ijk05|output|        r0       14
+GrupoP|ijk05|output|        r1       16
+GrupoP|ijk05|output|       r10       16
+GrupoP|ijk05|output|       r11        0
+GrupoP|ijk05|output|       r12        7
+GrupoP|ijk05|output|       r13   130198
+GrupoP|ijk05|output|       r17        0
+GrupoP|ijk05|output|       r18        7
+GrupoP|ijk05|output|        r2       14
+GrupoP|ijk05|output|        r3       16
+GrupoP|ijk05|output|        r4       -2
+GrupoP|ijk05|output|        r5       -2
+GrupoP|ijk05|output|        r6       16
+GrupoP|ijk05|output|        r7      -18
+GrupoP|ijk05|output|        r8       -2
+GrupoP|ijk05|output|        r9      -18
+GrupoP|ijk05|output|      rbss    65099
+GrupoP|ijk05|output|       rfp   130198
+GrupoP|ijk05|output|       rpc        8
+GrupoP|ijk05|output|       rsp   130198
+GrupoP|ijk05|output|
+GrupoP|ijk05|output|    memory    value
+GrupoP|ijk05|output|00130198        7
+GrupoP|ijk05|output|00130202        0
+GrupoP|ijk05|output|00130206   130198
+GrupoP|ijk05|output|00130210       -2
+GrupoP|ijk05|output|00130214      -18
+GrupoP|ijk05|output|00130218       16
+GrupoP|ijk05|memory|00130198|7
+GrupoP|ijk05|memory|00130202|0
+GrupoP|ijk05|memory|00130206|130198
+GrupoP|ijk05|memory|00130210|-2
+GrupoP|ijk05|memory|00130214|-18
+GrupoP|ijk05|memory|00130218|16
+GrupoP|ijk06|stack|110613
+GrupoP|ijk06|data|55306
+GrupoP|ijk06|input|loadI 42 => rbss
+GrupoP|ijk06|input|loadI 54 => rsp
+GrupoP|ijk06|input|loadI 54 => rfp
+GrupoP|ijk06|input|storeAI rfp => rsp, 8
+GrupoP|ijk06|input|addI rpc, 3 => r18
+GrupoP|ijk06|input|storeAI r18 => rsp, 0
+GrupoP|ijk06|input|jumpI  => L0
+GrupoP|ijk06|input|loadAI rsp, 4 => r17
+GrupoP|ijk06|input|halt 
+GrupoP|ijk06|input|L0: nop 
+GrupoP|ijk06|input|i2i rsp => rfp
+GrupoP|ijk06|input|addI rsp, 24 => rsp
+GrupoP|ijk06|input|loadI 75 => r0
+GrupoP|ijk06|input|storeAI r0 => rfp, 16
+GrupoP|ijk06|input|loadI 3 => r1
+GrupoP|ijk06|input|storeAI r1 => rfp, 20
+GrupoP|ijk06|input|loadAI rfp, 16 => r2
+GrupoP|ijk06|input|loadAI rfp, 20 => r3
+GrupoP|ijk06|input|div r2, r3 => r4
+GrupoP|ijk06|input|storeAI r4 => rfp, 12
+GrupoP|ijk06|input|loadAI rfp, 12 => r5
+GrupoP|ijk06|input|loadI 5 => r6
+GrupoP|ijk06|input|div r5, r6 => r7
+GrupoP|ijk06|input|storeAI r7 => rfp, 16
+GrupoP|ijk06|input|loadAI rfp, 12 => r8
+GrupoP|ijk06|input|loadI 2 => r9
+GrupoP|ijk06|input|div r8, r9 => r10
+GrupoP|ijk06|input|storeAI r10 => rfp, 20
+GrupoP|ijk06|input|loadI 0 => r11
+GrupoP|ijk06|input|loadAI rfp, 0 => r12
+GrupoP|ijk06|input|storeAI r11 => rfp, 4
+GrupoP|ijk06|input|loadAI rfp, 8 => r13
+GrupoP|ijk06|input|i2i rfp => rsp
+GrupoP|ijk06|input|i2i r13 => rfp
+GrupoP|ijk06|input|jump  -> r12
+GrupoP|ijk06|input|loadI 0 => r14
+GrupoP|ijk06|input|loadAI rfp, 0 => r15
+GrupoP|ijk06|input|storeAI r14 => rfp, 4
+GrupoP|ijk06|input|loadAI rfp, 8 => r16
+GrupoP|ijk06|input|i2i rfp => rsp
+GrupoP|ijk06|input|i2i r16 => rfp
+GrupoP|ijk06|input|jump  -> r15
+GrupoP|ijk06|output|Change of rbss ignored (strict mode)
+GrupoP|ijk06|output|Change of rsp ignored (strict mode)
+GrupoP|ijk06|output|Change of rfp ignored (strict mode)
+GrupoP|ijk06|output|count	instruction
+GrupoP|ijk06|output|    8	loadI
+GrupoP|ijk06|output|    8	storeAI
+GrupoP|ijk06|output|    7	loadAI
+GrupoP|ijk06|output|    3	i2i
+GrupoP|ijk06|output|    3	div
+GrupoP|ijk06|output|    2	addI
+GrupoP|ijk06|output|    1	jumpI
+GrupoP|ijk06|output|    1	nop
+GrupoP|ijk06|output|    1	jump
+GrupoP|ijk06|output|    1	halt
+GrupoP|ijk06|output|
+GrupoP|ijk06|output|instructions executed:   35
+GrupoP|ijk06|output|register         read:   35 write:   55
+GrupoP|ijk06|output|memory           read:    7 write:    8
+GrupoP|ijk06|output|
+GrupoP|ijk06|output|  register    value
+GrupoP|ijk06|output|        r0       75
+GrupoP|ijk06|output|        r1        3
+GrupoP|ijk06|output|       r10       12
+GrupoP|ijk06|output|       r11        0
+GrupoP|ijk06|output|       r12        7
+GrupoP|ijk06|output|       r13   110613
+GrupoP|ijk06|output|       r17        0
+GrupoP|ijk06|output|       r18        7
+GrupoP|ijk06|output|        r2       75
+GrupoP|ijk06|output|        r3        3
+GrupoP|ijk06|output|        r4       25
+GrupoP|ijk06|output|        r5       25
+GrupoP|ijk06|output|        r6        5
+GrupoP|ijk06|output|        r7        5
+GrupoP|ijk06|output|        r8       25
+GrupoP|ijk06|output|        r9        2
+GrupoP|ijk06|output|      rbss    55306
+GrupoP|ijk06|output|       rfp   110613
+GrupoP|ijk06|output|       rpc        8
+GrupoP|ijk06|output|       rsp   110613
+GrupoP|ijk06|output|
+GrupoP|ijk06|output|    memory    value
+GrupoP|ijk06|output|00110613        7
+GrupoP|ijk06|output|00110617        0
+GrupoP|ijk06|output|00110621   110613
+GrupoP|ijk06|output|00110625       25
+GrupoP|ijk06|output|00110629        5
+GrupoP|ijk06|output|00110633       12
+GrupoP|ijk06|memory|00110613|7
+GrupoP|ijk06|memory|00110617|0
+GrupoP|ijk06|memory|00110621|110613
+GrupoP|ijk06|memory|00110625|25
+GrupoP|ijk06|memory|00110629|5
+GrupoP|ijk06|memory|00110633|12
+GrupoP|ijk07|stack|131417
+GrupoP|ijk07|data|65708
+GrupoP|ijk07|input|loadI 42 => rbss
+GrupoP|ijk07|input|loadI 54 => rsp
+GrupoP|ijk07|input|loadI 54 => rfp
+GrupoP|ijk07|input|storeAI rfp => rsp, 8
+GrupoP|ijk07|input|addI rpc, 3 => r18
+GrupoP|ijk07|input|storeAI r18 => rsp, 0
+GrupoP|ijk07|input|jumpI  => L0
+GrupoP|ijk07|input|loadAI rsp, 4 => r17
+GrupoP|ijk07|input|halt 
+GrupoP|ijk07|input|L0: nop 
+GrupoP|ijk07|input|i2i rsp => rfp
+GrupoP|ijk07|input|addI rsp, 24 => rsp
+GrupoP|ijk07|input|loadI 15 => r0
+GrupoP|ijk07|input|storeAI r0 => rfp, 16
+GrupoP|ijk07|input|loadI 3 => r1
+GrupoP|ijk07|input|storeAI r1 => rfp, 20
+GrupoP|ijk07|input|loadAI rfp, 16 => r2
+GrupoP|ijk07|input|loadAI rfp, 20 => r3
+GrupoP|ijk07|input|mult r2, r3 => r4
+GrupoP|ijk07|input|storeAI r4 => rfp, 12
+GrupoP|ijk07|input|loadAI rfp, 12 => r5
+GrupoP|ijk07|input|loadAI rfp, 20 => r6
+GrupoP|ijk07|input|mult r5, r6 => r7
+GrupoP|ijk07|input|storeAI r7 => rfp, 16
+GrupoP|ijk07|input|loadAI rfp, 12 => r8
+GrupoP|ijk07|input|loadAI rfp, 16 => r9
+GrupoP|ijk07|input|mult r8, r9 => r10
+GrupoP|ijk07|input|storeAI r10 => rfp, 20
+GrupoP|ijk07|input|loadI 0 => r11
+GrupoP|ijk07|input|loadAI rfp, 0 => r12
+GrupoP|ijk07|input|storeAI r11 => rfp, 4
+GrupoP|ijk07|input|loadAI rfp, 8 => r13
+GrupoP|ijk07|input|i2i rfp => rsp
+GrupoP|ijk07|input|i2i r13 => rfp
+GrupoP|ijk07|input|jump  -> r12
+GrupoP|ijk07|input|loadI 0 => r14
+GrupoP|ijk07|input|loadAI rfp, 0 => r15
+GrupoP|ijk07|input|storeAI r14 => rfp, 4
+GrupoP|ijk07|input|loadAI rfp, 8 => r16
+GrupoP|ijk07|input|i2i rfp => rsp
+GrupoP|ijk07|input|i2i r16 => rfp
+GrupoP|ijk07|input|jump  -> r15
+GrupoP|ijk07|output|Change of rbss ignored (strict mode)
+GrupoP|ijk07|output|Change of rsp ignored (strict mode)
+GrupoP|ijk07|output|Change of rfp ignored (strict mode)
+GrupoP|ijk07|output|count	instruction
+GrupoP|ijk07|output|    9	loadAI
+GrupoP|ijk07|output|    8	storeAI
+GrupoP|ijk07|output|    6	loadI
+GrupoP|ijk07|output|    3	i2i
+GrupoP|ijk07|output|    3	mult
+GrupoP|ijk07|output|    2	addI
+GrupoP|ijk07|output|    1	jumpI
+GrupoP|ijk07|output|    1	nop
+GrupoP|ijk07|output|    1	jump
+GrupoP|ijk07|output|    1	halt
+GrupoP|ijk07|output|
+GrupoP|ijk07|output|instructions executed:   35
+GrupoP|ijk07|output|register         read:   37 write:   55
+GrupoP|ijk07|output|memory           read:    9 write:    8
+GrupoP|ijk07|output|
+GrupoP|ijk07|output|  register    value
+GrupoP|ijk07|output|        r0       15
+GrupoP|ijk07|output|        r1        3
+GrupoP|ijk07|output|       r10     6075
+GrupoP|ijk07|output|       r11        0
+GrupoP|ijk07|output|       r12        7
+GrupoP|ijk07|output|       r13   131417
+GrupoP|ijk07|output|       r17        0
+GrupoP|ijk07|output|       r18        7
+GrupoP|ijk07|output|        r2       15
+GrupoP|ijk07|output|        r3        3
+GrupoP|ijk07|output|        r4       45
+GrupoP|ijk07|output|        r5       45
+GrupoP|ijk07|output|        r6        3
+GrupoP|ijk07|output|        r7      135
+GrupoP|ijk07|output|        r8       45
+GrupoP|ijk07|output|        r9      135
+GrupoP|ijk07|output|      rbss    65708
+GrupoP|ijk07|output|       rfp   131417
+GrupoP|ijk07|output|       rpc        8
+GrupoP|ijk07|output|       rsp   131417
+GrupoP|ijk07|output|
+GrupoP|ijk07|output|    memory    value
+GrupoP|ijk07|output|00131417        7
+GrupoP|ijk07|output|00131421        0
+GrupoP|ijk07|output|00131425   131417
+GrupoP|ijk07|output|00131429       45
+GrupoP|ijk07|output|00131433      135
+GrupoP|ijk07|output|00131437     6075
+GrupoP|ijk07|memory|00131417|7
+GrupoP|ijk07|memory|00131421|0
+GrupoP|ijk07|memory|00131425|131417
+GrupoP|ijk07|memory|00131429|45
+GrupoP|ijk07|memory|00131433|135
+GrupoP|ijk07|memory|00131437|6075
+GrupoP|ijk08|stack|125103
+GrupoP|ijk08|data|62551
+GrupoP|ijk08|input|loadI 40 => rbss
+GrupoP|ijk08|input|loadI 52 => rsp
+GrupoP|ijk08|input|loadI 52 => rfp
+GrupoP|ijk08|input|storeAI rfp => rsp, 8
+GrupoP|ijk08|input|addI rpc, 3 => r18
+GrupoP|ijk08|input|storeAI r18 => rsp, 0
+GrupoP|ijk08|input|jumpI  => L0
+GrupoP|ijk08|input|loadAI rsp, 4 => r17
+GrupoP|ijk08|input|halt 
+GrupoP|ijk08|input|L0: nop 
+GrupoP|ijk08|input|i2i rsp => rfp
+GrupoP|ijk08|input|addI rsp, 24 => rsp
+GrupoP|ijk08|input|loadI 15 => r0
+GrupoP|ijk08|input|storeAI r0 => rfp, 16
+GrupoP|ijk08|input|loadI 3 => r1
+GrupoP|ijk08|input|storeAI r1 => rfp, 20
+GrupoP|ijk08|input|loadAI rfp, 16 => r2
+GrupoP|ijk08|input|loadAI rfp, 20 => r3
+GrupoP|ijk08|input|mult r2, r3 => r4
+GrupoP|ijk08|input|loadI 2 => r5
+GrupoP|ijk08|input|loadI 20 => r6
+GrupoP|ijk08|input|mult r5, r6 => r7
+GrupoP|ijk08|input|loadI 4 => r8
+GrupoP|ijk08|input|div r7, r8 => r9
+GrupoP|ijk08|input|add r4, r9 => r10
+GrupoP|ijk08|input|storeAI r10 => rfp, 12
+GrupoP|ijk08|input|loadI 0 => r11
+GrupoP|ijk08|input|loadAI rfp, 0 => r12
+GrupoP|ijk08|input|storeAI r11 => rfp, 4
+GrupoP|ijk08|input|loadAI rfp, 8 => r13
+GrupoP|ijk08|input|i2i rfp => rsp
+GrupoP|ijk08|input|i2i r13 => rfp
+GrupoP|ijk08|input|jump  -> r12
+GrupoP|ijk08|input|loadI 0 => r14
+GrupoP|ijk08|input|loadAI rfp, 0 => r15
+GrupoP|ijk08|input|storeAI r14 => rfp, 4
+GrupoP|ijk08|input|loadAI rfp, 8 => r16
+GrupoP|ijk08|input|i2i rfp => rsp
+GrupoP|ijk08|input|i2i r16 => rfp
+GrupoP|ijk08|input|jump  -> r15
+GrupoP|ijk08|output|Change of rbss ignored (strict mode)
+GrupoP|ijk08|output|Change of rsp ignored (strict mode)
+GrupoP|ijk08|output|Change of rfp ignored (strict mode)
+GrupoP|ijk08|output|count	instruction
+GrupoP|ijk08|output|    9	loadI
+GrupoP|ijk08|output|    6	storeAI
+GrupoP|ijk08|output|    5	loadAI
+GrupoP|ijk08|output|    3	i2i
+GrupoP|ijk08|output|    2	addI
+GrupoP|ijk08|output|    2	mult
+GrupoP|ijk08|output|    1	jumpI
+GrupoP|ijk08|output|    1	nop
+GrupoP|ijk08|output|    1	div
+GrupoP|ijk08|output|    1	add
+GrupoP|ijk08|output|    1	jump
+GrupoP|ijk08|output|    1	halt
+GrupoP|ijk08|output|
+GrupoP|ijk08|output|instructions executed:   33
+GrupoP|ijk08|output|register         read:   31 write:   53
+GrupoP|ijk08|output|memory           read:    5 write:    6
+GrupoP|ijk08|output|
+GrupoP|ijk08|output|  register    value
+GrupoP|ijk08|output|        r0       15
+GrupoP|ijk08|output|        r1        3
+GrupoP|ijk08|output|       r10       55
+GrupoP|ijk08|output|       r11        0
+GrupoP|ijk08|output|       r12        7
+GrupoP|ijk08|output|       r13   125103
+GrupoP|ijk08|output|       r17        0
+GrupoP|ijk08|output|       r18        7
+GrupoP|ijk08|output|        r2       15
+GrupoP|ijk08|output|        r3        3
+GrupoP|ijk08|output|        r4       45
+GrupoP|ijk08|output|        r5        2
+GrupoP|ijk08|output|        r6       20
+GrupoP|ijk08|output|        r7       40
+GrupoP|ijk08|output|        r8        4
+GrupoP|ijk08|output|        r9       10
+GrupoP|ijk08|output|      rbss    62551
+GrupoP|ijk08|output|       rfp   125103
+GrupoP|ijk08|output|       rpc        8
+GrupoP|ijk08|output|       rsp   125103
+GrupoP|ijk08|output|
+GrupoP|ijk08|output|    memory    value
+GrupoP|ijk08|output|00125103        7
+GrupoP|ijk08|output|00125107        0
+GrupoP|ijk08|output|00125111   125103
+GrupoP|ijk08|output|00125115       55
+GrupoP|ijk08|output|00125119       15
+GrupoP|ijk08|output|00125123        3
+GrupoP|ijk08|memory|00125103|7
+GrupoP|ijk08|memory|00125107|0
+GrupoP|ijk08|memory|00125111|125103
+GrupoP|ijk08|memory|00125115|55
+GrupoP|ijk08|memory|00125119|15
+GrupoP|ijk08|memory|00125123|3
+GrupoP|ijk09|stack|110172
+GrupoP|ijk09|data|55086
+GrupoP|ijk09|input|loadI 40 => rbss
+GrupoP|ijk09|input|loadI 52 => rsp
+GrupoP|ijk09|input|loadI 52 => rfp
+GrupoP|ijk09|input|storeAI rfp => rsp, 8
+GrupoP|ijk09|input|addI rpc, 3 => r18
+GrupoP|ijk09|input|storeAI r18 => rsp, 0
+GrupoP|ijk09|input|jumpI  => L0
+GrupoP|ijk09|input|loadAI rsp, 4 => r17
+GrupoP|ijk09|input|halt 
+GrupoP|ijk09|input|L0: nop 
+GrupoP|ijk09|input|i2i rsp => rfp
+GrupoP|ijk09|input|addI rsp, 24 => rsp
+GrupoP|ijk09|input|loadI 15 => r0
+GrupoP|ijk09|input|storeAI r0 => rfp, 16
+GrupoP|ijk09|input|loadI 3 => r1
+GrupoP|ijk09|input|storeAI r1 => rfp, 20
+GrupoP|ijk09|input|loadAI rfp, 16 => r2
+GrupoP|ijk09|input|loadAI rfp, 20 => r3
+GrupoP|ijk09|input|add r2, r3 => r4
+GrupoP|ijk09|input|loadAI rfp, 16 => r5
+GrupoP|ijk09|input|add r4, r5 => r6
+GrupoP|ijk09|input|loadAI rfp, 20 => r7
+GrupoP|ijk09|input|add r6, r7 => r8
+GrupoP|ijk09|input|loadI 10 => r9
+GrupoP|ijk09|input|add r8, r9 => r10
+GrupoP|ijk09|input|storeAI r10 => rfp, 12
+GrupoP|ijk09|input|loadI 0 => r11
+GrupoP|ijk09|input|loadAI rfp, 0 => r12
+GrupoP|ijk09|input|storeAI r11 => rfp, 4
+GrupoP|ijk09|input|loadAI rfp, 8 => r13
+GrupoP|ijk09|input|i2i rfp => rsp
+GrupoP|ijk09|input|i2i r13 => rfp
+GrupoP|ijk09|input|jump  -> r12
+GrupoP|ijk09|input|loadI 0 => r14
+GrupoP|ijk09|input|loadAI rfp, 0 => r15
+GrupoP|ijk09|input|storeAI r14 => rfp, 4
+GrupoP|ijk09|input|loadAI rfp, 8 => r16
+GrupoP|ijk09|input|i2i rfp => rsp
+GrupoP|ijk09|input|i2i r16 => rfp
+GrupoP|ijk09|input|jump  -> r15
+GrupoP|ijk09|output|Change of rbss ignored (strict mode)
+GrupoP|ijk09|output|Change of rsp ignored (strict mode)
+GrupoP|ijk09|output|Change of rfp ignored (strict mode)
+GrupoP|ijk09|output|count	instruction
+GrupoP|ijk09|output|    7	loadI
+GrupoP|ijk09|output|    7	loadAI
+GrupoP|ijk09|output|    6	storeAI
+GrupoP|ijk09|output|    4	add
+GrupoP|ijk09|output|    3	i2i
+GrupoP|ijk09|output|    2	addI
+GrupoP|ijk09|output|    1	jumpI
+GrupoP|ijk09|output|    1	nop
+GrupoP|ijk09|output|    1	jump
+GrupoP|ijk09|output|    1	halt
+GrupoP|ijk09|output|
+GrupoP|ijk09|output|instructions executed:   33
+GrupoP|ijk09|output|register         read:   33 write:   53
+GrupoP|ijk09|output|memory           read:    7 write:    6
+GrupoP|ijk09|output|
+GrupoP|ijk09|output|  register    value
+GrupoP|ijk09|output|        r0       15
+GrupoP|ijk09|output|        r1        3
+GrupoP|ijk09|output|       r10       46
+GrupoP|ijk09|output|       r11        0
+GrupoP|ijk09|output|       r12        7
+GrupoP|ijk09|output|       r13   110172
+GrupoP|ijk09|output|       r17        0
+GrupoP|ijk09|output|       r18        7
+GrupoP|ijk09|output|        r2       15
+GrupoP|ijk09|output|        r3        3
+GrupoP|ijk09|output|        r4       18
+GrupoP|ijk09|output|        r5       15
+GrupoP|ijk09|output|        r6       33
+GrupoP|ijk09|output|        r7        3
+GrupoP|ijk09|output|        r8       36
+GrupoP|ijk09|output|        r9       10
+GrupoP|ijk09|output|      rbss    55086
+GrupoP|ijk09|output|       rfp   110172
+GrupoP|ijk09|output|       rpc        8
+GrupoP|ijk09|output|       rsp   110172
+GrupoP|ijk09|output|
+GrupoP|ijk09|output|    memory    value
+GrupoP|ijk09|output|00110172        7
+GrupoP|ijk09|output|00110176        0
+GrupoP|ijk09|output|00110180   110172
+GrupoP|ijk09|output|00110184       46
+GrupoP|ijk09|output|00110188       15
+GrupoP|ijk09|output|00110192        3
+GrupoP|ijk09|memory|00110172|7
+GrupoP|ijk09|memory|00110176|0
+GrupoP|ijk09|memory|00110180|110172
+GrupoP|ijk09|memory|00110184|46
+GrupoP|ijk09|memory|00110188|15
+GrupoP|ijk09|memory|00110192|3
+GrupoP|ijk10|stack|114768
+GrupoP|ijk10|data|57384
+GrupoP|ijk10|input|loadI 40 => rbss
+GrupoP|ijk10|input|loadI 52 => rsp
+GrupoP|ijk10|input|loadI 52 => rfp
+GrupoP|ijk10|input|storeAI rfp => rsp, 8
+GrupoP|ijk10|input|addI rpc, 3 => r18
+GrupoP|ijk10|input|storeAI r18 => rsp, 0
+GrupoP|ijk10|input|jumpI  => L0
+GrupoP|ijk10|input|loadAI rsp, 4 => r17
+GrupoP|ijk10|input|halt 
+GrupoP|ijk10|input|L0: nop 
+GrupoP|ijk10|input|i2i rsp => rfp
+GrupoP|ijk10|input|addI rsp, 24 => rsp
+GrupoP|ijk10|input|loadI 400 => r0
+GrupoP|ijk10|input|storeAI r0 => rfp, 16
+GrupoP|ijk10|input|loadI 2 => r1
+GrupoP|ijk10|input|storeAI r1 => rfp, 20
+GrupoP|ijk10|input|loadAI rfp, 16 => r2
+GrupoP|ijk10|input|loadAI rfp, 20 => r3
+GrupoP|ijk10|input|div r2, r3 => r4
+GrupoP|ijk10|input|loadAI rfp, 16 => r5
+GrupoP|ijk10|input|loadAI rfp, 20 => r6
+GrupoP|ijk10|input|div r5, r6 => r7
+GrupoP|ijk10|input|loadAI rfp, 20 => r8
+GrupoP|ijk10|input|div r7, r8 => r9
+GrupoP|ijk10|input|add r4, r9 => r10
+GrupoP|ijk10|input|storeAI r10 => rfp, 12
+GrupoP|ijk10|input|loadI 0 => r11
+GrupoP|ijk10|input|loadAI rfp, 0 => r12
+GrupoP|ijk10|input|storeAI r11 => rfp, 4
+GrupoP|ijk10|input|loadAI rfp, 8 => r13
+GrupoP|ijk10|input|i2i rfp => rsp
+GrupoP|ijk10|input|i2i r13 => rfp
+GrupoP|ijk10|input|jump  -> r12
+GrupoP|ijk10|input|loadI 0 => r14
+GrupoP|ijk10|input|loadAI rfp, 0 => r15
+GrupoP|ijk10|input|storeAI r14 => rfp, 4
+GrupoP|ijk10|input|loadAI rfp, 8 => r16
+GrupoP|ijk10|input|i2i rfp => rsp
+GrupoP|ijk10|input|i2i r16 => rfp
+GrupoP|ijk10|input|jump  -> r15
+GrupoP|ijk10|output|Change of rbss ignored (strict mode)
+GrupoP|ijk10|output|Change of rsp ignored (strict mode)
+GrupoP|ijk10|output|Change of rfp ignored (strict mode)
+GrupoP|ijk10|output|count	instruction
+GrupoP|ijk10|output|    8	loadAI
+GrupoP|ijk10|output|    6	loadI
+GrupoP|ijk10|output|    6	storeAI
+GrupoP|ijk10|output|    3	i2i
+GrupoP|ijk10|output|    3	div
+GrupoP|ijk10|output|    2	addI
+GrupoP|ijk10|output|    1	jumpI
+GrupoP|ijk10|output|    1	nop
+GrupoP|ijk10|output|    1	add
+GrupoP|ijk10|output|    1	jump
+GrupoP|ijk10|output|    1	halt
+GrupoP|ijk10|output|
+GrupoP|ijk10|output|instructions executed:   33
+GrupoP|ijk10|output|register         read:   34 write:   53
+GrupoP|ijk10|output|memory           read:    8 write:    6
+GrupoP|ijk10|output|
+GrupoP|ijk10|output|  register    value
+GrupoP|ijk10|output|        r0      400
+GrupoP|ijk10|output|        r1        2
+GrupoP|ijk10|output|       r10      300
+GrupoP|ijk10|output|       r11        0
+GrupoP|ijk10|output|       r12        7
+GrupoP|ijk10|output|       r13   114768
+GrupoP|ijk10|output|       r17        0
+GrupoP|ijk10|output|       r18        7
+GrupoP|ijk10|output|        r2      400
+GrupoP|ijk10|output|        r3        2
+GrupoP|ijk10|output|        r4      200
+GrupoP|ijk10|output|        r5      400
+GrupoP|ijk10|output|        r6        2
+GrupoP|ijk10|output|        r7      200
+GrupoP|ijk10|output|        r8        2
+GrupoP|ijk10|output|        r9      100
+GrupoP|ijk10|output|      rbss    57384
+GrupoP|ijk10|output|       rfp   114768
+GrupoP|ijk10|output|       rpc        8
+GrupoP|ijk10|output|       rsp   114768
+GrupoP|ijk10|output|
+GrupoP|ijk10|output|    memory    value
+GrupoP|ijk10|output|00114768        7
+GrupoP|ijk10|output|00114772        0
+GrupoP|ijk10|output|00114776   114768
+GrupoP|ijk10|output|00114780      300
+GrupoP|ijk10|output|00114784      400
+GrupoP|ijk10|output|00114788        2
+GrupoP|ijk10|memory|00114768|7
+GrupoP|ijk10|memory|00114772|0
+GrupoP|ijk10|memory|00114776|114768
+GrupoP|ijk10|memory|00114780|300
+GrupoP|ijk10|memory|00114784|400
+GrupoP|ijk10|memory|00114788|2
+GrupoP|ijk11|stack|126138
+GrupoP|ijk11|data|63069
+GrupoP|ijk11|input|loadI 40 => rbss
+GrupoP|ijk11|input|loadI 52 => rsp
+GrupoP|ijk11|input|loadI 52 => rfp
+GrupoP|ijk11|input|storeAI rfp => rsp, 8
+GrupoP|ijk11|input|addI rpc, 3 => r18
+GrupoP|ijk11|input|storeAI r18 => rsp, 0
+GrupoP|ijk11|input|jumpI  => L0
+GrupoP|ijk11|input|loadAI rsp, 4 => r17
+GrupoP|ijk11|input|halt 
+GrupoP|ijk11|input|L0: nop 
+GrupoP|ijk11|input|i2i rsp => rfp
+GrupoP|ijk11|input|addI rsp, 24 => rsp
+GrupoP|ijk11|input|loadI 400 => r0
+GrupoP|ijk11|input|storeAI r0 => rfp, 16
+GrupoP|ijk11|input|loadI 2 => r1
+GrupoP|ijk11|input|storeAI r1 => rfp, 20
+GrupoP|ijk11|input|loadAI rfp, 16 => r2
+GrupoP|ijk11|input|loadAI rfp, 16 => r3
+GrupoP|ijk11|input|loadAI rfp, 20 => r4
+GrupoP|ijk11|input|div r3, r4 => r5
+GrupoP|ijk11|input|add r2, r5 => r6
+GrupoP|ijk11|input|loadAI rfp, 16 => r7
+GrupoP|ijk11|input|loadAI rfp, 20 => r8
+GrupoP|ijk11|input|div r7, r8 => r9
+GrupoP|ijk11|input|add r6, r9 => r10
+GrupoP|ijk11|input|storeAI r10 => rfp, 12
+GrupoP|ijk11|input|loadI 0 => r11
+GrupoP|ijk11|input|loadAI rfp, 0 => r12
+GrupoP|ijk11|input|storeAI r11 => rfp, 4
+GrupoP|ijk11|input|loadAI rfp, 8 => r13
+GrupoP|ijk11|input|i2i rfp => rsp
+GrupoP|ijk11|input|i2i r13 => rfp
+GrupoP|ijk11|input|jump  -> r12
+GrupoP|ijk11|input|loadI 0 => r14
+GrupoP|ijk11|input|loadAI rfp, 0 => r15
+GrupoP|ijk11|input|storeAI r14 => rfp, 4
+GrupoP|ijk11|input|loadAI rfp, 8 => r16
+GrupoP|ijk11|input|i2i rfp => rsp
+GrupoP|ijk11|input|i2i r16 => rfp
+GrupoP|ijk11|input|jump  -> r15
+GrupoP|ijk11|output|Change of rbss ignored (strict mode)
+GrupoP|ijk11|output|Change of rsp ignored (strict mode)
+GrupoP|ijk11|output|Change of rfp ignored (strict mode)
+GrupoP|ijk11|output|count	instruction
+GrupoP|ijk11|output|    8	loadAI
+GrupoP|ijk11|output|    6	loadI
+GrupoP|ijk11|output|    6	storeAI
+GrupoP|ijk11|output|    3	i2i
+GrupoP|ijk11|output|    2	addI
+GrupoP|ijk11|output|    2	div
+GrupoP|ijk11|output|    2	add
+GrupoP|ijk11|output|    1	jumpI
+GrupoP|ijk11|output|    1	nop
+GrupoP|ijk11|output|    1	jump
+GrupoP|ijk11|output|    1	halt
+GrupoP|ijk11|output|
+GrupoP|ijk11|output|instructions executed:   33
+GrupoP|ijk11|output|register         read:   34 write:   53
+GrupoP|ijk11|output|memory           read:    8 write:    6
+GrupoP|ijk11|output|
+GrupoP|ijk11|output|  register    value
+GrupoP|ijk11|output|        r0      400
+GrupoP|ijk11|output|        r1        2
+GrupoP|ijk11|output|       r10      800
+GrupoP|ijk11|output|       r11        0
+GrupoP|ijk11|output|       r12        7
+GrupoP|ijk11|output|       r13   126138
+GrupoP|ijk11|output|       r17        0
+GrupoP|ijk11|output|       r18        7
+GrupoP|ijk11|output|        r2      400
+GrupoP|ijk11|output|        r3      400
+GrupoP|ijk11|output|        r4        2
+GrupoP|ijk11|output|        r5      200
+GrupoP|ijk11|output|        r6      600
+GrupoP|ijk11|output|        r7      400
+GrupoP|ijk11|output|        r8        2
+GrupoP|ijk11|output|        r9      200
+GrupoP|ijk11|output|      rbss    63069
+GrupoP|ijk11|output|       rfp   126138
+GrupoP|ijk11|output|       rpc        8
+GrupoP|ijk11|output|       rsp   126138
+GrupoP|ijk11|output|
+GrupoP|ijk11|output|    memory    value
+GrupoP|ijk11|output|00126138        7
+GrupoP|ijk11|output|00126142        0
+GrupoP|ijk11|output|00126146   126138
+GrupoP|ijk11|output|00126150      800
+GrupoP|ijk11|output|00126154      400
+GrupoP|ijk11|output|00126158        2
+GrupoP|ijk11|memory|00126138|7
+GrupoP|ijk11|memory|00126142|0
+GrupoP|ijk11|memory|00126146|126138
+GrupoP|ijk11|memory|00126150|800
+GrupoP|ijk11|memory|00126154|400
+GrupoP|ijk11|memory|00126158|2
+GrupoP|ijk12|stack|126534
+GrupoP|ijk12|data|63267
+GrupoP|ijk12|input|loadI 36 => rbss
+GrupoP|ijk12|input|loadI 48 => rsp
+GrupoP|ijk12|input|loadI 48 => rfp
+GrupoP|ijk12|input|storeAI rfp => rsp, 8
+GrupoP|ijk12|input|addI rpc, 3 => r16
+GrupoP|ijk12|input|storeAI r16 => rsp, 0
+GrupoP|ijk12|input|jumpI  => L0
+GrupoP|ijk12|input|loadAI rsp, 4 => r15
+GrupoP|ijk12|input|halt 
+GrupoP|ijk12|input|L0: nop 
+GrupoP|ijk12|input|i2i rsp => rfp
+GrupoP|ijk12|input|addI rsp, 16 => rsp
+GrupoP|ijk12|input|loadI 2 => r0
+GrupoP|ijk12|input|loadI 4 => r1
+GrupoP|ijk12|input|loadI 2 => r2
+GrupoP|ijk12|input|div r1, r2 => r3
+GrupoP|ijk12|input|add r0, r3 => r4
+GrupoP|ijk12|input|loadI 4 => r5
+GrupoP|ijk12|input|loadI 4 => r6
+GrupoP|ijk12|input|mult r5, r6 => r7
+GrupoP|ijk12|input|add r4, r7 => r8
+GrupoP|ijk12|input|storeAI r8 => rfp, 12
+GrupoP|ijk12|input|loadI 0 => r9
+GrupoP|ijk12|input|loadAI rfp, 0 => r10
+GrupoP|ijk12|input|storeAI r9 => rfp, 4
+GrupoP|ijk12|input|loadAI rfp, 8 => r11
+GrupoP|ijk12|input|i2i rfp => rsp
+GrupoP|ijk12|input|i2i r11 => rfp
+GrupoP|ijk12|input|jump  -> r10
+GrupoP|ijk12|input|loadI 0 => r12
+GrupoP|ijk12|input|loadAI rfp, 0 => r13
+GrupoP|ijk12|input|storeAI r12 => rfp, 4
+GrupoP|ijk12|input|loadAI rfp, 8 => r14
+GrupoP|ijk12|input|i2i rfp => rsp
+GrupoP|ijk12|input|i2i r14 => rfp
+GrupoP|ijk12|input|jump  -> r13
+GrupoP|ijk12|output|Change of rbss ignored (strict mode)
+GrupoP|ijk12|output|Change of rsp ignored (strict mode)
+GrupoP|ijk12|output|Change of rfp ignored (strict mode)
+GrupoP|ijk12|output|count	instruction
+GrupoP|ijk12|output|    9	loadI
+GrupoP|ijk12|output|    4	storeAI
+GrupoP|ijk12|output|    3	i2i
+GrupoP|ijk12|output|    3	loadAI
+GrupoP|ijk12|output|    2	addI
+GrupoP|ijk12|output|    2	add
+GrupoP|ijk12|output|    1	jumpI
+GrupoP|ijk12|output|    1	nop
+GrupoP|ijk12|output|    1	div
+GrupoP|ijk12|output|    1	mult
+GrupoP|ijk12|output|    1	jump
+GrupoP|ijk12|output|    1	halt
+GrupoP|ijk12|output|
+GrupoP|ijk12|output|instructions executed:   29
+GrupoP|ijk12|output|register         read:   25 write:   47
+GrupoP|ijk12|output|memory           read:    3 write:    4
+GrupoP|ijk12|output|
+GrupoP|ijk12|output|  register    value
+GrupoP|ijk12|output|        r0        2
+GrupoP|ijk12|output|        r1        4
+GrupoP|ijk12|output|       r10        7
+GrupoP|ijk12|output|       r11   126534
+GrupoP|ijk12|output|       r15        0
+GrupoP|ijk12|output|       r16        7
+GrupoP|ijk12|output|        r2        2
+GrupoP|ijk12|output|        r3        2
+GrupoP|ijk12|output|        r4        4
+GrupoP|ijk12|output|        r5        4
+GrupoP|ijk12|output|        r6        4
+GrupoP|ijk12|output|        r7       16
+GrupoP|ijk12|output|        r8       20
+GrupoP|ijk12|output|        r9        0
+GrupoP|ijk12|output|      rbss    63267
+GrupoP|ijk12|output|       rfp   126534
+GrupoP|ijk12|output|       rpc        8
+GrupoP|ijk12|output|       rsp   126534
+GrupoP|ijk12|output|
+GrupoP|ijk12|output|    memory    value
+GrupoP|ijk12|output|00126534        7
+GrupoP|ijk12|output|00126538        0
+GrupoP|ijk12|output|00126542   126534
+GrupoP|ijk12|output|00126546       20
+GrupoP|ijk12|memory|00126534|7
+GrupoP|ijk12|memory|00126538|0
+GrupoP|ijk12|memory|00126542|126534
+GrupoP|ijk12|memory|00126546|20
+GrupoP|ijk13|stack|127248
+GrupoP|ijk13|data|63624
+GrupoP|ijk13|input|loadI 28 => rbss
+GrupoP|ijk13|input|loadI 40 => rsp
+GrupoP|ijk13|input|loadI 40 => rfp
+GrupoP|ijk13|input|storeAI rfp => rsp, 8
+GrupoP|ijk13|input|addI rpc, 3 => r8
+GrupoP|ijk13|input|storeAI r8 => rsp, 0
+GrupoP|ijk13|input|jumpI  => L0
+GrupoP|ijk13|input|loadAI rsp, 4 => r7
+GrupoP|ijk13|input|halt 
+GrupoP|ijk13|input|L0: nop 
+GrupoP|ijk13|input|i2i rsp => rfp
+GrupoP|ijk13|input|addI rsp, 16 => rsp
+GrupoP|ijk13|input|loadI 2 => r0
+GrupoP|ijk13|input|storeAI r0 => rfp, 12
+GrupoP|ijk13|input|loadI 0 => r1
+GrupoP|ijk13|input|loadAI rfp, 0 => r2
+GrupoP|ijk13|input|storeAI r1 => rfp, 4
+GrupoP|ijk13|input|loadAI rfp, 8 => r3
+GrupoP|ijk13|input|i2i rfp => rsp
+GrupoP|ijk13|input|i2i r3 => rfp
+GrupoP|ijk13|input|jump  -> r2
+GrupoP|ijk13|input|loadI 0 => r4
+GrupoP|ijk13|input|loadAI rfp, 0 => r5
+GrupoP|ijk13|input|storeAI r4 => rfp, 4
+GrupoP|ijk13|input|loadAI rfp, 8 => r6
+GrupoP|ijk13|input|i2i rfp => rsp
+GrupoP|ijk13|input|i2i r6 => rfp
+GrupoP|ijk13|input|jump  -> r5
+GrupoP|ijk13|output|Change of rbss ignored (strict mode)
+GrupoP|ijk13|output|Change of rsp ignored (strict mode)
+GrupoP|ijk13|output|Change of rfp ignored (strict mode)
+GrupoP|ijk13|output|count	instruction
+GrupoP|ijk13|output|    5	loadI
+GrupoP|ijk13|output|    4	storeAI
+GrupoP|ijk13|output|    3	i2i
+GrupoP|ijk13|output|    3	loadAI
+GrupoP|ijk13|output|    2	addI
+GrupoP|ijk13|output|    1	jumpI
+GrupoP|ijk13|output|    1	nop
+GrupoP|ijk13|output|    1	jump
+GrupoP|ijk13|output|    1	halt
+GrupoP|ijk13|output|
+GrupoP|ijk13|output|instructions executed:   21
+GrupoP|ijk13|output|register         read:   17 write:   31
+GrupoP|ijk13|output|memory           read:    3 write:    4
+GrupoP|ijk13|output|
+GrupoP|ijk13|output|  register    value
+GrupoP|ijk13|output|        r0        2
+GrupoP|ijk13|output|        r1        0
+GrupoP|ijk13|output|        r2        7
+GrupoP|ijk13|output|        r3   127248
+GrupoP|ijk13|output|        r7        0
+GrupoP|ijk13|output|        r8        7
+GrupoP|ijk13|output|      rbss    63624
+GrupoP|ijk13|output|       rfp   127248
+GrupoP|ijk13|output|       rpc        8
+GrupoP|ijk13|output|       rsp   127248
+GrupoP|ijk13|output|
+GrupoP|ijk13|output|    memory    value
+GrupoP|ijk13|output|00127248        7
+GrupoP|ijk13|output|00127252        0
+GrupoP|ijk13|output|00127256   127248
+GrupoP|ijk13|output|00127260        2
+GrupoP|ijk13|memory|00127248|7
+GrupoP|ijk13|memory|00127252|0
+GrupoP|ijk13|memory|00127256|127248
+GrupoP|ijk13|memory|00127260|2
+GrupoP|ijk14|stack|118100
+GrupoP|ijk14|data|59050
+GrupoP|ijk14|input|loadI 34 => rbss
+GrupoP|ijk14|input|loadI 38 => rsp
+GrupoP|ijk14|input|loadI 38 => rfp
+GrupoP|ijk14|input|storeAI rfp => rsp, 8
+GrupoP|ijk14|input|addI rpc, 3 => r12
+GrupoP|ijk14|input|storeAI r12 => rsp, 0
+GrupoP|ijk14|input|jumpI  => L0
+GrupoP|ijk14|input|loadAI rsp, 4 => r11
+GrupoP|ijk14|input|halt 
+GrupoP|ijk14|input|L0: nop 
+GrupoP|ijk14|input|i2i rsp => rfp
+GrupoP|ijk14|input|addI rsp, 16 => rsp
+GrupoP|ijk14|input|loadI 393 => r0
+GrupoP|ijk14|input|storeAI r0 => rbss, 0
+GrupoP|ijk14|input|loadAI rbss, 0 => r1
+GrupoP|ijk14|input|storeAI r1 => rfp, 12
+GrupoP|ijk14|input|loadAI rfp, 12 => r2
+GrupoP|ijk14|input|loadI 1 => r3
+GrupoP|ijk14|input|add r2, r3 => r4
+GrupoP|ijk14|input|storeAI r4 => rfp, 12
+GrupoP|ijk14|input|loadI 0 => r5
+GrupoP|ijk14|input|loadAI rfp, 0 => r6
+GrupoP|ijk14|input|storeAI r5 => rfp, 4
+GrupoP|ijk14|input|loadAI rfp, 8 => r7
+GrupoP|ijk14|input|i2i rfp => rsp
+GrupoP|ijk14|input|i2i r7 => rfp
+GrupoP|ijk14|input|jump  -> r6
+GrupoP|ijk14|input|loadI 0 => r8
+GrupoP|ijk14|input|loadAI rfp, 0 => r9
+GrupoP|ijk14|input|storeAI r8 => rfp, 4
+GrupoP|ijk14|input|loadAI rfp, 8 => r10
+GrupoP|ijk14|input|i2i rfp => rsp
+GrupoP|ijk14|input|i2i r10 => rfp
+GrupoP|ijk14|input|jump  -> r9
+GrupoP|ijk14|output|Change of rbss ignored (strict mode)
+GrupoP|ijk14|output|Change of rsp ignored (strict mode)
+GrupoP|ijk14|output|Change of rfp ignored (strict mode)
+GrupoP|ijk14|output|count	instruction
+GrupoP|ijk14|output|    6	loadI
+GrupoP|ijk14|output|    6	storeAI
+GrupoP|ijk14|output|    5	loadAI
+GrupoP|ijk14|output|    3	i2i
+GrupoP|ijk14|output|    2	addI
+GrupoP|ijk14|output|    1	jumpI
+GrupoP|ijk14|output|    1	nop
+GrupoP|ijk14|output|    1	add
+GrupoP|ijk14|output|    1	jump
+GrupoP|ijk14|output|    1	halt
+GrupoP|ijk14|output|
+GrupoP|ijk14|output|instructions executed:   27
+GrupoP|ijk14|output|register         read:   25 write:   41
+GrupoP|ijk14|output|memory           read:    5 write:    6
+GrupoP|ijk14|output|
+GrupoP|ijk14|output|  register    value
+GrupoP|ijk14|output|        r0      393
+GrupoP|ijk14|output|        r1      393
+GrupoP|ijk14|output|       r11        0
+GrupoP|ijk14|output|       r12        7
+GrupoP|ijk14|output|        r2      393
+GrupoP|ijk14|output|        r3        1
+GrupoP|ijk14|output|        r4      394
+GrupoP|ijk14|output|        r5        0
+GrupoP|ijk14|output|        r6        7
+GrupoP|ijk14|output|        r7   118100
+GrupoP|ijk14|output|      rbss    59050
+GrupoP|ijk14|output|       rfp   118100
+GrupoP|ijk14|output|       rpc        8
+GrupoP|ijk14|output|       rsp   118100
+GrupoP|ijk14|output|
+GrupoP|ijk14|output|    memory    value
+GrupoP|ijk14|output|00059050      393
+GrupoP|ijk14|output|00118100        7
+GrupoP|ijk14|output|00118104        0
+GrupoP|ijk14|output|00118108   118100
+GrupoP|ijk14|output|00118112      394
+GrupoP|ijk14|memory|00059050|393
+GrupoP|ijk14|memory|00118100|7
+GrupoP|ijk14|memory|00118104|0
+GrupoP|ijk14|memory|00118108|118100
+GrupoP|ijk14|memory|00118112|394
+GrupoP|ijk15|stack|100565
+GrupoP|ijk15|data|50282
+GrupoP|ijk15|input|loadI 55 => rbss
+GrupoP|ijk15|input|loadI 59 => rsp
+GrupoP|ijk15|input|loadI 59 => rfp
+GrupoP|ijk15|input|storeAI rfp => rsp, 8
+GrupoP|ijk15|input|addI rpc, 3 => r21
+GrupoP|ijk15|input|storeAI r21 => rsp, 0
+GrupoP|ijk15|input|jumpI  => L0
+GrupoP|ijk15|input|loadAI rsp, 4 => r20
+GrupoP|ijk15|input|halt 
+GrupoP|ijk15|input|L0: nop 
+GrupoP|ijk15|input|i2i rsp => rfp
+GrupoP|ijk15|input|addI rsp, 24 => rsp
+GrupoP|ijk15|input|loadI 234 => r0
+GrupoP|ijk15|input|storeAI r0 => rbss, 0
+GrupoP|ijk15|input|loadI 456 => r1
+GrupoP|ijk15|input|storeAI r1 => rfp, 16
+GrupoP|ijk15|input|loadI 98 => r2
+GrupoP|ijk15|input|storeAI r2 => rfp, 20
+GrupoP|ijk15|input|loadI 1 => r3
+GrupoP|ijk15|input|storeAI r3 => rfp, 12
+GrupoP|ijk15|input|loadAI rfp, 12 => r4
+GrupoP|ijk15|input|loadI 0 => r5
+GrupoP|ijk15|input|cmp_GT r4, r5 -> r7
+GrupoP|ijk15|input|cbr r7 -> L1, L2
+GrupoP|ijk15|input|L1: loadI 1 => r6
+GrupoP|ijk15|input|jumpI  -> L3
+GrupoP|ijk15|input|L2: loadI 0 => r6
+GrupoP|ijk15|input|L3: nop 
+GrupoP|ijk15|input|loadI 0 => r12
+GrupoP|ijk15|input|cmp_NE r6, r12 -> r13
+GrupoP|ijk15|input|cbr r13 -> L4, L5
+GrupoP|ijk15|input|L4: nop 
+GrupoP|ijk15|input|loadI 123 => r8
+GrupoP|ijk15|input|storeAI r8 => rfp, 20
+GrupoP|ijk15|input|loadAI rbss, 0 => r9
+GrupoP|ijk15|input|loadAI rfp, 20 => r10
+GrupoP|ijk15|input|add r9, r10 => r11
+GrupoP|ijk15|input|storeAI r11 => rfp, 16
+GrupoP|ijk15|input|jumpI  -> L6
+GrupoP|ijk15|input|L5: nop 
+GrupoP|ijk15|input|L6: nop 
+GrupoP|ijk15|input|loadI 0 => r14
+GrupoP|ijk15|input|loadAI rfp, 0 => r15
+GrupoP|ijk15|input|storeAI r14 => rfp, 4
+GrupoP|ijk15|input|loadAI rfp, 8 => r16
+GrupoP|ijk15|input|i2i rfp => rsp
+GrupoP|ijk15|input|i2i r16 => rfp
+GrupoP|ijk15|input|jump  -> r15
+GrupoP|ijk15|input|loadI 0 => r17
+GrupoP|ijk15|input|loadAI rfp, 0 => r18
+GrupoP|ijk15|input|storeAI r17 => rfp, 4
+GrupoP|ijk15|input|loadAI rfp, 8 => r19
+GrupoP|ijk15|input|i2i rfp => rsp
+GrupoP|ijk15|input|i2i r19 => rfp
+GrupoP|ijk15|input|jump  -> r18
+GrupoP|ijk15|output|Change of rbss ignored (strict mode)
+GrupoP|ijk15|output|Change of rsp ignored (strict mode)
+GrupoP|ijk15|output|Change of rfp ignored (strict mode)
+GrupoP|ijk15|output|count	instruction
+GrupoP|ijk15|output|   12	loadI
+GrupoP|ijk15|output|    9	storeAI
+GrupoP|ijk15|output|    6	loadAI
+GrupoP|ijk15|output|    4	nop
+GrupoP|ijk15|output|    3	jumpI
+GrupoP|ijk15|output|    3	i2i
+GrupoP|ijk15|output|    2	addI
+GrupoP|ijk15|output|    2	cbr
+GrupoP|ijk15|output|    1	cmp_GT
+GrupoP|ijk15|output|    1	cmp_NE
+GrupoP|ijk15|output|    1	add
+GrupoP|ijk15|output|    1	jump
+GrupoP|ijk15|output|    1	halt
+GrupoP|ijk15|output|
+GrupoP|ijk15|output|instructions executed:   46
+GrupoP|ijk15|output|register         read:   38 write:   69
+GrupoP|ijk15|output|memory           read:    6 write:    9
+GrupoP|ijk15|output|
+GrupoP|ijk15|output|  register    value
+GrupoP|ijk15|output|        r0      234
+GrupoP|ijk15|output|        r1      456
+GrupoP|ijk15|output|       r10      123
+GrupoP|ijk15|output|       r11      357
+GrupoP|ijk15|output|       r12        0
+GrupoP|ijk15|output|       r13        1
+GrupoP|ijk15|output|       r14        0
+GrupoP|ijk15|output|       r15        7
+GrupoP|ijk15|output|       r16   100565
+GrupoP|ijk15|output|        r2       98
+GrupoP|ijk15|output|       r20        0
+GrupoP|ijk15|output|       r21        7
+GrupoP|ijk15|output|        r3        1
+GrupoP|ijk15|output|        r4        1
+GrupoP|ijk15|output|        r5        0
+GrupoP|ijk15|output|        r6        1
+GrupoP|ijk15|output|        r7        1
+GrupoP|ijk15|output|        r8      123
+GrupoP|ijk15|output|        r9      234
+GrupoP|ijk15|output|      rbss    50282
+GrupoP|ijk15|output|       rfp   100565
+GrupoP|ijk15|output|       rpc        8
+GrupoP|ijk15|output|       rsp   100565
+GrupoP|ijk15|output|
+GrupoP|ijk15|output|    memory    value
+GrupoP|ijk15|output|00050282      234
+GrupoP|ijk15|output|00100565        7
+GrupoP|ijk15|output|00100569        0
+GrupoP|ijk15|output|00100573   100565
+GrupoP|ijk15|output|00100577        1
+GrupoP|ijk15|output|00100581      357
+GrupoP|ijk15|output|00100585      123
+GrupoP|ijk15|memory|00050282|234
+GrupoP|ijk15|memory|00100565|7
+GrupoP|ijk15|memory|00100569|0
+GrupoP|ijk15|memory|00100573|100565
+GrupoP|ijk15|memory|00100577|1
+GrupoP|ijk15|memory|00100581|357
+GrupoP|ijk15|memory|00100585|123
+GrupoP|ijk16|stack|117583
+GrupoP|ijk16|data|58791
+GrupoP|ijk16|input|loadI 49 => rbss
+GrupoP|ijk16|input|loadI 61 => rsp
+GrupoP|ijk16|input|loadI 61 => rfp
+GrupoP|ijk16|input|storeAI rfp => rsp, 8
+GrupoP|ijk16|input|addI rpc, 3 => r17
+GrupoP|ijk16|input|storeAI r17 => rsp, 0
+GrupoP|ijk16|input|jumpI  => L0
+GrupoP|ijk16|input|loadAI rsp, 4 => r16
+GrupoP|ijk16|input|halt 
+GrupoP|ijk16|input|L0: nop 
+GrupoP|ijk16|input|i2i rsp => rfp
+GrupoP|ijk16|input|addI rsp, 20 => rsp
+GrupoP|ijk16|input|loadI 1 => r0
+GrupoP|ijk16|input|storeAI r0 => rfp, 12
+GrupoP|ijk16|input|loadI 234 => r1
+GrupoP|ijk16|input|storeAI r1 => rfp, 16
+GrupoP|ijk16|input|loadAI rfp, 12 => r2
+GrupoP|ijk16|input|loadI 0 => r3
+GrupoP|ijk16|input|cmp_GT r2, r3 -> r5
+GrupoP|ijk16|input|cbr r5 -> L1, L2
+GrupoP|ijk16|input|L1: loadI 1 => r4
+GrupoP|ijk16|input|jumpI  -> L3
+GrupoP|ijk16|input|L2: loadI 0 => r4
+GrupoP|ijk16|input|L3: nop 
+GrupoP|ijk16|input|loadI 0 => r8
+GrupoP|ijk16|input|cmp_NE r4, r8 -> r9
+GrupoP|ijk16|input|cbr r9 -> L4, L5
+GrupoP|ijk16|input|L4: nop 
+GrupoP|ijk16|input|loadI 393 => r6
+GrupoP|ijk16|input|storeAI r6 => rfp, 16
+GrupoP|ijk16|input|jumpI  -> L6
+GrupoP|ijk16|input|L5: nop 
+GrupoP|ijk16|input|loadI 432 => r7
+GrupoP|ijk16|input|storeAI r7 => rfp, 16
+GrupoP|ijk16|input|L6: nop 
+GrupoP|ijk16|input|loadI 0 => r10
+GrupoP|ijk16|input|loadAI rfp, 0 => r11
+GrupoP|ijk16|input|storeAI r10 => rfp, 4
+GrupoP|ijk16|input|loadAI rfp, 8 => r12
+GrupoP|ijk16|input|i2i rfp => rsp
+GrupoP|ijk16|input|i2i r12 => rfp
+GrupoP|ijk16|input|jump  -> r11
+GrupoP|ijk16|input|loadI 0 => r13
+GrupoP|ijk16|input|loadAI rfp, 0 => r14
+GrupoP|ijk16|input|storeAI r13 => rfp, 4
+GrupoP|ijk16|input|loadAI rfp, 8 => r15
+GrupoP|ijk16|input|i2i rfp => rsp
+GrupoP|ijk16|input|i2i r15 => rfp
+GrupoP|ijk16|input|jump  -> r14
+GrupoP|ijk16|output|Change of rbss ignored (strict mode)
+GrupoP|ijk16|output|Change of rsp ignored (strict mode)
+GrupoP|ijk16|output|Change of rfp ignored (strict mode)
+GrupoP|ijk16|output|count	instruction
+GrupoP|ijk16|output|   10	loadI
+GrupoP|ijk16|output|    6	storeAI
+GrupoP|ijk16|output|    4	nop
+GrupoP|ijk16|output|    4	loadAI
+GrupoP|ijk16|output|    3	jumpI
+GrupoP|ijk16|output|    3	i2i
+GrupoP|ijk16|output|    2	addI
+GrupoP|ijk16|output|    2	cbr
+GrupoP|ijk16|output|    1	cmp_GT
+GrupoP|ijk16|output|    1	cmp_NE
+GrupoP|ijk16|output|    1	jump
+GrupoP|ijk16|output|    1	halt
+GrupoP|ijk16|output|
+GrupoP|ijk16|output|instructions executed:   38
+GrupoP|ijk16|output|register         read:   28 write:   56
+GrupoP|ijk16|output|memory           read:    4 write:    6
+GrupoP|ijk16|output|
+GrupoP|ijk16|output|  register    value
+GrupoP|ijk16|output|        r0        1
+GrupoP|ijk16|output|        r1      234
+GrupoP|ijk16|output|       r10        0
+GrupoP|ijk16|output|       r11        7
+GrupoP|ijk16|output|       r12   117583
+GrupoP|ijk16|output|       r16        0
+GrupoP|ijk16|output|       r17        7
+GrupoP|ijk16|output|        r2        1
+GrupoP|ijk16|output|        r3        0
+GrupoP|ijk16|output|        r4        1
+GrupoP|ijk16|output|        r5        1
+GrupoP|ijk16|output|        r6      393
+GrupoP|ijk16|output|        r8        0
+GrupoP|ijk16|output|        r9        1
+GrupoP|ijk16|output|      rbss    58791
+GrupoP|ijk16|output|       rfp   117583
+GrupoP|ijk16|output|       rpc        8
+GrupoP|ijk16|output|       rsp   117583
+GrupoP|ijk16|output|
+GrupoP|ijk16|output|    memory    value
+GrupoP|ijk16|output|00117583        7
+GrupoP|ijk16|output|00117587        0
+GrupoP|ijk16|output|00117591   117583
+GrupoP|ijk16|output|00117595        1
+GrupoP|ijk16|output|00117599      393
+GrupoP|ijk16|memory|00117583|7
+GrupoP|ijk16|memory|00117587|0
+GrupoP|ijk16|memory|00117591|117583
+GrupoP|ijk16|memory|00117595|1
+GrupoP|ijk16|memory|00117599|393
+GrupoP|ijk17|stack|127097
+GrupoP|ijk17|data|63548
+GrupoP|ijk17|input|loadI 55 => rbss
+GrupoP|ijk17|input|loadI 67 => rsp
+GrupoP|ijk17|input|loadI 67 => rfp
+GrupoP|ijk17|input|storeAI rfp => rsp, 8
+GrupoP|ijk17|input|addI rpc, 3 => r22
+GrupoP|ijk17|input|storeAI r22 => rsp, 0
+GrupoP|ijk17|input|jumpI  => L0
+GrupoP|ijk17|input|loadAI rsp, 4 => r21
+GrupoP|ijk17|input|halt 
+GrupoP|ijk17|input|L0: nop 
+GrupoP|ijk17|input|i2i rsp => rfp
+GrupoP|ijk17|input|addI rsp, 24 => rsp
+GrupoP|ijk17|input|loadI 10 => r0
+GrupoP|ijk17|input|storeAI r0 => rfp, 12
+GrupoP|ijk17|input|loadI 2 => r1
+GrupoP|ijk17|input|storeAI r1 => rfp, 16
+GrupoP|ijk17|input|loadI 0 => r2
+GrupoP|ijk17|input|storeAI r2 => rfp, 20
+GrupoP|ijk17|input|loadI 0 => r13
+GrupoP|ijk17|input|L4: nop 
+GrupoP|ijk17|input|loadAI rfp, 12 => r3
+GrupoP|ijk17|input|loadI 5 => r4
+GrupoP|ijk17|input|cmp_GT r3, r4 -> r6
+GrupoP|ijk17|input|cbr r6 -> L1, L2
+GrupoP|ijk17|input|L1: loadI 1 => r5
+GrupoP|ijk17|input|jumpI  -> L3
+GrupoP|ijk17|input|L2: loadI 0 => r5
+GrupoP|ijk17|input|L3: nop 
+GrupoP|ijk17|input|cmp_NE r5, r13 -> r14
+GrupoP|ijk17|input|cbr r14 -> L5, L6
+GrupoP|ijk17|input|L5: nop 
+GrupoP|ijk17|input|loadAI rfp, 12 => r7
+GrupoP|ijk17|input|loadI 1 => r8
+GrupoP|ijk17|input|sub r7, r8 => r9
+GrupoP|ijk17|input|storeAI r9 => rfp, 12
+GrupoP|ijk17|input|loadAI rfp, 20 => r10
+GrupoP|ijk17|input|loadI 123 => r11
+GrupoP|ijk17|input|add r10, r11 => r12
+GrupoP|ijk17|input|storeAI r12 => rfp, 20
+GrupoP|ijk17|input|jumpI  -> L4
+GrupoP|ijk17|input|L6: nop 
+GrupoP|ijk17|input|loadI 0 => r15
+GrupoP|ijk17|input|loadAI rfp, 0 => r16
+GrupoP|ijk17|input|storeAI r15 => rfp, 4
+GrupoP|ijk17|input|loadAI rfp, 8 => r17
+GrupoP|ijk17|input|i2i rfp => rsp
+GrupoP|ijk17|input|i2i r17 => rfp
+GrupoP|ijk17|input|jump  -> r16
+GrupoP|ijk17|input|loadI 0 => r18
+GrupoP|ijk17|input|loadAI rfp, 0 => r19
+GrupoP|ijk17|input|storeAI r18 => rfp, 4
+GrupoP|ijk17|input|loadAI rfp, 8 => r20
+GrupoP|ijk17|input|i2i rfp => rsp
+GrupoP|ijk17|input|i2i r20 => rfp
+GrupoP|ijk17|input|jump  -> r19
+GrupoP|ijk17|output|Change of rbss ignored (strict mode)
+GrupoP|ijk17|output|Change of rsp ignored (strict mode)
+GrupoP|ijk17|output|Change of rfp ignored (strict mode)
+GrupoP|ijk17|output|count	instruction
+GrupoP|ijk17|output|   30	loadI
+GrupoP|ijk17|output|   19	nop
+GrupoP|ijk17|output|   19	loadAI
+GrupoP|ijk17|output|   16	storeAI
+GrupoP|ijk17|output|   12	cbr
+GrupoP|ijk17|output|   11	jumpI
+GrupoP|ijk17|output|    6	cmp_GT
+GrupoP|ijk17|output|    6	cmp_NE
+GrupoP|ijk17|output|    5	sub
+GrupoP|ijk17|output|    5	add
+GrupoP|ijk17|output|    3	i2i
+GrupoP|ijk17|output|    2	addI
+GrupoP|ijk17|output|    1	jump
+GrupoP|ijk17|output|    1	halt
+GrupoP|ijk17|output|
+GrupoP|ijk17|output|instructions executed:  136
+GrupoP|ijk17|output|register         read:  113 write:  209
+GrupoP|ijk17|output|memory           read:   19 write:   16
+GrupoP|ijk17|output|
+GrupoP|ijk17|output|  register    value
+GrupoP|ijk17|output|        r0       10
+GrupoP|ijk17|output|        r1        2
+GrupoP|ijk17|output|       r10      492
+GrupoP|ijk17|output|       r11      123
+GrupoP|ijk17|output|       r12      615
+GrupoP|ijk17|output|       r13        0
+GrupoP|ijk17|output|       r14        0
+GrupoP|ijk17|output|       r15        0
+GrupoP|ijk17|output|       r16        7
+GrupoP|ijk17|output|       r17   127097
+GrupoP|ijk17|output|        r2        0
+GrupoP|ijk17|output|       r21        0
+GrupoP|ijk17|output|       r22        7
+GrupoP|ijk17|output|        r3        5
+GrupoP|ijk17|output|        r4        5
+GrupoP|ijk17|output|        r5        0
+GrupoP|ijk17|output|        r6        0
+GrupoP|ijk17|output|        r7        6
+GrupoP|ijk17|output|        r8        1
+GrupoP|ijk17|output|        r9        5
+GrupoP|ijk17|output|      rbss    63548
+GrupoP|ijk17|output|       rfp   127097
+GrupoP|ijk17|output|       rpc        8
+GrupoP|ijk17|output|       rsp   127097
+GrupoP|ijk17|output|
+GrupoP|ijk17|output|    memory    value
+GrupoP|ijk17|output|00127097        7
+GrupoP|ijk17|output|00127101        0
+GrupoP|ijk17|output|00127105   127097
+GrupoP|ijk17|output|00127109        5
+GrupoP|ijk17|output|00127113        2
+GrupoP|ijk17|output|00127117      615
+GrupoP|ijk17|memory|00127097|7
+GrupoP|ijk17|memory|00127101|0
+GrupoP|ijk17|memory|00127105|127097
+GrupoP|ijk17|memory|00127109|5
+GrupoP|ijk17|memory|00127113|2
+GrupoP|ijk17|memory|00127117|615
+GrupoP|ijk18|stack|104173
+GrupoP|ijk18|data|52086
+GrupoP|ijk18|input|loadI 53 => rbss
+GrupoP|ijk18|input|loadI 65 => rsp
+GrupoP|ijk18|input|loadI 65 => rfp
+GrupoP|ijk18|input|storeAI rfp => rsp, 8
+GrupoP|ijk18|input|addI rpc, 3 => r21
+GrupoP|ijk18|input|storeAI r21 => rsp, 0
+GrupoP|ijk18|input|jumpI  => L0
+GrupoP|ijk18|input|loadAI rsp, 4 => r20
+GrupoP|ijk18|input|halt 
+GrupoP|ijk18|input|L0: nop 
+GrupoP|ijk18|input|i2i rsp => rfp
+GrupoP|ijk18|input|addI rsp, 20 => rsp
+GrupoP|ijk18|input|loadI 10 => r0
+GrupoP|ijk18|input|storeAI r0 => rfp, 12
+GrupoP|ijk18|input|loadI 0 => r1
+GrupoP|ijk18|input|storeAI r1 => rfp, 16
+GrupoP|ijk18|input|loadI 0 => r12
+GrupoP|ijk18|input|L4: nop 
+GrupoP|ijk18|input|loadAI rfp, 12 => r2
+GrupoP|ijk18|input|loadI 5 => r3
+GrupoP|ijk18|input|cmp_GT r2, r3 -> r5
+GrupoP|ijk18|input|cbr r5 -> L1, L2
+GrupoP|ijk18|input|L1: loadI 1 => r4
+GrupoP|ijk18|input|jumpI  -> L3
+GrupoP|ijk18|input|L2: loadI 0 => r4
+GrupoP|ijk18|input|L3: nop 
+GrupoP|ijk18|input|cmp_NE r4, r12 -> r13
+GrupoP|ijk18|input|cbr r13 -> L5, L6
+GrupoP|ijk18|input|L5: nop 
+GrupoP|ijk18|input|loadAI rfp, 12 => r6
+GrupoP|ijk18|input|loadI 1 => r7
+GrupoP|ijk18|input|sub r6, r7 => r8
+GrupoP|ijk18|input|storeAI r8 => rfp, 12
+GrupoP|ijk18|input|loadAI rfp, 16 => r9
+GrupoP|ijk18|input|loadI 123 => r10
+GrupoP|ijk18|input|add r9, r10 => r11
+GrupoP|ijk18|input|storeAI r11 => rfp, 16
+GrupoP|ijk18|input|jumpI  -> L4
+GrupoP|ijk18|input|L6: nop 
+GrupoP|ijk18|input|loadI 0 => r14
+GrupoP|ijk18|input|loadAI rfp, 0 => r15
+GrupoP|ijk18|input|storeAI r14 => rfp, 4
+GrupoP|ijk18|input|loadAI rfp, 8 => r16
+GrupoP|ijk18|input|i2i rfp => rsp
+GrupoP|ijk18|input|i2i r16 => rfp
+GrupoP|ijk18|input|jump  -> r15
+GrupoP|ijk18|input|loadI 0 => r17
+GrupoP|ijk18|input|loadAI rfp, 0 => r18
+GrupoP|ijk18|input|storeAI r17 => rfp, 4
+GrupoP|ijk18|input|loadAI rfp, 8 => r19
+GrupoP|ijk18|input|i2i rfp => rsp
+GrupoP|ijk18|input|i2i r19 => rfp
+GrupoP|ijk18|input|jump  -> r18
+GrupoP|ijk18|output|Change of rbss ignored (strict mode)
+GrupoP|ijk18|output|Change of rsp ignored (strict mode)
+GrupoP|ijk18|output|Change of rfp ignored (strict mode)
+GrupoP|ijk18|output|count	instruction
+GrupoP|ijk18|output|   29	loadI
+GrupoP|ijk18|output|   19	nop
+GrupoP|ijk18|output|   19	loadAI
+GrupoP|ijk18|output|   15	storeAI
+GrupoP|ijk18|output|   12	cbr
+GrupoP|ijk18|output|   11	jumpI
+GrupoP|ijk18|output|    6	cmp_GT
+GrupoP|ijk18|output|    6	cmp_NE
+GrupoP|ijk18|output|    5	sub
+GrupoP|ijk18|output|    5	add
+GrupoP|ijk18|output|    3	i2i
+GrupoP|ijk18|output|    2	addI
+GrupoP|ijk18|output|    1	jump
+GrupoP|ijk18|output|    1	halt
+GrupoP|ijk18|output|
+GrupoP|ijk18|output|instructions executed:  134
+GrupoP|ijk18|output|register         read:  111 write:  206
+GrupoP|ijk18|output|memory           read:   19 write:   15
+GrupoP|ijk18|output|
+GrupoP|ijk18|output|  register    value
+GrupoP|ijk18|output|        r0       10
+GrupoP|ijk18|output|        r1        0
+GrupoP|ijk18|output|       r10      123
+GrupoP|ijk18|output|       r11      615
+GrupoP|ijk18|output|       r12        0
+GrupoP|ijk18|output|       r13        0
+GrupoP|ijk18|output|       r14        0
+GrupoP|ijk18|output|       r15        7
+GrupoP|ijk18|output|       r16   104173
+GrupoP|ijk18|output|        r2        5
+GrupoP|ijk18|output|       r20        0
+GrupoP|ijk18|output|       r21        7
+GrupoP|ijk18|output|        r3        5
+GrupoP|ijk18|output|        r4        0
+GrupoP|ijk18|output|        r5        0
+GrupoP|ijk18|output|        r6        6
+GrupoP|ijk18|output|        r7        1
+GrupoP|ijk18|output|        r8        5
+GrupoP|ijk18|output|        r9      492
+GrupoP|ijk18|output|      rbss    52086
+GrupoP|ijk18|output|       rfp   104173
+GrupoP|ijk18|output|       rpc        8
+GrupoP|ijk18|output|       rsp   104173
+GrupoP|ijk18|output|
+GrupoP|ijk18|output|    memory    value
+GrupoP|ijk18|output|00104173        7
+GrupoP|ijk18|output|00104177        0
+GrupoP|ijk18|output|00104181   104173
+GrupoP|ijk18|output|00104185        5
+GrupoP|ijk18|output|00104189      615
+GrupoP|ijk18|memory|00104173|7
+GrupoP|ijk18|memory|00104177|0
+GrupoP|ijk18|memory|00104181|104173
+GrupoP|ijk18|memory|00104185|5
+GrupoP|ijk18|memory|00104189|615
+GrupoP|ijk19|stack|107943
+GrupoP|ijk19|data|53971
+GrupoP|ijk19|input|loadI 67 => rbss
+GrupoP|ijk19|input|loadI 79 => rsp
+GrupoP|ijk19|input|loadI 79 => rfp
+GrupoP|ijk19|input|storeAI rfp => rsp, 8
+GrupoP|ijk19|input|addI rpc, 3 => r25
+GrupoP|ijk19|input|storeAI r25 => rsp, 0
+GrupoP|ijk19|input|jumpI  => L0
+GrupoP|ijk19|input|loadAI rsp, 4 => r24
+GrupoP|ijk19|input|halt 
+GrupoP|ijk19|input|L0: nop 
+GrupoP|ijk19|input|i2i rsp => rfp
+GrupoP|ijk19|input|addI rsp, 32 => rsp
+GrupoP|ijk19|input|loadI 0 => r0
+GrupoP|ijk19|input|storeAI r0 => rfp, 12
+GrupoP|ijk19|input|loadI 1 => r1
+GrupoP|ijk19|input|storeAI r1 => rfp, 16
+GrupoP|ijk19|input|loadI 2 => r2
+GrupoP|ijk19|input|storeAI r2 => rfp, 20
+GrupoP|ijk19|input|loadI 3 => r3
+GrupoP|ijk19|input|storeAI r3 => rfp, 24
+GrupoP|ijk19|input|loadAI rfp, 12 => r4
+GrupoP|ijk19|input|loadAI rfp, 16 => r5
+GrupoP|ijk19|input|cmp_LT r4, r5 -> r7
+GrupoP|ijk19|input|cbr r7 -> L1, L2
+GrupoP|ijk19|input|L1: loadI 1 => r6
+GrupoP|ijk19|input|jumpI  -> L3
+GrupoP|ijk19|input|L2: loadI 0 => r6
+GrupoP|ijk19|input|L3: nop 
+GrupoP|ijk19|input|loadI 0 => r13
+GrupoP|ijk19|input|cmp_NE r6, r13 -> r14
+GrupoP|ijk19|input|cbr r14 -> L7, L8
+GrupoP|ijk19|input|L8: nop 
+GrupoP|ijk19|input|loadAI rfp, 20 => r8
+GrupoP|ijk19|input|loadAI rfp, 24 => r9
+GrupoP|ijk19|input|cmp_LT r8, r9 -> r11
+GrupoP|ijk19|input|cbr r11 -> L4, L5
+GrupoP|ijk19|input|L4: loadI 1 => r10
+GrupoP|ijk19|input|jumpI  -> L6
+GrupoP|ijk19|input|L5: loadI 0 => r10
+GrupoP|ijk19|input|L6: nop 
+GrupoP|ijk19|input|or r6, r10 => r12
+GrupoP|ijk19|input|jumpI  -> L9
+GrupoP|ijk19|input|L7: loadI 1 => r12
+GrupoP|ijk19|input|L9: nop 
+GrupoP|ijk19|input|loadI 0 => r16
+GrupoP|ijk19|input|cmp_NE r12, r16 -> r17
+GrupoP|ijk19|input|cbr r17 -> L10, L11
+GrupoP|ijk19|input|L10: nop 
+GrupoP|ijk19|input|loadI 293 => r15
+GrupoP|ijk19|input|storeAI r15 => rfp, 28
+GrupoP|ijk19|input|jumpI  -> L12
+GrupoP|ijk19|input|L11: nop 
+GrupoP|ijk19|input|L12: nop 
+GrupoP|ijk19|input|loadI 0 => r18
+GrupoP|ijk19|input|loadAI rfp, 0 => r19
+GrupoP|ijk19|input|storeAI r18 => rfp, 4
+GrupoP|ijk19|input|loadAI rfp, 8 => r20
+GrupoP|ijk19|input|i2i rfp => rsp
+GrupoP|ijk19|input|i2i r20 => rfp
+GrupoP|ijk19|input|jump  -> r19
+GrupoP|ijk19|input|loadI 0 => r21
+GrupoP|ijk19|input|loadAI rfp, 0 => r22
+GrupoP|ijk19|input|storeAI r21 => rfp, 4
+GrupoP|ijk19|input|loadAI rfp, 8 => r23
+GrupoP|ijk19|input|i2i rfp => rsp
+GrupoP|ijk19|input|i2i r23 => rfp
+GrupoP|ijk19|input|jump  -> r22
+GrupoP|ijk19|output|Change of rbss ignored (strict mode)
+GrupoP|ijk19|output|Change of rsp ignored (strict mode)
+GrupoP|ijk19|output|Change of rfp ignored (strict mode)
+GrupoP|ijk19|output|count	instruction
+GrupoP|ijk19|output|   13	loadI
+GrupoP|ijk19|output|    8	storeAI
+GrupoP|ijk19|output|    5	nop
+GrupoP|ijk19|output|    5	loadAI
+GrupoP|ijk19|output|    3	jumpI
+GrupoP|ijk19|output|    3	i2i
+GrupoP|ijk19|output|    3	cbr
+GrupoP|ijk19|output|    2	addI
+GrupoP|ijk19|output|    2	cmp_NE
+GrupoP|ijk19|output|    1	cmp_LT
+GrupoP|ijk19|output|    1	jump
+GrupoP|ijk19|output|    1	halt
+GrupoP|ijk19|output|
+GrupoP|ijk19|output|instructions executed:   47
+GrupoP|ijk19|output|register         read:   36 write:   70
+GrupoP|ijk19|output|memory           read:    5 write:    8
+GrupoP|ijk19|output|
+GrupoP|ijk19|output|  register    value
+GrupoP|ijk19|output|        r0        0
+GrupoP|ijk19|output|        r1        1
+GrupoP|ijk19|output|       r12        1
+GrupoP|ijk19|output|       r13        0
+GrupoP|ijk19|output|       r14        1
+GrupoP|ijk19|output|       r15      293
+GrupoP|ijk19|output|       r16        0
+GrupoP|ijk19|output|       r17        1
+GrupoP|ijk19|output|       r18        0
+GrupoP|ijk19|output|       r19        7
+GrupoP|ijk19|output|        r2        2
+GrupoP|ijk19|output|       r20   107943
+GrupoP|ijk19|output|       r24        0
+GrupoP|ijk19|output|       r25        7
+GrupoP|ijk19|output|        r3        3
+GrupoP|ijk19|output|        r4        0
+GrupoP|ijk19|output|        r5        1
+GrupoP|ijk19|output|        r6        1
+GrupoP|ijk19|output|        r7        1
+GrupoP|ijk19|output|      rbss    53971
+GrupoP|ijk19|output|       rfp   107943
+GrupoP|ijk19|output|       rpc        8
+GrupoP|ijk19|output|       rsp   107943
+GrupoP|ijk19|output|
+GrupoP|ijk19|output|    memory    value
+GrupoP|ijk19|output|00107943        7
+GrupoP|ijk19|output|00107947        0
+GrupoP|ijk19|output|00107951   107943
+GrupoP|ijk19|output|00107955        0
+GrupoP|ijk19|output|00107959        1
+GrupoP|ijk19|output|00107963        2
+GrupoP|ijk19|output|00107967        3
+GrupoP|ijk19|output|00107971      293
+GrupoP|ijk19|memory|00107943|7
+GrupoP|ijk19|memory|00107947|0
+GrupoP|ijk19|memory|00107951|107943
+GrupoP|ijk19|memory|00107955|0
+GrupoP|ijk19|memory|00107959|1
+GrupoP|ijk19|memory|00107963|2
+GrupoP|ijk19|memory|00107967|3
+GrupoP|ijk19|memory|00107971|293
+GrupoP|ijk20|stack|124544
+GrupoP|ijk20|data|62272
+GrupoP|ijk20|input|loadI 69 => rbss
+GrupoP|ijk20|input|loadI 81 => rsp
+GrupoP|ijk20|input|loadI 81 => rfp
+GrupoP|ijk20|input|storeAI rfp => rsp, 8
+GrupoP|ijk20|input|addI rpc, 3 => r26
+GrupoP|ijk20|input|storeAI r26 => rsp, 0
+GrupoP|ijk20|input|jumpI  => L0
+GrupoP|ijk20|input|loadAI rsp, 4 => r25
+GrupoP|ijk20|input|halt 
+GrupoP|ijk20|input|L0: nop 
+GrupoP|ijk20|input|i2i rsp => rfp
+GrupoP|ijk20|input|addI rsp, 32 => rsp
+GrupoP|ijk20|input|loadI 1 => r0
+GrupoP|ijk20|input|storeAI r0 => rfp, 12
+GrupoP|ijk20|input|loadI 0 => r1
+GrupoP|ijk20|input|storeAI r1 => rfp, 16
+GrupoP|ijk20|input|loadI 2 => r2
+GrupoP|ijk20|input|storeAI r2 => rfp, 20
+GrupoP|ijk20|input|loadI 3 => r3
+GrupoP|ijk20|input|storeAI r3 => rfp, 24
+GrupoP|ijk20|input|loadAI rfp, 12 => r4
+GrupoP|ijk20|input|loadAI rfp, 16 => r5
+GrupoP|ijk20|input|cmp_LT r4, r5 -> r7
+GrupoP|ijk20|input|cbr r7 -> L1, L2
+GrupoP|ijk20|input|L1: loadI 1 => r6
+GrupoP|ijk20|input|jumpI  -> L3
+GrupoP|ijk20|input|L2: loadI 0 => r6
+GrupoP|ijk20|input|L3: nop 
+GrupoP|ijk20|input|loadI 0 => r13
+GrupoP|ijk20|input|cmp_NE r6, r13 -> r14
+GrupoP|ijk20|input|cbr r14 -> L7, L8
+GrupoP|ijk20|input|L7: nop 
+GrupoP|ijk20|input|loadAI rfp, 20 => r8
+GrupoP|ijk20|input|loadAI rfp, 24 => r9
+GrupoP|ijk20|input|cmp_LT r8, r9 -> r11
+GrupoP|ijk20|input|cbr r11 -> L4, L5
+GrupoP|ijk20|input|L4: loadI 1 => r10
+GrupoP|ijk20|input|jumpI  -> L6
+GrupoP|ijk20|input|L5: loadI 0 => r10
+GrupoP|ijk20|input|L6: nop 
+GrupoP|ijk20|input|and r6, r10 => r12
+GrupoP|ijk20|input|jumpI  -> L9
+GrupoP|ijk20|input|L8: loadI 0 => r12
+GrupoP|ijk20|input|L9: nop 
+GrupoP|ijk20|input|loadI 0 => r17
+GrupoP|ijk20|input|cmp_NE r12, r17 -> r18
+GrupoP|ijk20|input|cbr r18 -> L10, L11
+GrupoP|ijk20|input|L10: nop 
+GrupoP|ijk20|input|loadI 293 => r15
+GrupoP|ijk20|input|storeAI r15 => rfp, 28
+GrupoP|ijk20|input|jumpI  -> L12
+GrupoP|ijk20|input|L11: nop 
+GrupoP|ijk20|input|loadI 325 => r16
+GrupoP|ijk20|input|storeAI r16 => rfp, 28
+GrupoP|ijk20|input|L12: nop 
+GrupoP|ijk20|input|loadI 0 => r19
+GrupoP|ijk20|input|loadAI rfp, 0 => r20
+GrupoP|ijk20|input|storeAI r19 => rfp, 4
+GrupoP|ijk20|input|loadAI rfp, 8 => r21
+GrupoP|ijk20|input|i2i rfp => rsp
+GrupoP|ijk20|input|i2i r21 => rfp
+GrupoP|ijk20|input|jump  -> r20
+GrupoP|ijk20|input|loadI 0 => r22
+GrupoP|ijk20|input|loadAI rfp, 0 => r23
+GrupoP|ijk20|input|storeAI r22 => rfp, 4
+GrupoP|ijk20|input|loadAI rfp, 8 => r24
+GrupoP|ijk20|input|i2i rfp => rsp
+GrupoP|ijk20|input|i2i r24 => rfp
+GrupoP|ijk20|input|jump  -> r23
+GrupoP|ijk20|output|Change of rbss ignored (strict mode)
+GrupoP|ijk20|output|Change of rsp ignored (strict mode)
+GrupoP|ijk20|output|Change of rfp ignored (strict mode)
+GrupoP|ijk20|output|count	instruction
+GrupoP|ijk20|output|   13	loadI
+GrupoP|ijk20|output|    8	storeAI
+GrupoP|ijk20|output|    5	nop
+GrupoP|ijk20|output|    5	loadAI
+GrupoP|ijk20|output|    3	i2i
+GrupoP|ijk20|output|    3	cbr
+GrupoP|ijk20|output|    2	addI
+GrupoP|ijk20|output|    2	cmp_NE
+GrupoP|ijk20|output|    1	jumpI
+GrupoP|ijk20|output|    1	cmp_LT
+GrupoP|ijk20|output|    1	jump
+GrupoP|ijk20|output|    1	halt
+GrupoP|ijk20|output|
+GrupoP|ijk20|output|instructions executed:   45
+GrupoP|ijk20|output|register         read:   36 write:   68
+GrupoP|ijk20|output|memory           read:    5 write:    8
+GrupoP|ijk20|output|
+GrupoP|ijk20|output|  register    value
+GrupoP|ijk20|output|        r0        1
+GrupoP|ijk20|output|        r1        0
+GrupoP|ijk20|output|       r12        0
+GrupoP|ijk20|output|       r13        0
+GrupoP|ijk20|output|       r14        0
+GrupoP|ijk20|output|       r16      325
+GrupoP|ijk20|output|       r17        0
+GrupoP|ijk20|output|       r18        0
+GrupoP|ijk20|output|       r19        0
+GrupoP|ijk20|output|        r2        2
+GrupoP|ijk20|output|       r20        7
+GrupoP|ijk20|output|       r21   124544
+GrupoP|ijk20|output|       r25        0
+GrupoP|ijk20|output|       r26        7
+GrupoP|ijk20|output|        r3        3
+GrupoP|ijk20|output|        r4        1
+GrupoP|ijk20|output|        r5        0
+GrupoP|ijk20|output|        r6        0
+GrupoP|ijk20|output|        r7        0
+GrupoP|ijk20|output|      rbss    62272
+GrupoP|ijk20|output|       rfp   124544
+GrupoP|ijk20|output|       rpc        8
+GrupoP|ijk20|output|       rsp   124544
+GrupoP|ijk20|output|
+GrupoP|ijk20|output|    memory    value
+GrupoP|ijk20|output|00124544        7
+GrupoP|ijk20|output|00124548        0
+GrupoP|ijk20|output|00124552   124544
+GrupoP|ijk20|output|00124556        1
+GrupoP|ijk20|output|00124560        0
+GrupoP|ijk20|output|00124564        2
+GrupoP|ijk20|output|00124568        3
+GrupoP|ijk20|output|00124572      325
+GrupoP|ijk20|memory|00124544|7
+GrupoP|ijk20|memory|00124548|0
+GrupoP|ijk20|memory|00124552|124544
+GrupoP|ijk20|memory|00124556|1
+GrupoP|ijk20|memory|00124560|0
+GrupoP|ijk20|memory|00124564|2
+GrupoP|ijk20|memory|00124568|3
+GrupoP|ijk20|memory|00124572|325
+GrupoP|ijk22|stack|105129
+GrupoP|ijk22|data|52564
+GrupoP|ijk22|input|loadI 57 => rbss
+GrupoP|ijk22|input|loadI 61 => rsp
+GrupoP|ijk22|input|loadI 61 => rfp
+GrupoP|ijk22|input|storeAI rfp => rsp, 8
+GrupoP|ijk22|input|addI rpc, 3 => r20
+GrupoP|ijk22|input|storeAI r20 => rsp, 0
+GrupoP|ijk22|input|jumpI  => L1
+GrupoP|ijk22|input|loadAI rsp, 4 => r19
+GrupoP|ijk22|input|halt 
+GrupoP|ijk22|input|L0: nop 
+GrupoP|ijk22|input|i2i rsp => rfp
+GrupoP|ijk22|input|addI rsp, 16 => rsp
+GrupoP|ijk22|input|loadI 99 => r0
+GrupoP|ijk22|input|storeAI r0 => rfp, 12
+GrupoP|ijk22|input|loadAI rfp, 12 => r1
+GrupoP|ijk22|input|loadAI rfp, 0 => r2
+GrupoP|ijk22|input|storeAI r1 => rfp, 4
+GrupoP|ijk22|input|loadAI rfp, 8 => r3
+GrupoP|ijk22|input|i2i rfp => rsp
+GrupoP|ijk22|input|i2i r3 => rfp
+GrupoP|ijk22|input|jump  -> r2
+GrupoP|ijk22|input|loadI 0 => r4
+GrupoP|ijk22|input|loadAI rfp, 0 => r5
+GrupoP|ijk22|input|storeAI r4 => rfp, 4
+GrupoP|ijk22|input|loadAI rfp, 8 => r6
+GrupoP|ijk22|input|i2i rfp => rsp
+GrupoP|ijk22|input|i2i r6 => rfp
+GrupoP|ijk22|input|jump  -> r5
+GrupoP|ijk22|input|L1: nop 
+GrupoP|ijk22|input|i2i rsp => rfp
+GrupoP|ijk22|input|addI rsp, 16 => rsp
+GrupoP|ijk22|input|loadI 456 => r7
+GrupoP|ijk22|input|storeAI r7 => rfp, 12
+GrupoP|ijk22|input|storeAI rfp => rsp, 8
+GrupoP|ijk22|input|addI rpc, 3 => r9
+GrupoP|ijk22|input|storeAI r9 => rsp, 0
+GrupoP|ijk22|input|jumpI  => L0
+GrupoP|ijk22|input|loadAI rsp, 4 => r8
+GrupoP|ijk22|input|storeAI r8 => rbss, 0
+GrupoP|ijk22|input|loadAI rbss, 0 => r10
+GrupoP|ijk22|input|loadAI rfp, 12 => r11
+GrupoP|ijk22|input|add r10, r11 => r12
+GrupoP|ijk22|input|storeAI r12 => rbss, 0
+GrupoP|ijk22|input|loadI 0 => r13
+GrupoP|ijk22|input|loadAI rfp, 0 => r14
+GrupoP|ijk22|input|storeAI r13 => rfp, 4
+GrupoP|ijk22|input|loadAI rfp, 8 => r15
+GrupoP|ijk22|input|i2i rfp => rsp
+GrupoP|ijk22|input|i2i r15 => rfp
+GrupoP|ijk22|input|jump  -> r14
+GrupoP|ijk22|input|loadI 0 => r16
+GrupoP|ijk22|input|loadAI rfp, 0 => r17
+GrupoP|ijk22|input|storeAI r16 => rfp, 4
+GrupoP|ijk22|input|loadAI rfp, 8 => r18
+GrupoP|ijk22|input|i2i rfp => rsp
+GrupoP|ijk22|input|i2i r18 => rfp
+GrupoP|ijk22|input|jump  -> r17
+GrupoP|ijk22|output|Change of rbss ignored (strict mode)
+GrupoP|ijk22|output|Change of rsp ignored (strict mode)
+GrupoP|ijk22|output|Change of rfp ignored (strict mode)
+GrupoP|ijk22|output|count	instruction
+GrupoP|ijk22|output|   10	storeAI
+GrupoP|ijk22|output|    9	loadAI
+GrupoP|ijk22|output|    6	loadI
+GrupoP|ijk22|output|    6	i2i
+GrupoP|ijk22|output|    4	addI
+GrupoP|ijk22|output|    2	jumpI
+GrupoP|ijk22|output|    2	nop
+GrupoP|ijk22|output|    2	jump
+GrupoP|ijk22|output|    1	add
+GrupoP|ijk22|output|    1	halt
+GrupoP|ijk22|output|
+GrupoP|ijk22|output|instructions executed:   43
+GrupoP|ijk22|output|register         read:   43 write:   66
+GrupoP|ijk22|output|memory           read:    9 write:   10
+GrupoP|ijk22|output|
+GrupoP|ijk22|output|  register    value
+GrupoP|ijk22|output|        r0       99
+GrupoP|ijk22|output|        r1       99
+GrupoP|ijk22|output|       r10       99
+GrupoP|ijk22|output|       r11      456
+GrupoP|ijk22|output|       r12      555
+GrupoP|ijk22|output|       r13        0
+GrupoP|ijk22|output|       r14        7
+GrupoP|ijk22|output|       r15   105129
+GrupoP|ijk22|output|       r19        0
+GrupoP|ijk22|output|        r2       37
+GrupoP|ijk22|output|       r20        7
+GrupoP|ijk22|output|        r3   105129
+GrupoP|ijk22|output|        r7      456
+GrupoP|ijk22|output|        r8       99
+GrupoP|ijk22|output|        r9       37
+GrupoP|ijk22|output|      rbss    52564
+GrupoP|ijk22|output|       rfp   105129
+GrupoP|ijk22|output|       rpc        8
+GrupoP|ijk22|output|       rsp   105129
+GrupoP|ijk22|output|
+GrupoP|ijk22|output|    memory    value
+GrupoP|ijk22|output|00052564      555
+GrupoP|ijk22|output|00105129        7
+GrupoP|ijk22|output|00105133        0
+GrupoP|ijk22|output|00105137   105129
+GrupoP|ijk22|output|00105141      456
+GrupoP|ijk22|output|00105145       37
+GrupoP|ijk22|output|00105149       99
+GrupoP|ijk22|output|00105153   105129
+GrupoP|ijk22|output|00105157       99
+GrupoP|ijk22|memory|00052564|555
+GrupoP|ijk22|memory|00105129|7
+GrupoP|ijk22|memory|00105133|0
+GrupoP|ijk22|memory|00105137|105129
+GrupoP|ijk22|memory|00105141|456
+GrupoP|ijk22|memory|00105145|37
+GrupoP|ijk22|memory|00105149|99
+GrupoP|ijk22|memory|00105153|105129
+GrupoP|ijk22|memory|00105157|99
+GrupoP|ijk23|stack|127316
+GrupoP|ijk23|data|63658
+GrupoP|ijk23|input|loadI 49 => rbss
+GrupoP|ijk23|input|loadI 53 => rsp
+GrupoP|ijk23|input|loadI 53 => rfp
+GrupoP|ijk23|input|storeAI rfp => rsp, 8
+GrupoP|ijk23|input|addI rpc, 3 => r15
+GrupoP|ijk23|input|storeAI r15 => rsp, 0
+GrupoP|ijk23|input|jumpI  => L1
+GrupoP|ijk23|input|loadAI rsp, 4 => r14
+GrupoP|ijk23|input|halt 
+GrupoP|ijk23|input|L0: nop 
+GrupoP|ijk23|input|i2i rsp => rfp
+GrupoP|ijk23|input|addI rsp, 12 => rsp
+GrupoP|ijk23|input|loadI 99 => r0
+GrupoP|ijk23|input|loadAI rfp, 0 => r1
+GrupoP|ijk23|input|storeAI r0 => rfp, 4
+GrupoP|ijk23|input|loadAI rfp, 8 => r2
+GrupoP|ijk23|input|i2i rfp => rsp
+GrupoP|ijk23|input|i2i r2 => rfp
+GrupoP|ijk23|input|jump  -> r1
+GrupoP|ijk23|input|loadI 0 => r3
+GrupoP|ijk23|input|loadAI rfp, 0 => r4
+GrupoP|ijk23|input|storeAI r3 => rfp, 4
+GrupoP|ijk23|input|loadAI rfp, 8 => r5
+GrupoP|ijk23|input|i2i rfp => rsp
+GrupoP|ijk23|input|i2i r5 => rfp
+GrupoP|ijk23|input|jump  -> r4
+GrupoP|ijk23|input|L1: nop 
+GrupoP|ijk23|input|i2i rsp => rfp
+GrupoP|ijk23|input|addI rsp, 12 => rsp
+GrupoP|ijk23|input|storeAI rfp => rsp, 8
+GrupoP|ijk23|input|addI rpc, 3 => r7
+GrupoP|ijk23|input|storeAI r7 => rsp, 0
+GrupoP|ijk23|input|jumpI  => L0
+GrupoP|ijk23|input|loadAI rsp, 4 => r6
+GrupoP|ijk23|input|storeAI r6 => rbss, 0
+GrupoP|ijk23|input|loadI 0 => r8
+GrupoP|ijk23|input|loadAI rfp, 0 => r9
+GrupoP|ijk23|input|storeAI r8 => rfp, 4
+GrupoP|ijk23|input|loadAI rfp, 8 => r10
+GrupoP|ijk23|input|i2i rfp => rsp
+GrupoP|ijk23|input|i2i r10 => rfp
+GrupoP|ijk23|input|jump  -> r9
+GrupoP|ijk23|input|loadI 0 => r11
+GrupoP|ijk23|input|loadAI rfp, 0 => r12
+GrupoP|ijk23|input|storeAI r11 => rfp, 4
+GrupoP|ijk23|input|loadAI rfp, 8 => r13
+GrupoP|ijk23|input|i2i rfp => rsp
+GrupoP|ijk23|input|i2i r13 => rfp
+GrupoP|ijk23|input|jump  -> r12
+GrupoP|ijk23|output|Change of rbss ignored (strict mode)
+GrupoP|ijk23|output|Change of rsp ignored (strict mode)
+GrupoP|ijk23|output|Change of rfp ignored (strict mode)
+GrupoP|ijk23|output|count	instruction
+GrupoP|ijk23|output|    7	storeAI
+GrupoP|ijk23|output|    6	i2i
+GrupoP|ijk23|output|    6	loadAI
+GrupoP|ijk23|output|    5	loadI
+GrupoP|ijk23|output|    4	addI
+GrupoP|ijk23|output|    2	jumpI
+GrupoP|ijk23|output|    2	nop
+GrupoP|ijk23|output|    2	jump
+GrupoP|ijk23|output|    1	halt
+GrupoP|ijk23|output|
+GrupoP|ijk23|output|instructions executed:   35
+GrupoP|ijk23|output|register         read:   32 write:   53
+GrupoP|ijk23|output|memory           read:    6 write:    7
+GrupoP|ijk23|output|
+GrupoP|ijk23|output|  register    value
+GrupoP|ijk23|output|        r0       99
+GrupoP|ijk23|output|        r1       33
+GrupoP|ijk23|output|       r10   127316
+GrupoP|ijk23|output|       r14        0
+GrupoP|ijk23|output|       r15        7
+GrupoP|ijk23|output|        r2   127316
+GrupoP|ijk23|output|        r6       99
+GrupoP|ijk23|output|        r7       33
+GrupoP|ijk23|output|        r8        0
+GrupoP|ijk23|output|        r9        7
+GrupoP|ijk23|output|      rbss    63658
+GrupoP|ijk23|output|       rfp   127316
+GrupoP|ijk23|output|       rpc        8
+GrupoP|ijk23|output|       rsp   127316
+GrupoP|ijk23|output|
+GrupoP|ijk23|output|    memory    value
+GrupoP|ijk23|output|00063658       99
+GrupoP|ijk23|output|00127316        7
+GrupoP|ijk23|output|00127320        0
+GrupoP|ijk23|output|00127324   127316
+GrupoP|ijk23|output|00127328       33
+GrupoP|ijk23|output|00127332       99
+GrupoP|ijk23|output|00127336   127316
+GrupoP|ijk23|memory|00063658|99
+GrupoP|ijk23|memory|00127316|7
+GrupoP|ijk23|memory|00127320|0
+GrupoP|ijk23|memory|00127324|127316
+GrupoP|ijk23|memory|00127328|33
+GrupoP|ijk23|memory|00127332|99
+GrupoP|ijk23|memory|00127336|127316
+GrupoP|ijk24|stack|126226
+GrupoP|ijk24|data|63113
+GrupoP|ijk24|input|loadI 55 => rbss
+GrupoP|ijk24|input|loadI 59 => rsp
+GrupoP|ijk24|input|loadI 59 => rfp
+GrupoP|ijk24|input|storeAI rfp => rsp, 8
+GrupoP|ijk24|input|addI rpc, 3 => r19
+GrupoP|ijk24|input|storeAI r19 => rsp, 0
+GrupoP|ijk24|input|jumpI  => L1
+GrupoP|ijk24|input|loadAI rsp, 4 => r18
+GrupoP|ijk24|input|halt 
+GrupoP|ijk24|input|L0: nop 
+GrupoP|ijk24|input|i2i rsp => rfp
+GrupoP|ijk24|input|addI rsp, 16 => rsp
+GrupoP|ijk24|input|loadI 98 => r0
+GrupoP|ijk24|input|storeAI r0 => rfp, 12
+GrupoP|ijk24|input|loadAI rfp, 12 => r1
+GrupoP|ijk24|input|loadAI rfp, 0 => r2
+GrupoP|ijk24|input|storeAI r1 => rfp, 4
+GrupoP|ijk24|input|loadAI rfp, 8 => r3
+GrupoP|ijk24|input|i2i rfp => rsp
+GrupoP|ijk24|input|i2i r3 => rfp
+GrupoP|ijk24|input|jump  -> r2
+GrupoP|ijk24|input|loadI 0 => r4
+GrupoP|ijk24|input|loadAI rfp, 0 => r5
+GrupoP|ijk24|input|storeAI r4 => rfp, 4
+GrupoP|ijk24|input|loadAI rfp, 8 => r6
+GrupoP|ijk24|input|i2i rfp => rsp
+GrupoP|ijk24|input|i2i r6 => rfp
+GrupoP|ijk24|input|jump  -> r5
+GrupoP|ijk24|input|L1: nop 
+GrupoP|ijk24|input|i2i rsp => rfp
+GrupoP|ijk24|input|addI rsp, 12 => rsp
+GrupoP|ijk24|input|storeAI rfp => rsp, 8
+GrupoP|ijk24|input|addI rpc, 3 => r8
+GrupoP|ijk24|input|storeAI r8 => rsp, 0
+GrupoP|ijk24|input|jumpI  => L0
+GrupoP|ijk24|input|loadAI rsp, 4 => r7
+GrupoP|ijk24|input|storeAI r7 => rbss, 0
+GrupoP|ijk24|input|loadAI rbss, 0 => r9
+GrupoP|ijk24|input|loadI 1 => r10
+GrupoP|ijk24|input|add r9, r10 => r11
+GrupoP|ijk24|input|storeAI r11 => rbss, 0
+GrupoP|ijk24|input|loadI 0 => r12
+GrupoP|ijk24|input|loadAI rfp, 0 => r13
+GrupoP|ijk24|input|storeAI r12 => rfp, 4
+GrupoP|ijk24|input|loadAI rfp, 8 => r14
+GrupoP|ijk24|input|i2i rfp => rsp
+GrupoP|ijk24|input|i2i r14 => rfp
+GrupoP|ijk24|input|jump  -> r13
+GrupoP|ijk24|input|loadI 0 => r15
+GrupoP|ijk24|input|loadAI rfp, 0 => r16
+GrupoP|ijk24|input|storeAI r15 => rfp, 4
+GrupoP|ijk24|input|loadAI rfp, 8 => r17
+GrupoP|ijk24|input|i2i rfp => rsp
+GrupoP|ijk24|input|i2i r17 => rfp
+GrupoP|ijk24|input|jump  -> r16
+GrupoP|ijk24|output|Change of rbss ignored (strict mode)
+GrupoP|ijk24|output|Change of rsp ignored (strict mode)
+GrupoP|ijk24|output|Change of rfp ignored (strict mode)
+GrupoP|ijk24|output|count	instruction
+GrupoP|ijk24|output|    9	storeAI
+GrupoP|ijk24|output|    8	loadAI
+GrupoP|ijk24|output|    6	loadI
+GrupoP|ijk24|output|    6	i2i
+GrupoP|ijk24|output|    4	addI
+GrupoP|ijk24|output|    2	jumpI
+GrupoP|ijk24|output|    2	nop
+GrupoP|ijk24|output|    2	jump
+GrupoP|ijk24|output|    1	add
+GrupoP|ijk24|output|    1	halt
+GrupoP|ijk24|output|
+GrupoP|ijk24|output|instructions executed:   41
+GrupoP|ijk24|output|register         read:   40 write:   63
+GrupoP|ijk24|output|memory           read:    8 write:    9
+GrupoP|ijk24|output|
+GrupoP|ijk24|output|  register    value
+GrupoP|ijk24|output|        r0       98
+GrupoP|ijk24|output|        r1       98
+GrupoP|ijk24|output|       r10        1
+GrupoP|ijk24|output|       r11       99
+GrupoP|ijk24|output|       r12        0
+GrupoP|ijk24|output|       r13        7
+GrupoP|ijk24|output|       r14   126226
+GrupoP|ijk24|output|       r18        0
+GrupoP|ijk24|output|       r19        7
+GrupoP|ijk24|output|        r2       35
+GrupoP|ijk24|output|        r3   126226
+GrupoP|ijk24|output|        r7       98
+GrupoP|ijk24|output|        r8       35
+GrupoP|ijk24|output|        r9       98
+GrupoP|ijk24|output|      rbss    63113
+GrupoP|ijk24|output|       rfp   126226
+GrupoP|ijk24|output|       rpc        8
+GrupoP|ijk24|output|       rsp   126226
+GrupoP|ijk24|output|
+GrupoP|ijk24|output|    memory    value
+GrupoP|ijk24|output|00063113       99
+GrupoP|ijk24|output|00126226        7
+GrupoP|ijk24|output|00126230        0
+GrupoP|ijk24|output|00126234   126226
+GrupoP|ijk24|output|00126238       35
+GrupoP|ijk24|output|00126242       98
+GrupoP|ijk24|output|00126246   126226
+GrupoP|ijk24|output|00126250       98
+GrupoP|ijk24|memory|00063113|99
+GrupoP|ijk24|memory|00126226|7
+GrupoP|ijk24|memory|00126230|0
+GrupoP|ijk24|memory|00126234|126226
+GrupoP|ijk24|memory|00126238|35
+GrupoP|ijk24|memory|00126242|98
+GrupoP|ijk24|memory|00126246|126226
+GrupoP|ijk24|memory|00126250|98
+GrupoP|ijk25|stack|118178
+GrupoP|ijk25|data|59089
+GrupoP|ijk25|input|loadI 63 => rbss
+GrupoP|ijk25|input|loadI 67 => rsp
+GrupoP|ijk25|input|loadI 67 => rfp
+GrupoP|ijk25|input|storeAI rfp => rsp, 8
+GrupoP|ijk25|input|addI rpc, 3 => r24
+GrupoP|ijk25|input|storeAI r24 => rsp, 0
+GrupoP|ijk25|input|jumpI  => L1
+GrupoP|ijk25|input|loadAI rsp, 4 => r23
+GrupoP|ijk25|input|halt 
+GrupoP|ijk25|input|L0: nop 
+GrupoP|ijk25|input|i2i rsp => rfp
+GrupoP|ijk25|input|addI rsp, 24 => rsp
+GrupoP|ijk25|input|loadAI rfp, 12 => r0
+GrupoP|ijk25|input|loadAI rfp, 16 => r1
+GrupoP|ijk25|input|mult r0, r1 => r2
+GrupoP|ijk25|input|storeAI r2 => rfp, 20
+GrupoP|ijk25|input|loadAI rfp, 20 => r3
+GrupoP|ijk25|input|loadAI rfp, 0 => r4
+GrupoP|ijk25|input|storeAI r3 => rfp, 4
+GrupoP|ijk25|input|loadAI rfp, 8 => r5
+GrupoP|ijk25|input|i2i rfp => rsp
+GrupoP|ijk25|input|i2i r5 => rfp
+GrupoP|ijk25|input|jump  -> r4
+GrupoP|ijk25|input|loadI 0 => r6
+GrupoP|ijk25|input|loadAI rfp, 0 => r7
+GrupoP|ijk25|input|storeAI r6 => rfp, 4
+GrupoP|ijk25|input|loadAI rfp, 8 => r8
+GrupoP|ijk25|input|i2i rfp => rsp
+GrupoP|ijk25|input|i2i r8 => rfp
+GrupoP|ijk25|input|jump  -> r7
+GrupoP|ijk25|input|L1: nop 
+GrupoP|ijk25|input|i2i rsp => rfp
+GrupoP|ijk25|input|addI rsp, 16 => rsp
+GrupoP|ijk25|input|loadI 7 => r9
+GrupoP|ijk25|input|storeAI r9 => rfp, 12
+GrupoP|ijk25|input|storeAI rfp => rsp, 8
+GrupoP|ijk25|input|loadAI rfp, 12 => r10
+GrupoP|ijk25|input|storeAI r10 => rsp, 12
+GrupoP|ijk25|input|loadAI rfp, 12 => r11
+GrupoP|ijk25|input|storeAI r11 => rsp, 16
+GrupoP|ijk25|input|addI rpc, 3 => r13
+GrupoP|ijk25|input|storeAI r13 => rsp, 0
+GrupoP|ijk25|input|jumpI  => L0
+GrupoP|ijk25|input|loadAI rsp, 4 => r12
+GrupoP|ijk25|input|storeAI r12 => rbss, 0
+GrupoP|ijk25|input|loadAI rbss, 0 => r14
+GrupoP|ijk25|input|loadAI rfp, 12 => r15
+GrupoP|ijk25|input|add r14, r15 => r16
+GrupoP|ijk25|input|storeAI r16 => rbss, 0
+GrupoP|ijk25|input|loadI 0 => r17
+GrupoP|ijk25|input|loadAI rfp, 0 => r18
+GrupoP|ijk25|input|storeAI r17 => rfp, 4
+GrupoP|ijk25|input|loadAI rfp, 8 => r19
+GrupoP|ijk25|input|i2i rfp => rsp
+GrupoP|ijk25|input|i2i r19 => rfp
+GrupoP|ijk25|input|jump  -> r18
+GrupoP|ijk25|input|loadI 0 => r20
+GrupoP|ijk25|input|loadAI rfp, 0 => r21
+GrupoP|ijk25|input|storeAI r20 => rfp, 4
+GrupoP|ijk25|input|loadAI rfp, 8 => r22
+GrupoP|ijk25|input|i2i rfp => rsp
+GrupoP|ijk25|input|i2i r22 => rfp
+GrupoP|ijk25|input|jump  -> r21
+GrupoP|ijk25|output|Change of rbss ignored (strict mode)
+GrupoP|ijk25|output|Change of rsp ignored (strict mode)
+GrupoP|ijk25|output|Change of rfp ignored (strict mode)
+GrupoP|ijk25|output|count	instruction
+GrupoP|ijk25|output|   13	loadAI
+GrupoP|ijk25|output|   12	storeAI
+GrupoP|ijk25|output|    6	i2i
+GrupoP|ijk25|output|    5	loadI
+GrupoP|ijk25|output|    4	addI
+GrupoP|ijk25|output|    2	jumpI
+GrupoP|ijk25|output|    2	nop
+GrupoP|ijk25|output|    2	jump
+GrupoP|ijk25|output|    1	mult
+GrupoP|ijk25|output|    1	add
+GrupoP|ijk25|output|    1	halt
+GrupoP|ijk25|output|
+GrupoP|ijk25|output|instructions executed:   49
+GrupoP|ijk25|output|register         read:   53 write:   76
+GrupoP|ijk25|output|memory           read:   13 write:   12
+GrupoP|ijk25|output|
+GrupoP|ijk25|output|  register    value
+GrupoP|ijk25|output|        r0        7
+GrupoP|ijk25|output|        r1        7
+GrupoP|ijk25|output|       r10        7
+GrupoP|ijk25|output|       r11        7
+GrupoP|ijk25|output|       r12       49
+GrupoP|ijk25|output|       r13       43
+GrupoP|ijk25|output|       r14       49
+GrupoP|ijk25|output|       r15        7
+GrupoP|ijk25|output|       r16       56
+GrupoP|ijk25|output|       r17        0
+GrupoP|ijk25|output|       r18        7
+GrupoP|ijk25|output|       r19   118178
+GrupoP|ijk25|output|        r2       49
+GrupoP|ijk25|output|       r23        0
+GrupoP|ijk25|output|       r24        7
+GrupoP|ijk25|output|        r3       49
+GrupoP|ijk25|output|        r4       43
+GrupoP|ijk25|output|        r5   118178
+GrupoP|ijk25|output|        r9        7
+GrupoP|ijk25|output|      rbss    59089
+GrupoP|ijk25|output|       rfp   118178
+GrupoP|ijk25|output|       rpc        8
+GrupoP|ijk25|output|       rsp   118178
+GrupoP|ijk25|output|
+GrupoP|ijk25|output|    memory    value
+GrupoP|ijk25|output|00059089       56
+GrupoP|ijk25|output|00118178        7
+GrupoP|ijk25|output|00118182        0
+GrupoP|ijk25|output|00118186   118178
+GrupoP|ijk25|output|00118190        7
+GrupoP|ijk25|output|00118194       43
+GrupoP|ijk25|output|00118198       49
+GrupoP|ijk25|output|00118202   118178
+GrupoP|ijk25|output|00118206        7
+GrupoP|ijk25|output|00118210        7
+GrupoP|ijk25|output|00118214       49
+GrupoP|ijk25|memory|00059089|56
+GrupoP|ijk25|memory|00118178|7
+GrupoP|ijk25|memory|00118182|0
+GrupoP|ijk25|memory|00118186|118178
+GrupoP|ijk25|memory|00118190|7
+GrupoP|ijk25|memory|00118194|43
+GrupoP|ijk25|memory|00118198|49
+GrupoP|ijk25|memory|00118202|118178
+GrupoP|ijk25|memory|00118206|7
+GrupoP|ijk25|memory|00118210|7
+GrupoP|ijk25|memory|00118214|49
+GrupoP|ijk26|stack|120144
+GrupoP|ijk26|data|60072
+GrupoP|ijk26|input|loadI 91 => rbss
+GrupoP|ijk26|input|loadI 95 => rsp
+GrupoP|ijk26|input|loadI 95 => rfp
+GrupoP|ijk26|input|storeAI rfp => rsp, 8
+GrupoP|ijk26|input|addI rpc, 3 => r36
+GrupoP|ijk26|input|storeAI r36 => rsp, 0
+GrupoP|ijk26|input|jumpI  => L7
+GrupoP|ijk26|input|loadAI rsp, 4 => r35
+GrupoP|ijk26|input|halt 
+GrupoP|ijk26|input|L0: nop 
+GrupoP|ijk26|input|i2i rsp => rfp
+GrupoP|ijk26|input|addI rsp, 20 => rsp
+GrupoP|ijk26|input|loadAI rfp, 12 => r0
+GrupoP|ijk26|input|loadI 1 => r1
+GrupoP|ijk26|input|cmp_EQ r0, r1 -> r3
+GrupoP|ijk26|input|cbr r3 -> L1, L2
+GrupoP|ijk26|input|L1: loadI 1 => r2
+GrupoP|ijk26|input|jumpI  -> L3
+GrupoP|ijk26|input|L2: loadI 0 => r2
+GrupoP|ijk26|input|L3: nop 
+GrupoP|ijk26|input|loadI 0 => r7
+GrupoP|ijk26|input|cmp_NE r2, r7 -> r8
+GrupoP|ijk26|input|cbr r8 -> L4, L5
+GrupoP|ijk26|input|L4: nop 
+GrupoP|ijk26|input|loadAI rfp, 12 => r4
+GrupoP|ijk26|input|loadAI rfp, 0 => r5
+GrupoP|ijk26|input|storeAI r4 => rfp, 4
+GrupoP|ijk26|input|loadAI rfp, 8 => r6
+GrupoP|ijk26|input|i2i rfp => rsp
+GrupoP|ijk26|input|i2i r6 => rfp
+GrupoP|ijk26|input|jump  -> r5
+GrupoP|ijk26|input|jumpI  -> L6
+GrupoP|ijk26|input|L5: nop 
+GrupoP|ijk26|input|L6: nop 
+GrupoP|ijk26|input|storeAI rfp => rsp, 8
+GrupoP|ijk26|input|loadAI rfp, 12 => r9
+GrupoP|ijk26|input|loadI 1 => r10
+GrupoP|ijk26|input|sub r9, r10 => r11
+GrupoP|ijk26|input|storeAI r11 => rsp, 12
+GrupoP|ijk26|input|addI rpc, 3 => r13
+GrupoP|ijk26|input|storeAI r13 => rsp, 0
+GrupoP|ijk26|input|jumpI  => L0
+GrupoP|ijk26|input|loadAI rsp, 4 => r12
+GrupoP|ijk26|input|loadAI rfp, 12 => r14
+GrupoP|ijk26|input|mult r12, r14 => r15
+GrupoP|ijk26|input|storeAI r15 => rfp, 16
+GrupoP|ijk26|input|loadAI rfp, 16 => r16
+GrupoP|ijk26|input|loadAI rfp, 0 => r17
+GrupoP|ijk26|input|storeAI r16 => rfp, 4
+GrupoP|ijk26|input|loadAI rfp, 8 => r18
+GrupoP|ijk26|input|i2i rfp => rsp
+GrupoP|ijk26|input|i2i r18 => rfp
+GrupoP|ijk26|input|jump  -> r17
+GrupoP|ijk26|input|loadI 0 => r19
+GrupoP|ijk26|input|loadAI rfp, 0 => r20
+GrupoP|ijk26|input|storeAI r19 => rfp, 4
+GrupoP|ijk26|input|loadAI rfp, 8 => r21
+GrupoP|ijk26|input|i2i rfp => rsp
+GrupoP|ijk26|input|i2i r21 => rfp
+GrupoP|ijk26|input|jump  -> r20
+GrupoP|ijk26|input|L7: nop 
+GrupoP|ijk26|input|i2i rsp => rfp
+GrupoP|ijk26|input|addI rsp, 16 => rsp
+GrupoP|ijk26|input|loadI 6 => r22
+GrupoP|ijk26|input|storeAI r22 => rfp, 12
+GrupoP|ijk26|input|storeAI rfp => rsp, 8
+GrupoP|ijk26|input|loadAI rfp, 12 => r23
+GrupoP|ijk26|input|storeAI r23 => rsp, 12
+GrupoP|ijk26|input|addI rpc, 3 => r25
+GrupoP|ijk26|input|storeAI r25 => rsp, 0
+GrupoP|ijk26|input|jumpI  => L0
+GrupoP|ijk26|input|loadAI rsp, 4 => r24
+GrupoP|ijk26|input|storeAI r24 => rbss, 0
+GrupoP|ijk26|input|loadAI rbss, 0 => r26
+GrupoP|ijk26|input|loadI 1 => r27
+GrupoP|ijk26|input|add r26, r27 => r28
+GrupoP|ijk26|input|storeAI r28 => rbss, 0
+GrupoP|ijk26|input|loadI 0 => r29
+GrupoP|ijk26|input|loadAI rfp, 0 => r30
+GrupoP|ijk26|input|storeAI r29 => rfp, 4
+GrupoP|ijk26|input|loadAI rfp, 8 => r31
+GrupoP|ijk26|input|i2i rfp => rsp
+GrupoP|ijk26|input|i2i r31 => rfp
+GrupoP|ijk26|input|jump  -> r30
+GrupoP|ijk26|input|loadI 0 => r32
+GrupoP|ijk26|input|loadAI rfp, 0 => r33
+GrupoP|ijk26|input|storeAI r32 => rfp, 4
+GrupoP|ijk26|input|loadAI rfp, 8 => r34
+GrupoP|ijk26|input|i2i rfp => rsp
+GrupoP|ijk26|input|i2i r34 => rfp
+GrupoP|ijk26|input|jump  -> r33
+GrupoP|ijk26|output|Change of rbss ignored (strict mode)
+GrupoP|ijk26|output|Change of rsp ignored (strict mode)
+GrupoP|ijk26|output|Change of rfp ignored (strict mode)
+GrupoP|ijk26|output|count	instruction
+GrupoP|ijk26|output|   45	loadAI
+GrupoP|ijk26|output|   35	storeAI
+GrupoP|ijk26|output|   29	loadI
+GrupoP|ijk26|output|   24	nop
+GrupoP|ijk26|output|   21	i2i
+GrupoP|ijk26|output|   14	addI
+GrupoP|ijk26|output|   12	cbr
+GrupoP|ijk26|output|    8	jumpI
+GrupoP|ijk26|output|    7	jump
+GrupoP|ijk26|output|    6	cmp_EQ
+GrupoP|ijk26|output|    6	cmp_NE
+GrupoP|ijk26|output|    5	sub
+GrupoP|ijk26|output|    5	mult
+GrupoP|ijk26|output|    1	add
+GrupoP|ijk26|output|    1	halt
+GrupoP|ijk26|output|
+GrupoP|ijk26|output|instructions executed:  219
+GrupoP|ijk26|output|register         read:  215 write:  348
+GrupoP|ijk26|output|memory           read:   45 write:   35
+GrupoP|ijk26|output|
+GrupoP|ijk26|output|  register    value
+GrupoP|ijk26|output|        r0        1
+GrupoP|ijk26|output|        r1        1
+GrupoP|ijk26|output|       r10        1
+GrupoP|ijk26|output|       r11        1
+GrupoP|ijk26|output|       r12      120
+GrupoP|ijk26|output|       r13       42
+GrupoP|ijk26|output|       r14        6
+GrupoP|ijk26|output|       r15      720
+GrupoP|ijk26|output|       r16      720
+GrupoP|ijk26|output|       r17       71
+GrupoP|ijk26|output|       r18   120144
+GrupoP|ijk26|output|        r2        1
+GrupoP|ijk26|output|       r22        6
+GrupoP|ijk26|output|       r23        6
+GrupoP|ijk26|output|       r24      720
+GrupoP|ijk26|output|       r25       71
+GrupoP|ijk26|output|       r26      720
+GrupoP|ijk26|output|       r27        1
+GrupoP|ijk26|output|       r28      721
+GrupoP|ijk26|output|       r29        0
+GrupoP|ijk26|output|        r3        1
+GrupoP|ijk26|output|       r30        7
+GrupoP|ijk26|output|       r31   120144
+GrupoP|ijk26|output|       r35        0
+GrupoP|ijk26|output|       r36        7
+GrupoP|ijk26|output|        r4        1
+GrupoP|ijk26|output|        r5       42
+GrupoP|ijk26|output|        r6   120240
+GrupoP|ijk26|output|        r7        0
+GrupoP|ijk26|output|        r8        1
+GrupoP|ijk26|output|        r9        2
+GrupoP|ijk26|output|      rbss    60072
+GrupoP|ijk26|output|       rfp   120144
+GrupoP|ijk26|output|       rpc        8
+GrupoP|ijk26|output|       rsp   120144
+GrupoP|ijk26|output|
+GrupoP|ijk26|output|    memory    value
+GrupoP|ijk26|output|00060072      721
+GrupoP|ijk26|output|00120144        7
+GrupoP|ijk26|output|00120148        0
+GrupoP|ijk26|output|00120152   120144
+GrupoP|ijk26|output|00120156        6
+GrupoP|ijk26|output|00120160       71
+GrupoP|ijk26|output|00120164      720
+GrupoP|ijk26|output|00120168   120144
+GrupoP|ijk26|output|00120172        6
+GrupoP|ijk26|output|00120176      720
+GrupoP|ijk26|output|00120180       42
+GrupoP|ijk26|output|00120184      120
+GrupoP|ijk26|output|00120188   120160
+GrupoP|ijk26|output|00120192        5
+GrupoP|ijk26|output|00120196      120
+GrupoP|ijk26|output|00120200       42
+GrupoP|ijk26|output|00120204       24
+GrupoP|ijk26|output|00120208   120180
+GrupoP|ijk26|output|00120212        4
+GrupoP|ijk26|output|00120216       24
+GrupoP|ijk26|output|00120220       42
+GrupoP|ijk26|output|00120224        6
+GrupoP|ijk26|output|00120228   120200
+GrupoP|ijk26|output|00120232        3
+GrupoP|ijk26|output|00120236        6
+GrupoP|ijk26|output|00120240       42
+GrupoP|ijk26|output|00120244        2
+GrupoP|ijk26|output|00120248   120220
+GrupoP|ijk26|output|00120252        2
+GrupoP|ijk26|output|00120256        2
+GrupoP|ijk26|output|00120260       42
+GrupoP|ijk26|output|00120264        1
+GrupoP|ijk26|output|00120268   120240
+GrupoP|ijk26|output|00120272        1
+GrupoP|ijk26|memory|00060072|721
+GrupoP|ijk26|memory|00120144|7
+GrupoP|ijk26|memory|00120148|0
+GrupoP|ijk26|memory|00120152|120144
+GrupoP|ijk26|memory|00120156|6
+GrupoP|ijk26|memory|00120160|71
+GrupoP|ijk26|memory|00120164|720
+GrupoP|ijk26|memory|00120168|120144
+GrupoP|ijk26|memory|00120172|6
+GrupoP|ijk26|memory|00120176|720
+GrupoP|ijk26|memory|00120180|42
+GrupoP|ijk26|memory|00120184|120
+GrupoP|ijk26|memory|00120188|120160
+GrupoP|ijk26|memory|00120192|5
+GrupoP|ijk26|memory|00120196|120
+GrupoP|ijk26|memory|00120200|42
+GrupoP|ijk26|memory|00120204|24
+GrupoP|ijk26|memory|00120208|120180
+GrupoP|ijk26|memory|00120212|4
+GrupoP|ijk26|memory|00120216|24
+GrupoP|ijk26|memory|00120220|42
+GrupoP|ijk26|memory|00120224|6
+GrupoP|ijk26|memory|00120228|120200
+GrupoP|ijk26|memory|00120232|3
+GrupoP|ijk26|memory|00120236|6
+GrupoP|ijk26|memory|00120240|42
+GrupoP|ijk26|memory|00120244|2
+GrupoP|ijk26|memory|00120248|120220
+GrupoP|ijk26|memory|00120252|2
+GrupoP|ijk26|memory|00120256|2
+GrupoP|ijk26|memory|00120260|42
+GrupoP|ijk26|memory|00120264|1
+GrupoP|ijk26|memory|00120268|120240
+GrupoP|ijk26|memory|00120272|1
+GrupoP|ijk27|stack|114727
+GrupoP|ijk27|data|57363
+GrupoP|ijk27|input|loadI 130 => rbss
+GrupoP|ijk27|input|loadI 134 => rsp
+GrupoP|ijk27|input|loadI 134 => rfp
+GrupoP|ijk27|input|storeAI rfp => rsp, 8
+GrupoP|ijk27|input|addI rpc, 3 => r57
+GrupoP|ijk27|input|storeAI r57 => rsp, 0
+GrupoP|ijk27|input|jumpI  => L2
+GrupoP|ijk27|input|loadAI rsp, 4 => r56
+GrupoP|ijk27|input|halt 
+GrupoP|ijk27|input|L0: nop 
+GrupoP|ijk27|input|i2i rsp => rfp
+GrupoP|ijk27|input|addI rsp, 24 => rsp
+GrupoP|ijk27|input|loadAI rfp, 12 => r0
+GrupoP|ijk27|input|loadAI rfp, 16 => r1
+GrupoP|ijk27|input|mult r0, r1 => r2
+GrupoP|ijk27|input|storeAI r2 => rfp, 20
+GrupoP|ijk27|input|loadAI rfp, 20 => r3
+GrupoP|ijk27|input|loadAI rfp, 0 => r4
+GrupoP|ijk27|input|storeAI r3 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r5
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r5 => rfp
+GrupoP|ijk27|input|jump  -> r4
+GrupoP|ijk27|input|loadI 0 => r6
+GrupoP|ijk27|input|loadAI rfp, 0 => r7
+GrupoP|ijk27|input|storeAI r6 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r8
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r8 => rfp
+GrupoP|ijk27|input|jump  -> r7
+GrupoP|ijk27|input|L1: nop 
+GrupoP|ijk27|input|i2i rsp => rfp
+GrupoP|ijk27|input|addI rsp, 56 => rsp
+GrupoP|ijk27|input|loadAI rfp, 12 => r9
+GrupoP|ijk27|input|storeAI r9 => rfp, 28
+GrupoP|ijk27|input|loadAI rfp, 28 => r10
+GrupoP|ijk27|input|loadI 1 => r11
+GrupoP|ijk27|input|add r10, r11 => r12
+GrupoP|ijk27|input|storeAI r12 => rfp, 28
+GrupoP|ijk27|input|loadAI rfp, 16 => r13
+GrupoP|ijk27|input|storeAI r13 => rfp, 32
+GrupoP|ijk27|input|loadAI rfp, 32 => r14
+GrupoP|ijk27|input|loadI 3 => r15
+GrupoP|ijk27|input|add r14, r15 => r16
+GrupoP|ijk27|input|storeAI r16 => rfp, 32
+GrupoP|ijk27|input|loadAI rfp, 20 => r17
+GrupoP|ijk27|input|storeAI r17 => rfp, 36
+GrupoP|ijk27|input|loadAI rfp, 36 => r18
+GrupoP|ijk27|input|loadI 2 => r19
+GrupoP|ijk27|input|add r18, r19 => r20
+GrupoP|ijk27|input|storeAI r20 => rfp, 36
+GrupoP|ijk27|input|loadAI rfp, 24 => r21
+GrupoP|ijk27|input|storeAI r21 => rfp, 40
+GrupoP|ijk27|input|loadAI rfp, 40 => r22
+GrupoP|ijk27|input|loadI 4 => r23
+GrupoP|ijk27|input|add r22, r23 => r24
+GrupoP|ijk27|input|storeAI r24 => rfp, 40
+GrupoP|ijk27|input|storeAI rfp => rsp, 8
+GrupoP|ijk27|input|loadAI rfp, 28 => r25
+GrupoP|ijk27|input|storeAI r25 => rsp, 12
+GrupoP|ijk27|input|loadAI rfp, 32 => r26
+GrupoP|ijk27|input|storeAI r26 => rsp, 16
+GrupoP|ijk27|input|addI rpc, 3 => r28
+GrupoP|ijk27|input|storeAI r28 => rsp, 0
+GrupoP|ijk27|input|jumpI  => L0
+GrupoP|ijk27|input|loadAI rsp, 4 => r27
+GrupoP|ijk27|input|storeAI r27 => rfp, 44
+GrupoP|ijk27|input|storeAI rfp => rsp, 8
+GrupoP|ijk27|input|loadAI rfp, 36 => r29
+GrupoP|ijk27|input|storeAI r29 => rsp, 12
+GrupoP|ijk27|input|loadAI rfp, 40 => r30
+GrupoP|ijk27|input|storeAI r30 => rsp, 16
+GrupoP|ijk27|input|addI rpc, 3 => r32
+GrupoP|ijk27|input|storeAI r32 => rsp, 0
+GrupoP|ijk27|input|jumpI  => L0
+GrupoP|ijk27|input|loadAI rsp, 4 => r31
+GrupoP|ijk27|input|storeAI r31 => rfp, 48
+GrupoP|ijk27|input|loadAI rfp, 44 => r33
+GrupoP|ijk27|input|loadAI rfp, 48 => r34
+GrupoP|ijk27|input|add r33, r34 => r35
+GrupoP|ijk27|input|storeAI r35 => rfp, 52
+GrupoP|ijk27|input|loadAI rfp, 52 => r36
+GrupoP|ijk27|input|loadAI rfp, 0 => r37
+GrupoP|ijk27|input|storeAI r36 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r38
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r38 => rfp
+GrupoP|ijk27|input|jump  -> r37
+GrupoP|ijk27|input|loadI 0 => r39
+GrupoP|ijk27|input|loadAI rfp, 0 => r40
+GrupoP|ijk27|input|storeAI r39 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r41
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r41 => rfp
+GrupoP|ijk27|input|jump  -> r40
+GrupoP|ijk27|input|L2: nop 
+GrupoP|ijk27|input|i2i rsp => rfp
+GrupoP|ijk27|input|addI rsp, 20 => rsp
+GrupoP|ijk27|input|loadI 7 => r42
+GrupoP|ijk27|input|storeAI r42 => rfp, 12
+GrupoP|ijk27|input|loadI 3 => r43
+GrupoP|ijk27|input|storeAI r43 => rfp, 16
+GrupoP|ijk27|input|storeAI rfp => rsp, 8
+GrupoP|ijk27|input|loadAI rfp, 12 => r44
+GrupoP|ijk27|input|storeAI r44 => rsp, 12
+GrupoP|ijk27|input|loadAI rfp, 12 => r45
+GrupoP|ijk27|input|storeAI r45 => rsp, 16
+GrupoP|ijk27|input|loadAI rfp, 16 => r46
+GrupoP|ijk27|input|storeAI r46 => rsp, 20
+GrupoP|ijk27|input|loadAI rfp, 16 => r47
+GrupoP|ijk27|input|storeAI r47 => rsp, 24
+GrupoP|ijk27|input|addI rpc, 3 => r49
+GrupoP|ijk27|input|storeAI r49 => rsp, 0
+GrupoP|ijk27|input|jumpI  => L1
+GrupoP|ijk27|input|loadAI rsp, 4 => r48
+GrupoP|ijk27|input|storeAI r48 => rbss, 0
+GrupoP|ijk27|input|loadI 0 => r50
+GrupoP|ijk27|input|loadAI rfp, 0 => r51
+GrupoP|ijk27|input|storeAI r50 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r52
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r52 => rfp
+GrupoP|ijk27|input|jump  -> r51
+GrupoP|ijk27|input|loadI 0 => r53
+GrupoP|ijk27|input|loadAI rfp, 0 => r54
+GrupoP|ijk27|input|storeAI r53 => rfp, 4
+GrupoP|ijk27|input|loadAI rfp, 8 => r55
+GrupoP|ijk27|input|i2i rfp => rsp
+GrupoP|ijk27|input|i2i r55 => rfp
+GrupoP|ijk27|input|jump  -> r54
+GrupoP|ijk27|output|Change of rbss ignored (strict mode)
+GrupoP|ijk27|output|Change of rsp ignored (strict mode)
+GrupoP|ijk27|output|Change of rfp ignored (strict mode)
+GrupoP|ijk27|output|count	instruction
+GrupoP|ijk27|output|   37	loadAI
+GrupoP|ijk27|output|   36	storeAI
+GrupoP|ijk27|output|   12	i2i
+GrupoP|ijk27|output|   10	loadI
+GrupoP|ijk27|output|    8	addI
+GrupoP|ijk27|output|    5	add
+GrupoP|ijk27|output|    4	jumpI
+GrupoP|ijk27|output|    4	nop
+GrupoP|ijk27|output|    4	jump
+GrupoP|ijk27|output|    2	mult
+GrupoP|ijk27|output|    1	halt
+GrupoP|ijk27|output|
+GrupoP|ijk27|output|instructions executed:  123
+GrupoP|ijk27|output|register         read:  147 write:  194
+GrupoP|ijk27|output|memory           read:   37 write:   36
+GrupoP|ijk27|output|
+GrupoP|ijk27|output|  register    value
+GrupoP|ijk27|output|        r0        5
+GrupoP|ijk27|output|        r1        7
+GrupoP|ijk27|output|       r10        7
+GrupoP|ijk27|output|       r11        1
+GrupoP|ijk27|output|       r12        8
+GrupoP|ijk27|output|       r13        7
+GrupoP|ijk27|output|       r14        7
+GrupoP|ijk27|output|       r15        3
+GrupoP|ijk27|output|       r16       10
+GrupoP|ijk27|output|       r17        3
+GrupoP|ijk27|output|       r18        3
+GrupoP|ijk27|output|       r19        2
+GrupoP|ijk27|output|        r2       35
+GrupoP|ijk27|output|       r20        5
+GrupoP|ijk27|output|       r21        3
+GrupoP|ijk27|output|       r22        3
+GrupoP|ijk27|output|       r23        4
+GrupoP|ijk27|output|       r24        7
+GrupoP|ijk27|output|       r25        8
+GrupoP|ijk27|output|       r26       10
+GrupoP|ijk27|output|       r27       80
+GrupoP|ijk27|output|       r28       65
+GrupoP|ijk27|output|       r29        5
+GrupoP|ijk27|output|        r3       35
+GrupoP|ijk27|output|       r30        7
+GrupoP|ijk27|output|       r31       35
+GrupoP|ijk27|output|       r32       75
+GrupoP|ijk27|output|       r33       80
+GrupoP|ijk27|output|       r34       35
+GrupoP|ijk27|output|       r35      115
+GrupoP|ijk27|output|       r36      115
+GrupoP|ijk27|output|       r37      114
+GrupoP|ijk27|output|       r38   114727
+GrupoP|ijk27|output|        r4       75
+GrupoP|ijk27|output|       r42        7
+GrupoP|ijk27|output|       r43        3
+GrupoP|ijk27|output|       r44        7
+GrupoP|ijk27|output|       r45        7
+GrupoP|ijk27|output|       r46        3
+GrupoP|ijk27|output|       r47        3
+GrupoP|ijk27|output|       r48      115
+GrupoP|ijk27|output|       r49      114
+GrupoP|ijk27|output|        r5   114747
+GrupoP|ijk27|output|       r50        0
+GrupoP|ijk27|output|       r51        7
+GrupoP|ijk27|output|       r52   114727
+GrupoP|ijk27|output|       r56        0
+GrupoP|ijk27|output|       r57        7
+GrupoP|ijk27|output|        r9        7
+GrupoP|ijk27|output|      rbss    57363
+GrupoP|ijk27|output|       rfp   114727
+GrupoP|ijk27|output|       rpc        8
+GrupoP|ijk27|output|       rsp   114727
+GrupoP|ijk27|output|
+GrupoP|ijk27|output|    memory    value
+GrupoP|ijk27|output|00057363      115
+GrupoP|ijk27|output|00114727        7
+GrupoP|ijk27|output|00114731        0
+GrupoP|ijk27|output|00114735   114727
+GrupoP|ijk27|output|00114739        7
+GrupoP|ijk27|output|00114743        3
+GrupoP|ijk27|output|00114747      114
+GrupoP|ijk27|output|00114751      115
+GrupoP|ijk27|output|00114755   114727
+GrupoP|ijk27|output|00114759        7
+GrupoP|ijk27|output|00114763        7
+GrupoP|ijk27|output|00114767        3
+GrupoP|ijk27|output|00114771        3
+GrupoP|ijk27|output|00114775        8
+GrupoP|ijk27|output|00114779       10
+GrupoP|ijk27|output|00114783        5
+GrupoP|ijk27|output|00114787        7
+GrupoP|ijk27|output|00114791       80
+GrupoP|ijk27|output|00114795       35
+GrupoP|ijk27|output|00114799      115
+GrupoP|ijk27|output|00114803       75
+GrupoP|ijk27|output|00114807       35
+GrupoP|ijk27|output|00114811   114747
+GrupoP|ijk27|output|00114815        5
+GrupoP|ijk27|output|00114819        7
+GrupoP|ijk27|output|00114823       35
+GrupoP|ijk27|memory|00057363|115
+GrupoP|ijk27|memory|00114727|7
+GrupoP|ijk27|memory|00114731|0
+GrupoP|ijk27|memory|00114735|114727
+GrupoP|ijk27|memory|00114739|7
+GrupoP|ijk27|memory|00114743|3
+GrupoP|ijk27|memory|00114747|114
+GrupoP|ijk27|memory|00114751|115
+GrupoP|ijk27|memory|00114755|114727
+GrupoP|ijk27|memory|00114759|7
+GrupoP|ijk27|memory|00114763|7
+GrupoP|ijk27|memory|00114767|3
+GrupoP|ijk27|memory|00114771|3
+GrupoP|ijk27|memory|00114775|8
+GrupoP|ijk27|memory|00114779|10
+GrupoP|ijk27|memory|00114783|5
+GrupoP|ijk27|memory|00114787|7
+GrupoP|ijk27|memory|00114791|80
+GrupoP|ijk27|memory|00114795|35
+GrupoP|ijk27|memory|00114799|115
+GrupoP|ijk27|memory|00114803|75
+GrupoP|ijk27|memory|00114807|35
+GrupoP|ijk27|memory|00114811|114747
+GrupoP|ijk27|memory|00114815|5
+GrupoP|ijk27|memory|00114819|7
+GrupoP|ijk27|memory|00114823|35
+GrupoP|ijk28|stack|114339
+GrupoP|ijk28|data|57169
+GrupoP|ijk28|input|loadI 91 => rbss
+GrupoP|ijk28|input|loadI 95 => rsp
+GrupoP|ijk28|input|loadI 95 => rfp
+GrupoP|ijk28|input|storeAI rfp => rsp, 8
+GrupoP|ijk28|input|addI rpc, 3 => r36
+GrupoP|ijk28|input|storeAI r36 => rsp, 0
+GrupoP|ijk28|input|jumpI  => L7
+GrupoP|ijk28|input|loadAI rsp, 4 => r35
+GrupoP|ijk28|input|halt 
+GrupoP|ijk28|input|L0: nop 
+GrupoP|ijk28|input|i2i rsp => rfp
+GrupoP|ijk28|input|addI rsp, 24 => rsp
+GrupoP|ijk28|input|loadAI rfp, 12 => r0
+GrupoP|ijk28|input|loadI 0 => r1
+GrupoP|ijk28|input|cmp_EQ r0, r1 -> r3
+GrupoP|ijk28|input|cbr r3 -> L1, L2
+GrupoP|ijk28|input|L1: loadI 1 => r2
+GrupoP|ijk28|input|jumpI  -> L3
+GrupoP|ijk28|input|L2: loadI 0 => r2
+GrupoP|ijk28|input|L3: nop 
+GrupoP|ijk28|input|loadI 0 => r7
+GrupoP|ijk28|input|cmp_NE r2, r7 -> r8
+GrupoP|ijk28|input|cbr r8 -> L4, L5
+GrupoP|ijk28|input|L4: nop 
+GrupoP|ijk28|input|loadI 1 => r4
+GrupoP|ijk28|input|loadAI rfp, 0 => r5
+GrupoP|ijk28|input|storeAI r4 => rfp, 4
+GrupoP|ijk28|input|loadAI rfp, 8 => r6
+GrupoP|ijk28|input|i2i rfp => rsp
+GrupoP|ijk28|input|i2i r6 => rfp
+GrupoP|ijk28|input|jump  -> r5
+GrupoP|ijk28|input|jumpI  -> L6
+GrupoP|ijk28|input|L5: nop 
+GrupoP|ijk28|input|L6: nop 
+GrupoP|ijk28|input|loadAI rfp, 12 => r9
+GrupoP|ijk28|input|loadI 1 => r10
+GrupoP|ijk28|input|sub r9, r10 => r11
+GrupoP|ijk28|input|storeAI r11 => rfp, 20
+GrupoP|ijk28|input|loadAI rfp, 12 => r12
+GrupoP|ijk28|input|storeAI rfp => rsp, 8
+GrupoP|ijk28|input|loadAI rfp, 20 => r13
+GrupoP|ijk28|input|storeAI r13 => rsp, 12
+GrupoP|ijk28|input|addI rpc, 3 => r15
+GrupoP|ijk28|input|storeAI r15 => rsp, 0
+GrupoP|ijk28|input|jumpI  => L0
+GrupoP|ijk28|input|loadAI rsp, 4 => r14
+GrupoP|ijk28|input|add r12, r14 => r16
+GrupoP|ijk28|input|storeAI r16 => rfp, 16
+GrupoP|ijk28|input|loadAI rfp, 16 => r17
+GrupoP|ijk28|input|loadAI rfp, 0 => r18
+GrupoP|ijk28|input|storeAI r17 => rfp, 4
+GrupoP|ijk28|input|loadAI rfp, 8 => r19
+GrupoP|ijk28|input|i2i rfp => rsp
+GrupoP|ijk28|input|i2i r19 => rfp
+GrupoP|ijk28|input|jump  -> r18
+GrupoP|ijk28|input|loadI 0 => r20
+GrupoP|ijk28|input|loadAI rfp, 0 => r21
+GrupoP|ijk28|input|storeAI r20 => rfp, 4
+GrupoP|ijk28|input|loadAI rfp, 8 => r22
+GrupoP|ijk28|input|i2i rfp => rsp
+GrupoP|ijk28|input|i2i r22 => rfp
+GrupoP|ijk28|input|jump  -> r21
+GrupoP|ijk28|input|L7: nop 
+GrupoP|ijk28|input|i2i rsp => rfp
+GrupoP|ijk28|input|addI rsp, 12 => rsp
+GrupoP|ijk28|input|storeAI rfp => rsp, 8
+GrupoP|ijk28|input|loadI 3 => r23
+GrupoP|ijk28|input|storeAI r23 => rsp, 12
+GrupoP|ijk28|input|addI rpc, 3 => r25
+GrupoP|ijk28|input|storeAI r25 => rsp, 0
+GrupoP|ijk28|input|jumpI  => L0
+GrupoP|ijk28|input|loadAI rsp, 4 => r24
+GrupoP|ijk28|input|storeAI r24 => rbss, 0
+GrupoP|ijk28|input|loadAI rbss, 0 => r26
+GrupoP|ijk28|input|loadI 1 => r27
+GrupoP|ijk28|input|add r26, r27 => r28
+GrupoP|ijk28|input|storeAI r28 => rbss, 0
+GrupoP|ijk28|input|loadI 0 => r29
+GrupoP|ijk28|input|loadAI rfp, 0 => r30
+GrupoP|ijk28|input|storeAI r29 => rfp, 4
+GrupoP|ijk28|input|loadAI rfp, 8 => r31
+GrupoP|ijk28|input|i2i rfp => rsp
+GrupoP|ijk28|input|i2i r31 => rfp
+GrupoP|ijk28|input|jump  -> r30
+GrupoP|ijk28|input|loadI 0 => r32
+GrupoP|ijk28|input|loadAI rfp, 0 => r33
+GrupoP|ijk28|input|storeAI r32 => rfp, 4
+GrupoP|ijk28|input|loadAI rfp, 8 => r34
+GrupoP|ijk28|input|i2i rfp => rsp
+GrupoP|ijk28|input|i2i r34 => rfp
+GrupoP|ijk28|input|jump  -> r33
+GrupoP|ijk28|output|Change of rbss ignored (strict mode)
+GrupoP|ijk28|output|Change of rsp ignored (strict mode)
+GrupoP|ijk28|output|Change of rfp ignored (strict mode)
+GrupoP|ijk28|output|count	instruction
+GrupoP|ijk28|output|   32	loadAI
+GrupoP|ijk28|output|   27	storeAI
+GrupoP|ijk28|output|   22	loadI
+GrupoP|ijk28|output|   16	nop
+GrupoP|ijk28|output|   15	i2i
+GrupoP|ijk28|output|   10	addI
+GrupoP|ijk28|output|    8	cbr
+GrupoP|ijk28|output|    6	jumpI
+GrupoP|ijk28|output|    5	jump
+GrupoP|ijk28|output|    4	cmp_EQ
+GrupoP|ijk28|output|    4	cmp_NE
+GrupoP|ijk28|output|    4	add
+GrupoP|ijk28|output|    3	sub
+GrupoP|ijk28|output|    1	halt
+GrupoP|ijk28|output|
+GrupoP|ijk28|output|instructions executed:  157
+GrupoP|ijk28|output|register         read:  154 write:  248
+GrupoP|ijk28|output|memory           read:   32 write:   27
+GrupoP|ijk28|output|
+GrupoP|ijk28|output|  register    value
+GrupoP|ijk28|output|        r0        0
+GrupoP|ijk28|output|        r1        0
+GrupoP|ijk28|output|       r10        1
+GrupoP|ijk28|output|       r11        0
+GrupoP|ijk28|output|       r12        1
+GrupoP|ijk28|output|       r13        0
+GrupoP|ijk28|output|       r14        3
+GrupoP|ijk28|output|       r15       45
+GrupoP|ijk28|output|       r16        4
+GrupoP|ijk28|output|       r17        4
+GrupoP|ijk28|output|       r18       71
+GrupoP|ijk28|output|       r19   114339
+GrupoP|ijk28|output|        r2        1
+GrupoP|ijk28|output|       r23        3
+GrupoP|ijk28|output|       r24        4
+GrupoP|ijk28|output|       r25       71
+GrupoP|ijk28|output|       r26        4
+GrupoP|ijk28|output|       r27        1
+GrupoP|ijk28|output|       r28        5
+GrupoP|ijk28|output|       r29        0
+GrupoP|ijk28|output|        r3        1
+GrupoP|ijk28|output|       r30        7
+GrupoP|ijk28|output|       r31   114339
+GrupoP|ijk28|output|       r35        0
+GrupoP|ijk28|output|       r36        7
+GrupoP|ijk28|output|        r4        1
+GrupoP|ijk28|output|        r5       45
+GrupoP|ijk28|output|        r6   114399
+GrupoP|ijk28|output|        r7        0
+GrupoP|ijk28|output|        r8        1
+GrupoP|ijk28|output|        r9        1
+GrupoP|ijk28|output|      rbss    57169
+GrupoP|ijk28|output|       rfp   114339
+GrupoP|ijk28|output|       rpc        8
+GrupoP|ijk28|output|       rsp   114339
+GrupoP|ijk28|output|
+GrupoP|ijk28|output|    memory    value
+GrupoP|ijk28|output|00057169        5
+GrupoP|ijk28|output|00114339        7
+GrupoP|ijk28|output|00114343        0
+GrupoP|ijk28|output|00114347   114339
+GrupoP|ijk28|output|00114351       71
+GrupoP|ijk28|output|00114355        4
+GrupoP|ijk28|output|00114359   114339
+GrupoP|ijk28|output|00114363        3
+GrupoP|ijk28|output|00114367        4
+GrupoP|ijk28|output|00114371        2
+GrupoP|ijk28|output|00114375       45
+GrupoP|ijk28|output|00114379        3
+GrupoP|ijk28|output|00114383   114351
+GrupoP|ijk28|output|00114387        2
+GrupoP|ijk28|output|00114391        3
+GrupoP|ijk28|output|00114395        1
+GrupoP|ijk28|output|00114399       45
+GrupoP|ijk28|output|00114403        2
+GrupoP|ijk28|output|00114407   114375
+GrupoP|ijk28|output|00114411        1
+GrupoP|ijk28|output|00114415        2
+GrupoP|ijk28|output|00114419        0
+GrupoP|ijk28|output|00114423       45
+GrupoP|ijk28|output|00114427        1
+GrupoP|ijk28|output|00114431   114399
+GrupoP|ijk28|output|00114435        0
+GrupoP|ijk28|memory|00057169|5
+GrupoP|ijk28|memory|00114339|7
+GrupoP|ijk28|memory|00114343|0
+GrupoP|ijk28|memory|00114347|114339
+GrupoP|ijk28|memory|00114351|71
+GrupoP|ijk28|memory|00114355|4
+GrupoP|ijk28|memory|00114359|114339
+GrupoP|ijk28|memory|00114363|3
+GrupoP|ijk28|memory|00114367|4
+GrupoP|ijk28|memory|00114371|2
+GrupoP|ijk28|memory|00114375|45
+GrupoP|ijk28|memory|00114379|3
+GrupoP|ijk28|memory|00114383|114351
+GrupoP|ijk28|memory|00114387|2
+GrupoP|ijk28|memory|00114391|3
+GrupoP|ijk28|memory|00114395|1
+GrupoP|ijk28|memory|00114399|45
+GrupoP|ijk28|memory|00114403|2
+GrupoP|ijk28|memory|00114407|114375
+GrupoP|ijk28|memory|00114411|1
+GrupoP|ijk28|memory|00114415|2
+GrupoP|ijk28|memory|00114419|0
+GrupoP|ijk28|memory|00114423|45
+GrupoP|ijk28|memory|00114427|1
+GrupoP|ijk28|memory|00114431|114399
+GrupoP|ijk28|memory|00114435|0
+GrupoP|ijk29|stack|117964
+GrupoP|ijk29|data|58982
+GrupoP|ijk29|input|Timeout
+GrupoP|ijk29|memory|00057169|5
+GrupoP|ijk29|memory|00114339|7
+GrupoP|ijk29|memory|00114343|0
+GrupoP|ijk29|memory|00114347|114339
+GrupoP|ijk29|memory|00114351|71
+GrupoP|ijk29|memory|00114355|4
+GrupoP|ijk29|memory|00114359|114339
+GrupoP|ijk29|memory|00114363|3
+GrupoP|ijk29|memory|00114367|4
+GrupoP|ijk29|memory|00114371|2
+GrupoP|ijk29|memory|00114375|45
+GrupoP|ijk29|memory|00114379|3
+GrupoP|ijk29|memory|00114383|114351
+GrupoP|ijk29|memory|00114387|2
+GrupoP|ijk29|memory|00114391|3
+GrupoP|ijk29|memory|00114395|1
+GrupoP|ijk29|memory|00114399|45
+GrupoP|ijk29|memory|00114403|2
+GrupoP|ijk29|memory|00114407|114375
+GrupoP|ijk29|memory|00114411|1
+GrupoP|ijk29|memory|00114415|2
+GrupoP|ijk29|memory|00114419|0
+GrupoP|ijk29|memory|00114423|45
+GrupoP|ijk29|memory|00114427|1
+GrupoP|ijk29|memory|00114431|114399
+GrupoP|ijk29|memory|00114435|0
+GrupoP|ijk30|stack|127756
+GrupoP|ijk30|data|63878
+GrupoP|ijk30|input|Timeout
+GrupoP|ijk30|memory|00057169|5
+GrupoP|ijk30|memory|00114339|7
+GrupoP|ijk30|memory|00114343|0
+GrupoP|ijk30|memory|00114347|114339
+GrupoP|ijk30|memory|00114351|71
+GrupoP|ijk30|memory|00114355|4
+GrupoP|ijk30|memory|00114359|114339
+GrupoP|ijk30|memory|00114363|3
+GrupoP|ijk30|memory|00114367|4
+GrupoP|ijk30|memory|00114371|2
+GrupoP|ijk30|memory|00114375|45
+GrupoP|ijk30|memory|00114379|3
+GrupoP|ijk30|memory|00114383|114351
+GrupoP|ijk30|memory|00114387|2
+GrupoP|ijk30|memory|00114391|3
+GrupoP|ijk30|memory|00114395|1
+GrupoP|ijk30|memory|00114399|45
+GrupoP|ijk30|memory|00114403|2
+GrupoP|ijk30|memory|00114407|114375
+GrupoP|ijk30|memory|00114411|1
+GrupoP|ijk30|memory|00114415|2
+GrupoP|ijk30|memory|00114419|0
+GrupoP|ijk30|memory|00114423|45
+GrupoP|ijk30|memory|00114427|1
+GrupoP|ijk30|memory|00114431|114399
+GrupoP|ijk30|memory|00114435|0
