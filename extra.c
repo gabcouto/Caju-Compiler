@@ -44,23 +44,19 @@ int encontra_endereco( Pilha * stack, char* identificador, int deslocamento){ //
 	
 	int deslocAtual = -1;
 	int deslocAcima = -1;
-	printf("cheguei na encontra end\n");
 	Tabela * elemento = stack->elemento_pilha;
 
 	while(elemento->conteudo != NULL){ // soma o tamanho de tudo em um nível da pilha
 		if (strcmp(elemento->conteudo->dados, identificador)==0)
 			deslocAtual=deslocamento;
 
-		printf("%d\n", elemento->conteudo->tamanho);
 		deslocamento += elemento->conteudo->tamanho;
 		if (elemento->nextElement!= NULL) elemento = elemento->nextElement;
 		else break;
 	}
-	printf("sai do while com deslocamento %d \n", deslocamento);
 	if (stack->top != NULL){	//se tem nivel acima, recursão
 		deslocAcima = encontra_endereco(stack->top, identificador, deslocamento);
 	}
-	printf("voltei da recursão ou nem entrei nela com deslocAcima: %d e desloc atual: %d\n", deslocAcima, deslocAtual);
 	if (deslocAcima!=-1) return deslocAcima;
 	
 	return deslocAtual;
@@ -444,11 +440,10 @@ enum Tipo analisa_uso(Tabela *myTable, Node *variavel){ //tem que acertar as coi
 		bool=1;
 
 		tempTable = tempPilha->elemento_pilha;
-		
 		while(tempTable->conteudo != NULL)
 		{	
 			if(strcmp(tempTable->conteudo->dados, id->label) != 0)
-				if (myTable->nextElement!= NULL)
+				if (tempTable->nextElement!= NULL)
 					tempTable = tempTable->nextElement;
 				else break;
 			else {

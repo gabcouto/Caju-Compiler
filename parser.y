@@ -306,8 +306,6 @@ variavel_local: IDENTIFICADOR
 atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao 
 {
 
-
-
 	$$ = create_node("ATRIBUICAO", "="); 
 	if ($2!= NULL) 
 	{ 
@@ -329,8 +327,6 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 		compareTypes(tipoLeft, tipoRight);
 	}
 	
-	
-	
 	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
 	//tem q pegar o lugar que exp deixou seu resultado
@@ -339,11 +335,13 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	// talvez essa funfe:
 	// int deslocExp = encontra_endereço(myStack, $4->label, 0); //tem q garantir q o $4->label retorna o identificador msm
 	// sprintf(string_temp, "%d", deslocExp);
-	
 	int deslocamento = encontra_endereco(myStack, $1->label, 0);
 	char *desloc_temp;
 	desloc_temp = (char*) malloc(sizeof(char));
 	sprintf(desloc_temp, "%d", deslocamento);
+
+	$1->rotulo = gera_rotulo();
+	sprintf(string_temp, "temporario%d", $1->rotulo);
 	$$->codigo = $4->codigo;
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
 
@@ -1001,7 +999,7 @@ literal: TK_LIT_INT {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "%d", $1.valor.inteiro);
 	//$$->temp = $1.valor.inteiro; //acho q isso já ta na create_node no label de $$
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadI", string_temp1, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadI", string_temp1, string_temp, NULL));
 	} ;
 literal: TK_LIT_FLOAT {$$ = create_node_from_token("TK_LIT_FLOAT", $1);};
 literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);}; 
