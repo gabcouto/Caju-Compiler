@@ -116,8 +116,41 @@ void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
 
 
 void print_iloc(L_iloc* lista_instrucoes)
-{
-	printf("%s %s %s %s %s\n", lista_instrucoes->instruction->label, lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+{	
+	if (lista_instrucoes->instruction->label!= NULL) 
+		printf("%s: nop\n", lista_instrucoes->instruction->label);
+	
+	if(lista_instrucoes->instruction->operation[0] == 'j')
+		printf("%s -> %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1);
+	
+	else
+	if(strcmp(lista_instrucoes->instruction->operation, "store")==0
+	|| strcmp(lista_instrucoes->instruction->operation, "cstore") == 0
+	|| strcmp(lista_instrucoes->instruction->operation, "load")==0
+	|| strcmp(lista_instrucoes->instruction->operation, "loadI")==0
+	|| strcmp(lista_instrucoes->instruction->operation, "cload") == 0 
+	|| lista_instrucoes->instruction->operation[1] == '2') //pra pegar as ops i2i, c2c, i2c, c2i 
+		printf("%s %s => %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2);
+		
+	else
+	if (strcmp(lista_instrucoes->instruction->operation, "storeAI")==0
+	|| strcmp(lista_instrucoes->instruction->operation, "storeAO") == 0
+	|| strcmp(lista_instrucoes->instruction->operation, "cstoreAI")==0
+	|| strcmp(lista_instrucoes->instruction->operation, "cstoreAO") == 0)
+		printf("%s %s => %s, %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+	
+	else 
+	if (strcmp(lista_instrucoes->instruction->operation, "cbr") == 0)
+		printf("%s %s -> %s, %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+		
+	else
+	if(lista_instrucoes->instruction->operation[0] == 'c'
+	&& lista_instrucoes->instruction->operation[1] == 'm'
+	&& lista_instrucoes->instruction->operation[2] == 'p') //pra pegar todos os compares
+		printf("%s %s, %s -> %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
+		
+	else
+		printf("%s %s, %s => %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
 
 	if(lista_instrucoes->next_instruction != NULL)
 		print_iloc(lista_instrucoes->next_instruction);
