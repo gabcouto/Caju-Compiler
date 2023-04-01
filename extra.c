@@ -97,7 +97,9 @@ L_iloc* find_free_place_iloc(L_iloc* minha_lista)
 }
 
 void add_to_l_iloc(L_iloc* lista_iloc, Iloc* nova_instrucao)
-{
+{	
+	//if (lista_iloc == NULL) {lista_iloc = nova_instrucao; return;}
+
 	L_iloc* espaco_vazio = find_free_place_iloc(lista_iloc);
 	if(espaco_vazio->instruction == NULL)
 		espaco_vazio->instruction = nova_instrucao;

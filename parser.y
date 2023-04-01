@@ -1,6 +1,13 @@
 
 /* Gabriel Couto & Felippo Stédile: Dupla */
 
+/*
+	Aviso ao professor sobre a ETAPA 5:
+	Optamos pela geração de código em 1 passagem.
+
+	
+*/
+
 %{
 	#include <stdio.h>
 	#include <string.h>
@@ -265,10 +272,9 @@ comandos_simples: PSblock bloco_comandos
 */
 declaracao_local: tipo lista_de_nome_de_variaveis_locais 
 {
-	$$ = $2; 
+	$$ = $2;
 	Pilha* temp = top_stack(myStack); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
-
 	free($1);
 };
 
@@ -291,7 +297,7 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 	free($2.valor.cadeia); 
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
-	
+	$$->rotulo = $3->rotulo;
 };
 
 variavel_local: IDENTIFICADOR 
@@ -305,7 +311,6 @@ variavel_local: IDENTIFICADOR
 
 atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao 
 {
-
 	$$ = create_node("ATRIBUICAO", "="); 
 	if ($2!= NULL) 
 	{ 
@@ -340,8 +345,8 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	desloc_temp = (char*) malloc(sizeof(char));
 	sprintf(desloc_temp, "%d", deslocamento);
 
-	$1->rotulo = gera_rotulo();
-	sprintf(string_temp, "temporario%d", $1->rotulo);
+	sprintf(string_temp, "temporario%d", $4->rotulo);
+	$$->codigo = create_lista_iloc();
 	$$->codigo = $4->codigo;
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
 
@@ -464,9 +469,34 @@ cond_else: {$$=NULL;};
 
 */
 
-multidimensional_: IDENTIFICADOR lista_de_expressoes {if ($2==NULL) $$=$1; else {$$=$2; add_child($$, $1);}};
+multidimensional_: IDENTIFICADOR lista_de_expressoes {
+	if ($2==NULL){
+		$$=$1;
+	//obter endereço da tanela de simbolos
+	//   em qual tabela/escopo foi declarado
+		int deslocamento = encontra_endereco(myStack, $1->label, 0);
+		char *desloc_temp;
+		desloc_temp = (char*) malloc(sizeof(char));
+		sprintf(desloc_temp, "%d", deslocamento);
 
-operandos: literal { $$ = $1; } ;
+	// gera temp
+		char* string_temp;
+		string_temp = (char*) malloc(sizeof(char));
+		$$->rotulo = gera_rotulo();
+		sprintf(string_temp, "temporario%d", $$->rotulo);
+	// if tabela global
+	//	gera loadAI rbss, deslocamento => temporario
+	// else 
+	//	gera loadAI rfp, deslocamento => temporario
+	//coloca instrução na ast em $$ (acho que quer dizer o $$.code = code gerado
+	//add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp));
+	$$->codigo = create_lista_iloc();
+	$$->codigo->instruction =  new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp);
+
+	} 
+	else {$$=$2; add_child($$, $1);}};
+
+operandos: literal { $$ = $1;} ;
 operandos: multidimensional_ { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
@@ -840,6 +870,9 @@ exp3: exp4 { $$ = $1;  } ;
 
 
 exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf lá
+	$$ = create_node("SOMA", "+" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -860,11 +893,9 @@ exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf l�
 
 	$$->codigo->next_instruction = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
+	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "add", string_temp1, string_temp3, string_temp));
-
-	$$ = create_node("SOMA", "+" ); 
-	add_child($$, $1);
-	add_child($$, $3); 
+	print_iloc($$->codigo->next_instruction);
 };
 exp4: exp4 '-' exp5 { //e se a exp é um literal?
 	$$->rotulo = gera_rotulo();
@@ -1006,15 +1037,6 @@ literal: TK_LIT_CHAR {$$ = create_node_from_token("TK_LIT_CHAR", $1);};
 literal: TK_LIT_TRUE {$$ = create_node_from_token("TK_LIT_TRUE", $1);}; 
 literal: TK_LIT_FALSE {$$ = create_node_from_token("TK_LIT_FALSE", $1);};
 IDENTIFICADOR: TK_IDENTIFICADOR {
-//n sei se é aqui,no caso do sor ele colocou isso no exp7 mais ou menos
-	//obter endereço da tanela de simbolos
-	//   em qual tabela/escopo foi declarado
-	// gera temp
-	// if tabela global
-	//	gera loadAI rbss, deslocamento => temporario
-	// else 
-	//	gera loadAI rfp, deslocamento => temporario
-	//coloca instrução na ast em $$ (acho que quer dizer o $$.code = code gerado
 	$$ = create_node_from_token("TK_IDENTIFICADOR", $1); 
 	free($1.valor.cadeia);
 };
