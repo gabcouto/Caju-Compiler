@@ -519,6 +519,9 @@ operandos: multidimensional_ { $$ = $1; } ;
 operandos: chamada_funcao { $$ = $1; } ;
 
 expressao: expressao TK_OC_OR exp1 {
+	$$ = create_node("OR", "||" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -530,25 +533,26 @@ expressao: expressao TK_OC_OR exp1 {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
-	// gera or $1.temp, $3.temp => temporario
+	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
 
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "or", string_temp1, string_temp3, string_temp));
-	$$ = create_node("OR", "||" );
-	add_child($$, $1);
+	
 	free($2.valor.cadeia);
-	add_child($$, $3);
 }; 
 expressao: exp1 { $$ = $1; } ;
 
 exp1: exp1 TK_OC_AND exp2 {
+	$$ = create_node("AND", "&&" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -560,22 +564,19 @@ exp1: exp1 TK_OC_AND exp2 {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
-	// gera and $1.temp, $3.temp => temporario
+	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
 
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "and", string_temp1, string_temp3, string_temp));
 	
-	$$ = create_node("AND", "&&" );
-	add_child($$, $1);
 	free($2.valor.cadeia);
-	add_child($$, $3);
 };
 exp1: exp2  { $$ = $1; } ;
 
@@ -909,13 +910,15 @@ exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf l�
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
 
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "add", string_temp1, string_temp3, string_temp));
-	print_iloc($$->codigo->next_instruction);
 };
 exp4: exp4 '-' exp5 { //e se a exp é um literal?
+		$$ = create_node("SUB", "-" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -927,24 +930,24 @@ exp4: exp4 '-' exp5 { //e se a exp é um literal?
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
-	//gera um temporario para guardar o resultado
-	// gera sub $1.temp, $3.temp => temporario
+	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
-	$$->codigo->next_instruction = $1->codigo;
+
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "sub", string_temp1, string_temp3, string_temp));
 	
-	$$ = create_node("SUB", "-" );
-	add_child($$, $1);
-	add_child($$, $3);
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "sub", string_temp1, string_temp3, string_temp));
 };
 exp4: exp5 { $$ = $1; } ;
 
 exp5: exp5 '*' exp6 {
+		$$ = create_node("MULT", "*" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -956,21 +959,22 @@ exp5: exp5 '*' exp6 {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
-	//gera um temporario para guardar o resultado
-	// gera mult $1.temp, $3.temp => temporario
+	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
-	$$->codigo->next_instruction = $1->codigo;
+
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
+	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "mult", string_temp1, string_temp3, string_temp));
-	$$ = create_node("MULT", "*" );
-	add_child($$, $1);
-	add_child($$, $3);
 };
 exp5: exp5 '/' exp6 {
+		$$ = create_node("DIV", "/" ); 
+	add_child($$, $1);
+	add_child($$, $3);
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
 	char *string_temp; 
@@ -982,19 +986,17 @@ exp5: exp5 '/' exp6 {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
-	//gera um temporario para guardar o resultado
-	// gera div $1.temp, $3.temp => temporario
+	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
 	// gerar code
 	// concat $1.code, $3.code, a instrução que geramos
 	// atribuimos a concacetnação em $$.code
-	$$->codigo->next_instruction = $1->codigo;
+
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
+	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "div", string_temp1, string_temp3, string_temp));
-	$$ = create_node("DIV", "/" );
-	add_child($$, $1);
-	add_child($$, $3);
 };
 exp5: exp5 '%' exp6 {
 // n precisa
