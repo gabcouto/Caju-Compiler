@@ -40,23 +40,31 @@ int tamanho_tipo(enum Tipo tipo)
 
 }
 
-int encontra_endereco( Pilha * stack, char* identificador, int deslocamento){ //recebe myStack 
+int encontra_endereco_ref( Pilha * stack, char* identificador, int deslocamento){ //recebe myStack 
 	
 	int deslocAtual = -1;
 	int deslocAcima = -1;
 	Tabela * elemento = stack->elemento_pilha;
 
 	while(elemento->conteudo != NULL){ // soma o tamanho de tudo em um nível da pilha
+
 		if (strcmp(elemento->conteudo->dados, identificador)==0)
 			deslocAtual=deslocamento;
 
 		deslocamento += elemento->conteudo->tamanho;
+
 		if (elemento->nextElement!= NULL) elemento = elemento->nextElement;
 		else break;
 	}
+
 	if (stack->top != NULL){	//se tem nivel acima, recursão
-		deslocAcima = encontra_endereco(stack->top, identificador, deslocamento);
+		deslocAcima = encontra_endereco_ref(stack->top, identificador, 0);
 	}
+
+	if (stack->top == NULL && deslocAtual > 0) return -1-deslocAtual;
+
+	if (deslocAcima>0) return deslocamento+deslocAcima;
+
 	if (deslocAcima!=-1) return deslocAcima;
 	
 	return deslocAtual;

@@ -334,21 +334,31 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	
 	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
+	
 	//tem q pegar o lugar que exp deixou seu resultado
 	// if exp == literal { sprintf(string_temp, "%d", exp->label) ou se for char sla
 	// else catar o local
 	// talvez essa funfe:
 	// int deslocExp = encontra_endereço(myStack, $4->label, 0); //tem q garantir q o $4->label retorna o identificador msm
 	// sprintf(string_temp, "%d", deslocExp);
-	int deslocamento = encontra_endereco(myStack, $1->label, 0);
+	int desloc = encontra_endereco_ref(myStack, $1->label, 0);
+	char* temp_pointer;
+	temp_pointer = (char*) malloc(sizeof(char));
+	if (desloc<0) {
+		sprintf(temp_pointer, "rfp"); 
+		desloc +=1;
+		desloc *=-1;	
+	}	else 
+	sprintf(temp_pointer, "rbss");
+
 	char *desloc_temp;
 	desloc_temp = (char*) malloc(sizeof(char));
-	sprintf(desloc_temp, "%d", deslocamento);
+	sprintf(desloc_temp, "%d", desloc);
 
 	sprintf(string_temp, "temporario%d", $4->rotulo);
 	$$->codigo = create_lista_iloc();
 	$$->codigo = $4->codigo;
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, temp_pointer, desloc_temp));
 
 	print_iloc($$->codigo);
 
@@ -474,7 +484,15 @@ multidimensional_: IDENTIFICADOR lista_de_expressoes {
 		$$=$1;
 	//obter endereço da tanela de simbolos
 	//   em qual tabela/escopo foi declarado
-		int deslocamento = encontra_endereco(myStack, $1->label, 0);
+		int deslocamento = encontra_endereco_ref(myStack, $1->label, 0);
+		char* temp_pointer;
+		temp_pointer = (char*) malloc(sizeof(char));
+	if (deslocamento<0) {
+		sprintf(temp_pointer, "rfp"); 
+		deslocamento +=1;
+		deslocamento *=-1;	
+	}	else 
+	sprintf(temp_pointer, "rbss");
 		char *desloc_temp;
 		desloc_temp = (char*) malloc(sizeof(char));
 		sprintf(desloc_temp, "%d", deslocamento);
@@ -491,7 +509,7 @@ multidimensional_: IDENTIFICADOR lista_de_expressoes {
 	//coloca instrução na ast em $$ (acho que quer dizer o $$.code = code gerado
 	//add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp));
 	$$->codigo = create_lista_iloc();
-	$$->codigo->instruction =  new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp);
+	$$->codigo->instruction =  new_instruction(NULL, "loadAI", temp_pointer , desloc_temp, string_temp);
 
 	} 
 	else {$$=$2; add_child($$, $1);}};
