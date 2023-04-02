@@ -19,6 +19,7 @@
 	extern Tabela *rfp, *rbss;
 	int yylex(void);
 	void yyerror(const char *);
+	extern int RSPoffset;
 %}
 
 %define parse.error verbose
@@ -70,10 +71,25 @@
 
 %%
 
-programa: lista_de_elementos {if($1!=NULL){$$=$1;  arvore = $$; }};
+programa: lista_de_elementos {if($1!=NULL){$$=$1;  arvore = $$; printf("\n\n"); print_iloc($$->codigo); }};
 programa: {$$=NULL;};
-lista_de_elementos: cabecalho_funcao lista_de_elementos { if($2!=NULL) {add_child($$, $2); } else {$$=$1; }};
-lista_de_elementos: declaracao ';' lista_de_elementos {$$ = $3; if($3!=NULL) {add_child($$, $1);} };
+lista_de_elementos: cabecalho_funcao lista_de_elementos { 
+	if($2!=NULL) {
+		add_child($$, $2); 
+		L_iloc* espaco_vazio = find_free_place_iloc($1->codigo);
+		espaco_vazio->next_instruction = create_lista_iloc();
+		if($2->codigo!=NULL) { 
+				espaco_vazio->next_instruction = $2->codigo;
+			}
+	} else {$$=$1; }
+		
+};
+lista_de_elementos: declaracao ';' lista_de_elementos {
+	$$ = $3; 
+	if($3!=NULL) {
+		add_child($$, $1);
+	} 
+};
 lista_de_elementos: cabecalho_funcao {$$=$1; };
 lista_de_elementos: declaracao ';'{$$=$1;};
 /*
@@ -131,10 +147,9 @@ multidimensional: IDENTIFICADOR
 */
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comandos 
 {
-	
-	
+
 	$$ = create_node_from_token("FuncaoL", $2); 
-	free($2.valor.cadeia); 
+	
 	add_child($$, $4); 
 	if($7!=NULL) 
 	{
@@ -146,15 +161,31 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS lista_parametros ')' '{' bloco_comand
 
 	// Esta linha abaixo serve para adicionar foo ao escopo imediatamente anterior.
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
+
+	char* funct_label;
+	funct_label = (char*) malloc(sizeof(char));
+	sprintf(funct_label, "%s", $2.valor.cadeia);
+
+	$$->codigo = create_lista_iloc();
+	add_to_l_iloc($$->codigo, new_instruction(funct_label, "nop", NULL, NULL, NULL));
+	$$->codigo->next_instruction = $4->codigo;
+
+	if ($7!= NULL){
+		//L_iloc* espaco_vazio = find_free_place_iloc($$->codigo);
+		//espaco_vazio->next_instruction = create_l_iloc();
+		//espaco_vazio->next->instruction = $7->codigo;
+	}
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jump", NULL, NULL, "rsp"));
+
+
 	free($1);
+	free($2.valor.cadeia); 
 };
 
 cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos 
 {
-	
-	
 	$$ = create_node_from_token("Funcao", $2); 
-	free($2.valor.cadeia); 
 	if($6!=NULL)
 	{
 		add_child($$, $6); 
@@ -162,7 +193,27 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos
 	pop_stack(myStack);
 	Pilha* temp = top_stack(myStack);
 	analisa_e_insere(temp->elemento_pilha, $$, $1);
+	char* funct_label;
+	funct_label = (char*) malloc(sizeof(char));
+	sprintf(funct_label, "%s", $2.valor.cadeia);
+
+	$$->codigo = create_lista_iloc();
+	add_to_l_iloc($$->codigo, new_instruction(funct_label, "nop", NULL, NULL, NULL));
+	if ($6!= NULL){
+		$$->codigo->next_instruction = $6->codigo;
+	}
+
+	char* string_temp;
+	string_temp = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", gera_rotulo());
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "addI", "rsp", "4" , string_temp));
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jump", string_temp, NULL, NULL));
+
 	free($1);
+	free($2.valor.cadeia); 
+
 };
 
 lista_parametros: tipo IDENTIFICADOR ',' lista_parametros 
@@ -172,6 +223,19 @@ lista_parametros: tipo IDENTIFICADOR ',' lista_parametros
 	add_child($$, $4); 
 	Pilha* temp = top_stack(myStack); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+
+	char* offset;
+	offset = (char*) malloc(sizeof(char));
+	sprintf(offset, "%d" ,RSPoffset);
+
+	char* string_temp;
+	string_temp = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", gera_rotulo());
+
+	$$->codigo = create_lista_iloc();
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rsp", offset, string_temp));
+	$$->codigo->next_instruction = $4->codigo;
+
 	free($2);
 };
 
@@ -180,6 +244,18 @@ lista_parametros: tipo IDENTIFICADOR
 	$$=$1; 
 	Pilha* temp = top_stack(myStack);
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+
+	char* offset;
+	offset = (char*) malloc(sizeof(char));
+	sprintf(offset, "%d", RSPoffset);
+
+	char* string_temp;
+	string_temp = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", gera_rotulo());
+
+	$$->codigo = create_lista_iloc();
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rsp", offset, string_temp));
+
 	free($2);
 };
 
@@ -212,15 +288,30 @@ PS: '('
 
 lista_comandos_simples: comandos_simples ';' lista_comandos_simples 
 {
+
 	if ($1!=NULL)  
 		if($3!=NULL) 
 		{
 			$$=$1;  
+
 			if(!strcmp($1->label, "<=")) 
-			{
+			{	
 				$1=ultimaInit($1);
 			}
 			add_child($1, $3); 
+
+			if ($1->codigo!=NULL){
+				L_iloc* espaco_vazio = find_free_place_iloc($1->codigo);
+				espaco_vazio->next_instruction = create_lista_iloc();
+				if($3->codigo!=NULL) { 
+					espaco_vazio->next_instruction = $3->codigo;
+				}
+			} else {
+				if($3->codigo!=NULL) { 
+					$$->codigo = $3->codigo;
+				}
+			}
+
 		} 
 		else 
 		{
@@ -244,7 +335,7 @@ comandos_simples: declaracao_local
 
 comandos_simples: atribuicao_local 
 {
-	$$=$1; 
+	$$=$1;
 };
 
 comandos_simples: chamada_funcao 
@@ -264,7 +355,8 @@ comandos_simples: chamada_ctrl_fluxo
 
 comandos_simples: PSblock bloco_comandos 
 {
-	$$=$2; 
+	
+	$$=$2;
 };
 
 /*
@@ -275,6 +367,7 @@ declaracao_local: tipo lista_de_nome_de_variaveis_locais
 	$$ = $2;
 	Pilha* temp = top_stack(myStack); 
 	analisa_e_insere(temp->elemento_pilha, $2, $1); 
+	//print_iloc($$->codigo);
 	free($1);
 };
 
@@ -283,6 +376,11 @@ lista_de_nome_de_variaveis_locais: variavel_local ',' lista_de_nome_de_variaveis
 	$$=create_node("PROX_VARL", ","); 
 	add_child($$, $1); 
 	add_child($$, $3); 
+
+	$$->codigo = create_lista_iloc();
+	$$->codigo = $1->codigo;
+	$$->codigo->next_instruction = $3->codigo;
+
 };
 
 lista_de_nome_de_variaveis_locais: variavel_local 
@@ -294,15 +392,35 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 {
 	$$ = create_node("TK_OC_LE", "<="); 
 	add_child($$, $1); 
-	free($2.valor.cadeia); 
+	
 	add_child($$, $3); 
 	$$->codigo = $3->codigo;
 	$$->rotulo = $3->rotulo;
+
+	int deslocamento = encontra_endereco_ref(myStack, $1->label, 0);
+	if (deslocamento<0) {
+		deslocamento +=1;
+		deslocamento *=-1;	
+	}
+
+	char *string_temp, *desloc_temp;
+	string_temp = (char*) malloc(sizeof(char));
+	desloc_temp = (char*) malloc(sizeof(char));
+	sprintf(string_temp, "temporario%d", contador);
+	sprintf(desloc_temp, "%d", deslocamento);
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
+
+	//print_iloc(arvore->codigo);
+	
+	free($2.valor.cadeia); 
 };
 
 variavel_local: IDENTIFICADOR 
 {
 	$$=$1;
+	$$->codigo = create_lista_iloc();
+	$$->codigo=NULL;
 };
 
 /*
@@ -359,8 +477,6 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	$$->codigo = create_lista_iloc();
 	$$->codigo = $4->codigo;
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, temp_pointer, desloc_temp));
-
-	print_iloc($$->codigo);
 
 	//obter endereço da tabela
 	// em qual tabela/ escopo foi declarado
@@ -423,9 +539,23 @@ chamada_funcao: TK_IDENTIFICADOR  '(' lista_expressoes_funcao ')' {
 };
 
 chamada_funcao: TK_IDENTIFICADOR  '(' ')' {
-	//jumpI $1.label
 	$$ = create_node_from_token("CHAMA_FUNCAO", $1);
 	analisa_uso(top_stack(myStack)->elemento_pilha, $$);
+
+	char* label_funct;
+	label_funct = (char*) malloc(sizeof(char));
+	sprintf(label_funct, "%s", $1.valor.cadeia);
+
+	$$->codigo = create_lista_iloc();
+
+	//coisa aqui pra empilhar os endereços
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadI", "rpc", "rsp" , NULL ));
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_funct, NULL , NULL ));
+
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "nop", NULL, NULL , NULL ));
+	//talvez  o label com end pra voltar no rsp
+	
 	free($1.valor.cadeia); 
 	}; 
 lista_expressoes_funcao: expressao ',' lista_expressoes_funcao {
@@ -441,13 +571,20 @@ lista_expressoes_funcao: expressao {
 /*
 	Chamada de retorno
 */
-chamada_retorno: TK_PR_RETURN expressao {$$ = create_node("TK_PR_RETURN", "return"); add_child($$, $2); free($1.valor.cadeia); };
+chamada_retorno: TK_PR_RETURN expressao {
+	$$ = create_node("TK_PR_RETURN", "return"); 
+	add_child($$, $2); free($1.valor.cadeia);
+
+
+};
 
 /*
 	Controle de Fluxo
 */
 chamada_ctrl_fluxo: ctrl_condicional {$$ = $1; };
+
 chamada_ctrl_fluxo: ctrl_repeticao {$$ = $1; };
+
 ctrl_repeticao: TK_PR_WHILE PS expressao ')' '{' bloco_comandos {
 	$$ = create_node("TK_PR_WHILE", "while");
 	add_child($$, $3);
@@ -457,19 +594,32 @@ ctrl_repeticao: TK_PR_WHILE PS expressao ')' '{' bloco_comandos {
 	Pilha* temp = top_stack(myStack); 
 	pop_stack(myStack);
 	};
+
 ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN '{' bloco_comandos cond_else {
 	$$ = create_node("TK_PR_IF", "if"); 
 	add_child($$, $3); 
 	add_child($$, $7); 
-	free($1.valor.cadeia);
-	free($5.valor.cadeia); 
+
+	print_iloc($3->codigo);
+	
 	if($8 != NULL){add_child($$, $8); } 
 	Pilha* temp = top_stack(myStack);
+
+	$$->codigo = create_lista_iloc();
+	$$->codigo = $3->codigo;
+
+	print_iloc($3->codigo);
+
 	pop_stack(myStack);
+	
+	free($1.valor.cadeia);
+	free($5.valor.cadeia); 
 	};
+
 cond_else: TK_PR_ELSE PSblock bloco_comandos { //botar no else o PS trocar o TK+PR po só ELSE e o ELSE ser o TKpr com o push
 	$$ = $3; 
 	free($1.valor.cadeia);};
+
 cond_else: {$$=NULL;};
 
 
@@ -493,6 +643,7 @@ multidimensional_: IDENTIFICADOR lista_de_expressoes {
 		deslocamento *=-1;	
 	}	else 
 	sprintf(temp_pointer, "rbss");
+
 		char *desloc_temp;
 		desloc_temp = (char*) malloc(sizeof(char));
 		sprintf(desloc_temp, "%d", deslocamento);
@@ -582,12 +733,14 @@ exp1: exp2  { $$ = $1; } ;
 
 exp2: exp2 TK_OC_EQ exp3 {
 //cmp_EQ
-
+	$$ = create_node("EQ", "==" );
+	add_child($$, $1);
+	add_child($$, $3);
 	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -598,6 +751,7 @@ exp2: exp2 TK_OC_EQ exp3 {
 	sprintf(string_temp, "temporario%d", $$->rotulo);
 	sprintf(string_temp1, "temporario%d", $1->rotulo);
 	sprintf(string_temp3, "temporario%d", $3->rotulo);
+
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -611,7 +765,7 @@ exp2: exp2 TK_OC_EQ exp3 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_EQ $1.temp, $3.temp => temporario	
@@ -619,25 +773,28 @@ exp2: exp2 TK_OC_EQ exp3 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
-	$$ = create_node("EQ", "==" );
-	add_child($$, $1);
+
+
 	free($2.valor.cadeia);
-	add_child($$, $3);
+	
 };
 exp2: exp2 TK_OC_NE exp3 {
 //cmp_NE
+	$$ = create_node("NE", "!=" );
+	add_child($$, $1);
+	add_child($$, $3);
 	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -661,7 +818,7 @@ exp2: exp2 TK_OC_NE exp3 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_NE $1.temp, $3.temp => temporario	
@@ -669,28 +826,29 @@ exp2: exp2 TK_OC_NE exp3 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
 	
-	$$ = create_node("NE", "!=" );
-	add_child($$, $1);
+
 	free($2.valor.cadeia);
-	add_child($$, $3);
 };
 exp2: exp3 { $$ = $1; } ;
 
 exp3: exp3 '<' exp4 {
 //cmp_LT
+	$$ = create_node("LT", "<" );
+	add_child($$, $1);
+	add_child($$, $3);
 	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -714,7 +872,7 @@ exp3: exp3 '<' exp4 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_LT $1.temp, $3.temp => temporario	
@@ -722,25 +880,26 @@ exp3: exp3 '<' exp4 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
-	$$ = create_node("LT", "<" );
-	add_child($$, $1);
-	add_child($$, $3);
+
 };
 
 exp3: exp3 '>' exp4 {
 //cmp_GT
+	$$ = create_node("GT", ">" );
+	add_child($$, $1);
+	add_child($$, $3);
 	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -764,7 +923,7 @@ exp3: exp3 '>' exp4 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_GT $1.temp, $3.temp => temporario	
@@ -772,25 +931,24 @@ exp3: exp3 '>' exp4 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
-
-	$$ = create_node("GT", ">" );
-	add_child($$, $1);
-	add_child($$, $3);
 };
 exp3: exp3 TK_OC_LE exp4 {
 //cmp_LE
+	$$ = create_node("LE", "<=" );
+	add_child($$, $1);
+	add_child($$, $3);
 	// gerar temporario  int temp = gera_rotulo()
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -814,7 +972,7 @@ exp3: exp3 TK_OC_LE exp4 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_LE $1.temp, $3.temp => temporario	
@@ -822,25 +980,25 @@ exp3: exp3 TK_OC_LE exp4 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
 	
-	$$ = create_node("LE", "<=" );
-	add_child($$, $1);
 	free($2.valor.cadeia); 
-	add_child($$, $3);
 };
 exp3: exp3 TK_OC_GE exp4 {
 // gerar temporario  int temp = gera_rotulo()
+	$$ = create_node("GE", ">=" ); 
+	add_child($$, $1); 
+	add_child($$, $3);
 	// $$.temp = temporario
 	$$->rotulo = gera_rotulo();
 	$$->codigo = create_lista_iloc();
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	char *string_temp; 
 	char *string_temp1;
@@ -864,7 +1022,7 @@ exp3: exp3 TK_OC_GE exp4 {
 	label_dps = (char*) malloc(sizeof(char));
 	sprintf(label_dps, "labelDps%d", gera_label());
 	// $$.code = o concat das coisas
-	$$->codigo->next_instruction = $1->codigo;
+	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
 	// gerar code disso: {
 	// gerar iloc cmp_GE $1.temp, $3.temp => temporario	
@@ -872,18 +1030,15 @@ exp3: exp3 TK_OC_GE exp4 {
 	// gerar iloc cbr temporario => label_true label_false 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "cbr", string_temp, label_true, label_false));
 	// gerar iloc com label_verdade: loadI 1 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_true, "loadI", "1", string_temp, NULL));
 	// gerar iloc jumpI label_depois
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", NULL, NULL, label_dps));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "jumpI", label_dps, NULL, NULL));
 	// gerar iloc com label_false: loadI 0 => temporario
-	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", 0, NULL, string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(label_false, "loadI", "0", string_temp, NULL));
 	// gerar iloc com label label_depois concat nop }
 	add_to_l_iloc($$->codigo, new_instruction(label_dps, "nop", NULL, NULL, NULL));
-	
-	$$ = create_node("GE", ">=" ); 
-	add_child($$, $1); 
+
 	free($2.valor.cadeia);
-	add_child($$, $3);
 };
 exp3: exp4 { $$ = $1;  } ;
 

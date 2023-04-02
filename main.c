@@ -18,6 +18,7 @@ Pilha* myStack;
 void *arvore = NULL;
 L_iloc *arvore_iloc;
 Tabela *rbss=NULL, *rfp=NULL;
+int RSPoffset = 0;
 void exporta (void *arvore);
 void libera (void *arvore);
 

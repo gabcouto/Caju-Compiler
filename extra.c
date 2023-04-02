@@ -71,6 +71,29 @@ int encontra_endereco_ref( Pilha * stack, char* identificador, int deslocamento)
 
 }
 
+/*
+if (stack->top != NULL){	//se tem nivel acima, recursão
+		deslocAcima = encontra_endereco_ref(stack->top, identificador, 0);
+	}
+
+	if (stack->top == NULL)
+		if (deslocAtual!=-100000) { return deslocAtual;} //>=0 entáo encontrei, <=-200000 entao nao encontrei mas ta ai meu desloc
+		else {
+			deslocamento+=200000;
+			return -deslocamento;
+		}
+
+	if (deslocAcima >= 0) return deslocAcima; //>= 0 entao ja foi encontrado, -200k < x <=-100k entao pra somar
+	else
+		if (deslocAtual!=-100000) {
+			deslocAtual+=100000;
+			return -deslocAtual;
+		}
+		else if (deslocAcima > -200000) {
+			deslocAcima -= deslocamento;
+			return deslocAcima;
+		} else return deslocAcima;*/
+
 Iloc* new_instruction(char* label, char* op, char* r1, char* r2, char* r3)
 {
 	Iloc* new_instruction = (Iloc*) malloc (sizeof(Iloc));
@@ -156,6 +179,9 @@ void print_iloc(L_iloc* lista_instrucoes)
 		printf("%s %s, %s -> %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
 		
 	else
+		if(strcmp(lista_instrucoes->instruction->operation, "nop")==0) 
+			printf("nop\n");
+		else
 		printf("%s %s, %s => %s\n", lista_instrucoes->instruction->operation, lista_instrucoes->instruction->r1, lista_instrucoes->instruction->r2, lista_instrucoes->instruction->r3);
 
 	if(lista_instrucoes->next_instruction != NULL)
@@ -306,6 +332,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			verifica_isDeclared(myTable, conteudo_de_simbolo);
 			desloc = 0;//n entedi pq fazer desloc global e iniciar ele em zero antes de entrar na função
 //acho q seria mais clean code fazer o desloc dentro da função e ela n ser recursiva
+			/*
 			int deslocamento = calcula_deslocamento(myTable);
 
 			char *string_temp, *desloc_temp;
@@ -316,9 +343,8 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 
 			add_to_l_iloc(arvore->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
 
-			print_iloc(arvore->codigo);
-
-
+			//print_iloc(arvore->codigo);
+			*/
 			add_to_table(myTable, conteudo_de_simbolo);
 		}	
 		else if(strcmp(arvore->name, "FuncaoL") == 0)
@@ -383,7 +409,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			}
 			/* Necessitamos pesquisar se a funcao já foi declarada antes de adicioná-la na tabela.*/
 			Content* conteudo_de_simbolo = create_conteudo(arvore->line_no, arvore->col_no, Funcao, type, tamanho, arvore->label, outros);
-			verifica_isDeclared(myTable, conteudo_de_simbolo);
+			//verifica_isDeclared(myTable, conteudo_de_simbolo);
 			add_to_table(myTable, conteudo_de_simbolo);
 		}
 
