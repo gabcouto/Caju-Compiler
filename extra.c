@@ -40,8 +40,8 @@ int tamanho_tipo(enum Tipo tipo)
 
 }
 
-int encontra_endereco_ref( Pilha * stack, char* identificador, int deslocamento){ //recebe myStack 
-	
+int encontra_endereco_rbss( Pilha * stack, char* identificador, int deslocamento){ //recebe myStack 
+
 	int deslocAtual = -1;
 	int deslocAcima = -1;
 	Tabela * elemento = stack->elemento_pilha;
@@ -58,12 +58,8 @@ int encontra_endereco_ref( Pilha * stack, char* identificador, int deslocamento)
 	}
 
 	if (stack->top != NULL){	//se tem nivel acima, recursão
-		deslocAcima = encontra_endereco_ref(stack->top, identificador, 0);
+		deslocAcima = encontra_endereco_rbss(stack->top, identificador, deslocamento);
 	}
-
-	if (stack->top == NULL && deslocAtual > 0) return -1-deslocAtual;
-
-	if (deslocAcima>0) return deslocamento+deslocAcima;
 
 	if (deslocAcima!=-1) return deslocAcima;
 	
@@ -71,28 +67,27 @@ int encontra_endereco_ref( Pilha * stack, char* identificador, int deslocamento)
 
 }
 
-/*
-if (stack->top != NULL){	//se tem nivel acima, recursão
-		deslocAcima = encontra_endereco_ref(stack->top, identificador, 0);
+int encontra_endereco_rfp(char* identificador){
+	Pilha* stack = top_stack(myStack); 
+	int deslocamento = 0;
+	int deslocAtual = -1;
+	Tabela * elemento = stack->elemento_pilha;
+
+	while(elemento->conteudo != NULL){
+
+		if (strcmp(elemento->conteudo->dados, identificador)==0)
+			deslocAtual=deslocamento;
+
+		deslocamento += elemento->conteudo->tamanho;
+		if (identificador[0] == 'c') 
+		printf("deslocamento do tamanho: %d\n deslocatual: %d\n   o q ta na tabela: %s\n", deslocamento, deslocAtual, elemento->conteudo->dados);
+
+		if (elemento->nextElement!= NULL) elemento = elemento->nextElement;
+		else break;
 	}
+	return deslocAtual;
 
-	if (stack->top == NULL)
-		if (deslocAtual!=-100000) { return deslocAtual;} //>=0 entáo encontrei, <=-200000 entao nao encontrei mas ta ai meu desloc
-		else {
-			deslocamento+=200000;
-			return -deslocamento;
-		}
-
-	if (deslocAcima >= 0) return deslocAcima; //>= 0 entao ja foi encontrado, -200k < x <=-100k entao pra somar
-	else
-		if (deslocAtual!=-100000) {
-			deslocAtual+=100000;
-			return -deslocAtual;
-		}
-		else if (deslocAcima > -200000) {
-			deslocAcima -= deslocamento;
-			return deslocAcima;
-		} else return deslocAcima;*/
+}
 
 Iloc* new_instruction(char* label, char* op, char* r1, char* r2, char* r3)
 {
@@ -346,6 +341,28 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			//print_iloc(arvore->codigo);
 			*/
 			add_to_table(myTable, conteudo_de_simbolo);
+
+			int rfp = encontra_endereco_rfp(dados);
+			int rbss = encontra_endereco_rbss(myStack, dados, 0);
+
+			
+			char *string_temp, *desloc_temp;
+			string_temp = (char*) malloc(sizeof(char));
+			desloc_temp = (char*) malloc(sizeof(char));
+			sprintf(string_temp, "temporario%d", arvore->firstChild->nextSibling->rotulo);
+			
+			arvore->codigo = arvore->firstChild->nextSibling->codigo;
+			if (rfp>=0){
+				sprintf(desloc_temp, "%d", rfp);
+				add_to_l_iloc(arvore->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
+				
+				
+			}
+			else {
+				sprintf(desloc_temp, "%d", rbss);
+				add_to_l_iloc(arvore->codigo, new_instruction(NULL, "storeAI", string_temp, "rbss", desloc_temp));
+			}
+
 		}	
 		else if(strcmp(arvore->name, "FuncaoL") == 0)
 		{

@@ -71,7 +71,53 @@
 
 %%
 
-programa: lista_de_elementos {if($1!=NULL){$$=$1;  arvore = $$; printf("\n\n"); print_iloc($$->codigo); }};
+programa: lista_de_elementos {if($1!=NULL){
+	$$=$1;
+	arvore = $$;
+	L_iloc* init = create_lista_iloc();
+	L_iloc* iter = $$->codigo;
+	int fim=9;
+	int mainpos;
+	while (iter!=NULL){
+		if (iter->instruction->label !=NULL){ 
+			if(strcmp(iter->instruction->label, "main")==0)
+				mainpos = fim;
+		}
+		if (iter->next_instruction == NULL) break;
+		iter = iter->next_instruction;
+		fim++;
+	}
+	fim++;
+
+	char* strfim;
+	strfim = (char*) malloc(sizeof(char));
+	sprintf(strfim, "%d", fim);
+	char* strmainpos;
+	strmainpos = (char*) malloc(sizeof(char));
+	sprintf(strmainpos, "%d", mainpos);
+	char* strfim_4;
+	strfim_4 = (char*) malloc(sizeof(char));
+	sprintf(strfim_4, "%d", fim+4);
+	char* reg;
+	reg = (char*) malloc(sizeof(char));
+	sprintf(reg, "r%d", gera_rotulo());
+
+	add_to_l_iloc(init, new_instruction(NULL, "loadI", strfim, "rbss", NULL));
+	add_to_l_iloc(init, new_instruction(NULL, "loadI", strfim_4, "rfp", NULL));
+	add_to_l_iloc(init, new_instruction(NULL, "loadI", strfim_4, "rsp", NULL));
+	add_to_l_iloc(init, new_instruction(NULL, "storeAI", "rfp", "rsp", "8"));
+	add_to_l_iloc(init, new_instruction(NULL, "addI", "rpc", "3", reg));
+	add_to_l_iloc(init, new_instruction(NULL, "storeAI", reg, "rsp", "0"));
+	add_to_l_iloc(init, new_instruction(NULL, "jump", "main", NULL, NULL));
+
+	L_iloc* espaco_vazio = find_free_place_iloc(init);
+	espaco_vazio->next_instruction = $$->codigo;
+	print_iloc(init); 
+	
+	
+	//printf("%s na linha: %d", iter->instruction->label, i);
+	
+	}};
 programa: {$$=NULL;};
 lista_de_elementos: cabecalho_funcao lista_de_elementos { 
 	if($2!=NULL) {
@@ -200,14 +246,15 @@ cabecalho_funcao: tipo TK_IDENTIFICADOR PS ')' '{' bloco_comandos
 	$$->codigo = create_lista_iloc();
 	add_to_l_iloc($$->codigo, new_instruction(funct_label, "nop", NULL, NULL, NULL));
 	if ($6!= NULL){
+		if ($6->codigo!=NULL)
 		$$->codigo->next_instruction = $6->codigo;
 	}
 
 	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", gera_rotulo());
+	sprintf(string_temp, "r%d", gera_rotulo());
 
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "addI", "rsp", "4" , string_temp));
+	add_to_l_iloc($$->codigo, new_instruction(NULL, "addI", "rsp", "2" , string_temp));
 
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "jump", string_temp, NULL, NULL));
 
@@ -230,7 +277,7 @@ lista_parametros: tipo IDENTIFICADOR ',' lista_parametros
 
 	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", gera_rotulo());
+	sprintf(string_temp, "r%d", gera_rotulo());
 
 	$$->codigo = create_lista_iloc();
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rsp", offset, string_temp));
@@ -251,7 +298,7 @@ lista_parametros: tipo IDENTIFICADOR
 
 	char* string_temp;
 	string_temp = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", gera_rotulo());
+	sprintf(string_temp, "r%d", gera_rotulo());
 
 	$$->codigo = create_lista_iloc();
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rsp", offset, string_temp));
@@ -392,26 +439,7 @@ variavel_local: IDENTIFICADOR TK_OC_LE literal
 {
 	$$ = create_node("TK_OC_LE", "<="); 
 	add_child($$, $1); 
-	
 	add_child($$, $3); 
-	$$->codigo = $3->codigo;
-	$$->rotulo = $3->rotulo;
-
-	int deslocamento = encontra_endereco_ref(myStack, $1->label, 0);
-	if (deslocamento<0) {
-		deslocamento +=1;
-		deslocamento *=-1;	
-	}
-
-	char *string_temp, *desloc_temp;
-	string_temp = (char*) malloc(sizeof(char));
-	desloc_temp = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", contador);
-	sprintf(desloc_temp, "%d", deslocamento);
-
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
-
-	//print_iloc(arvore->codigo);
 	
 	free($2.valor.cadeia); 
 };
@@ -459,24 +487,22 @@ atribuicao_local: IDENTIFICADOR  lista_de_expressoes '=' expressao
 	// talvez essa funfe:
 	// int deslocExp = encontra_endereço(myStack, $4->label, 0); //tem q garantir q o $4->label retorna o identificador msm
 	// sprintf(string_temp, "%d", deslocExp);
-	int desloc = encontra_endereco_ref(myStack, $1->label, 0);
-	char* temp_pointer;
-	temp_pointer = (char*) malloc(sizeof(char));
-	if (desloc<0) {
-		sprintf(temp_pointer, "rfp"); 
-		desloc +=1;
-		desloc *=-1;	
-	}	else 
-	sprintf(temp_pointer, "rbss");
+	int rbss = encontra_endereco_rbss(myStack, $1->label, 0);
+	int rfp = encontra_endereco_rfp($1->label);
 
 	char *desloc_temp;
 	desloc_temp = (char*) malloc(sizeof(char));
-	sprintf(desloc_temp, "%d", desloc);
 
-	sprintf(string_temp, "temporario%d", $4->rotulo);
+	sprintf(string_temp, "r%d", $4->rotulo);
 	$$->codigo = create_lista_iloc();
 	$$->codigo = $4->codigo;
-	add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, temp_pointer, desloc_temp));
+	if (rfp>=0){
+		sprintf(desloc_temp, "%d", rfp);
+		add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rfp", desloc_temp));
+	} else {
+		sprintf(desloc_temp, "%d", rbss);
+		add_to_l_iloc($$->codigo, new_instruction(NULL, "storeAI", string_temp, "rbss", desloc_temp));
+	}
 
 	//obter endereço da tabela
 	// em qual tabela/ escopo foi declarado
@@ -599,19 +625,15 @@ ctrl_condicional: TK_PR_IF PS expressao ')' TK_PR_THEN '{' bloco_comandos cond_e
 	$$ = create_node("TK_PR_IF", "if"); 
 	add_child($$, $3); 
 	add_child($$, $7); 
-
-	print_iloc($3->codigo);
 	
 	if($8 != NULL){add_child($$, $8); } 
 	Pilha* temp = top_stack(myStack);
 
+	pop_stack(myStack);
+	
 	$$->codigo = create_lista_iloc();
 	$$->codigo = $3->codigo;
 
-	print_iloc($3->codigo);
-
-	pop_stack(myStack);
-	
 	free($1.valor.cadeia);
 	free($5.valor.cadeia); 
 	};
@@ -634,25 +656,17 @@ multidimensional_: IDENTIFICADOR lista_de_expressoes {
 		$$=$1;
 	//obter endereço da tanela de simbolos
 	//   em qual tabela/escopo foi declarado
-		int deslocamento = encontra_endereco_ref(myStack, $1->label, 0);
-		char* temp_pointer;
-		temp_pointer = (char*) malloc(sizeof(char));
-	if (deslocamento<0) {
-		sprintf(temp_pointer, "rfp"); 
-		deslocamento +=1;
-		deslocamento *=-1;	
-	}	else 
-	sprintf(temp_pointer, "rbss");
+		int rbss = encontra_endereco_rbss(myStack, $1->label, 0);
+		int rfp = encontra_endereco_rfp($1->label);
 
 		char *desloc_temp;
 		desloc_temp = (char*) malloc(sizeof(char));
-		sprintf(desloc_temp, "%d", deslocamento);
 
 	// gera temp
 		char* string_temp;
 		string_temp = (char*) malloc(sizeof(char));
 		$$->rotulo = gera_rotulo();
-		sprintf(string_temp, "temporario%d", $$->rotulo);
+		sprintf(string_temp, "r%d", $$->rotulo);
 	// if tabela global
 	//	gera loadAI rbss, deslocamento => temporario
 	// else 
@@ -660,8 +674,16 @@ multidimensional_: IDENTIFICADOR lista_de_expressoes {
 	//coloca instrução na ast em $$ (acho que quer dizer o $$.code = code gerado
 	//add_to_l_iloc($$->codigo, new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp));
 	$$->codigo = create_lista_iloc();
-	$$->codigo->instruction =  new_instruction(NULL, "loadAI", temp_pointer , desloc_temp, string_temp);
 
+	if (rfp>=0){
+		sprintf(desloc_temp, "%d", rfp);
+		$$->codigo->instruction =  new_instruction(NULL, "loadAI", "rfp" , desloc_temp, string_temp);
+	} else {
+		sprintf(desloc_temp, "%d", rbss);
+		$$->codigo->instruction =  new_instruction(NULL, "loadAI",  "rbss" , desloc_temp, string_temp);
+
+	}
+	
 	} 
 	else {$$=$2; add_child($$, $1);}};
 
@@ -681,9 +703,9 @@ expressao: expressao TK_OC_OR exp1 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -712,9 +734,9 @@ exp1: exp1 TK_OC_AND exp2 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -729,7 +751,7 @@ exp1: exp1 TK_OC_AND exp2 {
 	
 	free($2.valor.cadeia);
 };
-exp1: exp2  { $$ = $1; } ;
+exp1: exp2  { $$ = $1;  } ;
 
 exp2: exp2 TK_OC_EQ exp3 {
 //cmp_EQ
@@ -748,9 +770,9 @@ exp2: exp2 TK_OC_EQ exp3 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 
 	// gerar label_true
 	char *label_true;
@@ -802,9 +824,9 @@ exp2: exp2 TK_OC_NE exp3 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -856,9 +878,9 @@ exp3: exp3 '<' exp4 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -907,9 +929,9 @@ exp3: exp3 '>' exp4 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -956,9 +978,9 @@ exp3: exp3 TK_OC_LE exp4 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -1006,9 +1028,9 @@ exp3: exp3 TK_OC_GE exp4 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gerar label_true
 	char *label_true;
 	label_true = (char*) malloc(sizeof(char));
@@ -1040,7 +1062,7 @@ exp3: exp3 TK_OC_GE exp4 {
 
 	free($2.valor.cadeia);
 };
-exp3: exp4 { $$ = $1;  } ;
+exp3: exp4 { $$ = $1; } ;
 
 
 exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf lá
@@ -1055,9 +1077,9 @@ exp4: exp4 '+' exp5 {//e se a exp é um literal? acho q daria ruim no sprintf l�
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -1082,9 +1104,9 @@ exp4: exp4 '-' exp5 { //e se a exp é um literal?
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -1094,7 +1116,6 @@ exp4: exp4 '-' exp5 { //e se a exp é um literal?
 
 	$$->codigo = $1->codigo;
 	$1->codigo->next_instruction = $3->codigo;
-	
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "sub", string_temp1, string_temp3, string_temp));
 };
 exp4: exp5 { $$ = $1; } ;
@@ -1111,9 +1132,9 @@ exp5: exp5 '*' exp6 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -1138,9 +1159,9 @@ exp5: exp5 '/' exp6 {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	string_temp3 = (char*) malloc(sizeof(char));
-	sprintf(string_temp, "temporario%d", $$->rotulo);
-	sprintf(string_temp1, "temporario%d", $1->rotulo);
-	sprintf(string_temp3, "temporario%d", $3->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
+	sprintf(string_temp1, "r%d", $1->rotulo);
+	sprintf(string_temp3, "r%d", $3->rotulo);
 	// gera add $1.temp, $3.temp => temporario
 	// salvar o nome desse temporario
 	// salvar o nome desse temporario gerado em $$.temp
@@ -1202,7 +1223,7 @@ literal: TK_LIT_INT {
 	string_temp = (char*) malloc(sizeof(char));
 	string_temp1 = (char*) malloc(sizeof(char));
 	$$->rotulo = gera_rotulo();
-	sprintf(string_temp, "temporario%d", $$->rotulo);
+	sprintf(string_temp, "r%d", $$->rotulo);
 	sprintf(string_temp1, "%d", $1.valor.inteiro);
 	//$$->temp = $1.valor.inteiro; //acho q isso já ta na create_node no label de $$
 	add_to_l_iloc($$->codigo, new_instruction(NULL, "loadI", string_temp1, string_temp, NULL));
