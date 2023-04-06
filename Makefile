@@ -1,5 +1,5 @@
 # Gabriel Couto & Felippo Stédile: Dupla 
-ETAPA_ATUAL = etapa5
+ETAPA_ATUAL = etapa6
 FILES_TO_TAR = extra.c main.c scanner.l parser.y extra.h Makefile
 OUT = etapa5
 LINUXCC  = gcc

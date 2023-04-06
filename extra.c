@@ -349,7 +349,7 @@ void analisa_e_insere(Tabela *myTable, Node *arvore, Node *tipo)
 			char *string_temp, *desloc_temp;
 			string_temp = (char*) malloc(sizeof(char));
 			desloc_temp = (char*) malloc(sizeof(char));
-			sprintf(string_temp, "temporario%d", arvore->firstChild->nextSibling->rotulo);
+			sprintf(string_temp, "r%d", arvore->firstChild->nextSibling->rotulo);
 			
 			arvore->codigo = arvore->firstChild->nextSibling->codigo;
 			if (rfp>=0){
